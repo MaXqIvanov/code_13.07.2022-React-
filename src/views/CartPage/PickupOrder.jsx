@@ -54,11 +54,11 @@ if(selectedItem == null){ return}
         console.log(selectedShop)
     }
     async function addToCustomCart(){
-        console.log(choosenType)
-        console.log(selectedItem)
-        setChoosenType({...choosenType, cart:[choosenType.cart.map((item)=>
-           item.id === selectedItem.id ? selectedItem : item
-            )]})
+        setChoosenType({...choosenType, cart: choosenType.cart.map((item,index)=>
+            item.id === selectedItem.id ? {...item, shop_address:selectedShop} : item
+            )
+        })
+        handleModalClose()
     }
     const pins = shopAddresses.map((shop) => (
                 <Marker
@@ -94,25 +94,27 @@ if(selectedItem == null){ return}
                     ))
                 }
                 <Card>
-                    <ListGroup className={styles.finishCartList}>
-                        {choosenType.cart.map((item)=>(
-                            <ListGroup.Item key={item.id} className={styles.finishCartBlock}>
-                                <div className={styles.itemImgBlock}>
-                                    <img className={styles.itemImg} src={item.images[0]} alt="Фото товара"/>
-                                    <span className={styles.itemCode}>Код товара: {item.id}</span>
-                                </div>
+                        <ListGroup className={styles.finishCartList}>
+                            {choosenType.cart.map((item) => (
+                                <ListGroup.Item key={item.id} className={styles.finishCartBlock}>
+                                    <div className={styles.itemImgBlock}>
+                                        <img className={styles.itemImg} src={item.images[0]} alt="Фото товара"/>
+                                        <span className={styles.itemCode}>Код товара: {item.id}</span>
+                                    </div>
 
-                                <div className={styles.finishItemName}>
-                                    {item._nomenclature.name}
-                                    <br/>
-                                    <b>{item.shop_address.address}</b> <span className={stylez.changeAddress} onClick={()=>{handleModalOpen(item)}}>Изменить адресс</span>
-                                </div>
-                                <span className={styles.itemPrice}> {item.middle_cost} руб.</span>
-                            </ListGroup.Item>
-                        ))}
+                                    <div className={styles.finishItemName}>
+                                        {item._nomenclature.name}
+                                        <br/>
+                                        <b>{item.shop_address.address}</b> <span className={stylez.changeAddress}
+                                                                                 onClick={() => {
+                                                                                     handleModalOpen(item)
+                                                                                 }}>Изменить адрес</span>
+                                    </div>
+                                    <span className={styles.itemPrice}> {item.middle_cost} руб.</span>
+                                </ListGroup.Item>
 
-
-                    </ListGroup>
+                            ))}
+                        </ListGroup>
                     <div className={styles.finishPricesBlock}>
                         <p className={'mt-2'} style={{fontSize:'1.5rem', fontWeight:'bolder'}}>Итого: {choosenType.cost} руб.</p>
                     </div>
