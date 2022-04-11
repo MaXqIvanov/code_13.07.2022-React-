@@ -1,0 +1,87 @@
+.mainBlock{
+    margin-top:1rem ;
+}
+.itemCard{
+    border: 0;
+    margin-top: 1rem;
+    position: relative;
+}
+.item{
+    max-width: 270px;
+    width: 270px;
+    min-width: 270px;
+    cursor: pointer;
+}
+.itemSlider {
+
+}
+.itemImg{
+    max-width: 100%;
+    height: 150px;
+    object-fit: contain;
+}
+
+.itemTitle{
+    text-align: center;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    font-size: 1rem !important;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+
+}
+.imgBlock{
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+
+}
+.test{
+    position: absolute;
+
+    width: 100%;
+    height: 50%;
+    display: flex;
+}
+.test div{
+    height: 100%;
+    width: 100%;
+}
+.imgFragment{
+
+}
+.itemBlock{
+    display: flex;
+    gap: 1rem;
+    flex-basis: 16%;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+
+}
+.itemFooter{
+    padding: 0;
+    background-color: white !important;
+}
+.cartBtn{
+    width: 100%;
+}
+/*@media screen and (min-width: 1008px){*/
+/*    .itemBlock{*/
+/*  margin: 0 auto;*/
+/*    }*/
+
+/*}*/
+
+
+@media screen and (max-width: 920px) {
+    .itemBlock {
+        flex: 1 21%;
+        margin: 0 auto !important;
+    }
+}

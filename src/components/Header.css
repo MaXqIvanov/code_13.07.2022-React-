@@ -1,0 +1,46 @@
+.search-btn{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+.navbar-brand{
+    cursor: pointer;
+    display: flex;
+    gap: 24px;
+    align-items: center !important;
+}
+.sidebar-button{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 5px;
+}
+.rightNavbar{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.nav-buttons{
+    display: flex;
+    gap: 1rem;
+}
+.exit-button{
+    color: red !important;
+}
+.cart-button{
+    display: flex !important;
+    align-items: center;
+    gap: 0.5rem;
+}
+.additionalNavBlock{
+    padding: 0 !important;
+    margin: 0 auto;
+    max-width: 77.5%;
+}
+.chosenCity{
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0.8rem;
+    text-decoration: unset;
+}

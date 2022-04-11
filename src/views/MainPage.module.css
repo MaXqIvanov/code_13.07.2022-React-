@@ -1,0 +1,37 @@
+.mainBlock{
+margin-top:1rem ;
+}
+.carousel{
+    width:100%;
+}
+.carouselImg{
+    min-width: 100%;
+    max-height: 40vh;
+    object-fit: contain;
+}
+.carouselCard{
+    border: 0 !important;
+
+}
+.categoryCard{
+    border: 0;
+    margin-top: 1rem;
+}
+.categoryItem{
+    width: 300px;
+    cursor: pointer;
+}
+.categoryImg{
+    min-width: 100%;
+    max-height: 150px;
+    object-fit: contain;
+}
+.categoryTitle{
+    text-align: center;
+}
+.categoryBlock{
+    display: flex;
+    gap: 1rem;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
