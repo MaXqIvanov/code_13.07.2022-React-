@@ -3,10 +3,11 @@ import {Button, Card, FloatingLabel, Form, ListGroup, Modal} from "react-bootstr
 import styles from "./CartPage.module.css";
 import stylez from './PirckupOrder.module.css'
 import DatePicker from "react-datepicker";
-import Map, {Marker, Popup} from "react-map-gl";
+import Map, {Marker, GeolocateControl, NavigationControl,AttributionControl} from "react-map-gl";
 import api from "../../plugins/axios/api";
 import {useCookies} from "react-cookie";
 import {Pin} from "react-bootstrap-icons";
+
 
 
 
@@ -37,12 +38,12 @@ const PickupOrder = (props) => {
 if(selectedItem == null){ return}
         api(`marketplace/shop/get_similar/?cart_position=${selectedItem.id}&city=${cookies.userCity.id}`)
             .then((response)=>{
-                setShopAddresses(response.data.results)
+                setShopAddresses(response.data)
             })
             .finally(()=>{
                 setAddressModalStatus(true)
             })
-        setSelectedShop(selectedItem.shop_address)
+        setSelectedShop(selectedItem._shop)
         console.log(selectedShop)
 
     },[selectedItem])
@@ -51,7 +52,13 @@ if(selectedItem == null){ return}
         console.log(selectedShop)
         setSelectedShop(shop)
         console.log(selectedShop)
-        setShowPopup(true)
+    }
+    async function addToCustomCart(){
+        console.log(choosenType)
+        console.log(selectedItem)
+        setChoosenType({...choosenType, cart:[choosenType.cart.map((item)=>
+           item.id === selectedItem.id ? selectedItem : item
+            )]})
     }
     const pins = shopAddresses.map((shop) => (
                 <Marker
@@ -89,7 +96,7 @@ if(selectedItem == null){ return}
                 <Card>
                     <ListGroup className={styles.finishCartList}>
                         {choosenType.cart.map((item)=>(
-                            <ListGroup.Item className={styles.finishCartBlock}>
+                            <ListGroup.Item key={item.id} className={styles.finishCartBlock}>
                                 <div className={styles.itemImgBlock}>
                                     <img className={styles.itemImg} src={item.images[0]} alt="Фото товара"/>
                                     <span className={styles.itemCode}>Код товара: {item.id}</span>
@@ -129,6 +136,7 @@ if(selectedItem == null){ return}
         <Modal.Body>
             {selectedItem !== null &&
                 <Map
+                    styleDiffing
                     initialViewState={{
                         longitude: selectedItem.shop_address.longitude,
                         latitude: selectedItem.shop_address.latitude,
@@ -138,10 +146,13 @@ if(selectedItem == null){ return}
                     mapStyle="mapbox://styles/mapbox/streets-v9"
                 >
                     {selectedShop !== null &&
-                    <Popup longitude={selectedShop.longitude} latitude={selectedShop.latitude}
-                           anchor="top">
-                        {selectedShop.address} </Popup>
+                    <div className={stylez.controlPanel}>
+                        <span>Выбранный адрес: {selectedShop.address}</span>
+                    </div>
                     }
+
+                    <GeolocateControl />
+                    <NavigationControl></NavigationControl>
 
                     {pins}
 
@@ -152,7 +163,9 @@ if(selectedItem == null){ return}
 
         <Modal.Footer>
             <Button variant="secondary">Закрыть</Button>
-            <Button  variant="primary">Добавить</Button>
+            <Button onClick={
+                addToCustomCart
+            } variant="primary">Добавить</Button>
         </Modal.Footer>
     </Modal>
     </div>
