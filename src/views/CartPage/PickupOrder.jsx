@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import Map, {Marker, GeolocateControl, NavigationControl} from "react-map-gl";
 import api from "../../plugins/axios/api";
 import {useCookies} from "react-cookie";
+import SuccessOrder from "../../components/SuccessOrder/SuccessOrder";
 
 
 
@@ -21,6 +22,8 @@ const PickupOrder = (props) => {
     const [cookies] = useCookies(['userCity']);
     const [shopAddresses, setShopAddresses] = useState([])
     const [selectedShop,setSelectedShop] = useState(null)
+    let [commentHolder, setCommentHolder] = useState('')
+    let [phoneHolder, setPhoneHolder] = useState('')
 
 
     const handleModalClose = () => setAddressModalStatus(false);
@@ -61,8 +64,11 @@ console.log(selectedShop)
                             if (item.id === selectedItem.id) {
                                 return {id: item.id, shop: selectedShop.id}
                             }
-                            //TODO баг при отправке запроса ,роасписать условие
+                            else {
+                                return item
 
+
+                            }
                         }
                     )
             })
@@ -70,7 +76,7 @@ console.log(selectedShop)
                     setChoosenType((prevState) => ({
                         ...prevState,
                         cost: response.data.cost,
-                        delivery_date: response.data.cost,
+                        delivery_date: response.data.delivery_date,
                         cart: response.data.cart
                     }))
                 })
@@ -85,12 +91,38 @@ console.log(selectedShop)
         }
     },[choosenType.cart])
 
-    async function createPickupOrder(){
+     function createPickupOrder(){
         if (choosenType.pickup_type=== 'Выбор точек'){
-            api('marketplace/order/pickup_custom/')
-        }
-        else {
-            api()
+            api.post(`marketplace/order/pickup_custom/`,{
+                phone:phoneHolder,
+                est_time:choosenType.delivery_date + ' 14:30',
+                payment_method:'card',
+                comment:commentHolder,
+                cost:choosenType.cost,
+                delivery_date:choosenType.delivery_date,
+                cart: [...choosenType.cart]
+            })
+                .then(response =>{
+                    if (response.status === 200){
+                        props.handlePickupClose()
+                        props.handleSuccessShow(response.data.id)
+                    }
+                })
+        } else {
+            api.post(`marketplace/order/${choosenType.type.url}/?city=${cookies.userCity.id}&address=${props.chosenAddress}`,{
+                phone:phoneHolder,
+                est_time: choosenType.delivery_date + ' 14:30',
+                payment_method:'card',
+                comment:commentHolder,
+                card: [...choosenType.cart]
+
+            })
+                .then(response =>{
+                    if (response.status === 200){
+                        props.handlePickupClose()
+                        props.handleSuccessShow(response.data.id)
+                    }
+                })
         }
     }
     const pins = shopAddresses.map((shop) => (
@@ -155,6 +187,27 @@ console.log(selectedShop)
                     <div className={styles.finishPricesBlock}>
                         <p className={'mt-2'} style={{fontSize:'1.5rem', fontWeight:'bolder'}}>Итого: {choosenType.cost} руб.</p>
                     </div>
+                    <FloatingLabel
+                        controlId="floatingInput"
+                        label="Номер телефона"
+                        className="mt-2"
+                    >
+                        <Form.Control onChange={(e)=>{
+                            setPhoneHolder(e.target.value)}
+                        } type="email" placeholder="+7 (___)___ -__-__" />
+                    </FloatingLabel>
+                    <FloatingLabel controlId="floatingTextarea2" label="Комментарий к заказу (дополнительно)">
+                        <Form.Control
+                            as="textarea"
+                            onChange={(event)=>{
+                                setCommentHolder(event.target.value)
+                            }
+                            }
+                            placeholder="Leave a comment here"
+                            style={{ height: '100px' }}
+                            className={'mt-2'}
+                        />
+                    </FloatingLabel>
                 </Card>
             </Modal.Body>
 
@@ -199,6 +252,7 @@ console.log(selectedShop)
             } variant="primary">Добавить</Button>
         </Modal.Footer>
     </Modal>
+
     </div>
     );
 };

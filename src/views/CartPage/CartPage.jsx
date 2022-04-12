@@ -23,6 +23,7 @@ import DatePicker from 'react-datepicker'
 import user from "../../store/user";
 import cart from "../../store/cart";
 import PickupOrder from "./PickupOrder";
+import SuccessOrder from "../../components/SuccessOrder/SuccessOrder";
 
 
 const CartPage = () => {
@@ -45,6 +46,17 @@ const CartPage = () => {
     let [choosenPickupType, setChoosenPickupType] = useState([])
     const [startDate, setStartDate] = useState('');
     let [pickupModalHolder, setPickupModalHolder] = useState(false)
+    const [successModal, setSuccessModal] = useState(false)
+    const [orderNumber, setOrderNumber] = useState(null)
+
+
+    const handleSuccessShow = (orderNumber) => {
+        setOrderNumber(orderNumber)
+        setSuccessModal(true)
+    };
+    const handleSuccessHide = (orderNumber) => {
+        setSuccessModal(false)
+    };
 
     const handleCountClose = () => setCountShow(false);
     const handleCountShow =  () => {
@@ -148,6 +160,10 @@ const CartPage = () => {
         })
             .then(response =>{
                 console.log(response)
+                if (response.status === 200){
+                    handleCountClose()
+                    handleSuccessShow(response.data.id)
+                }
             })
     }
 
@@ -212,7 +228,9 @@ const CartPage = () => {
                         </ListGroup>
                     </Card.Body>
                 </Card>
-
+                    {successModal &&
+                        <SuccessOrder></SuccessOrder>
+                    }
 
 
             <Card className={styles.cartSubmitBlock}>
@@ -252,7 +270,7 @@ const CartPage = () => {
 
                 </Card.Body>
                 {pickupModalHolder &&
-                <PickupOrder pickupData={pickupTypes} handlePickupClose={handlePickupClose}></PickupOrder>
+                <PickupOrder handleSuccessShow={handleSuccessShow} chosenAddress={chosenAddress} pickupData={pickupTypes} handlePickupClose={handlePickupClose}></PickupOrder>
                 }
                 <Modal show={addressShow} onHide={handleAddressClose}>
                     <Modal.Header closeButton>

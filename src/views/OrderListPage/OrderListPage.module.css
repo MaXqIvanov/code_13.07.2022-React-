@@ -1,0 +1,24 @@
+.orderId{
+    font-weight: bold;
+}
+.imgBlock{
+    display: flex;
+    gap: 0.5rem;
+}
+.orderImg{
+    width:3rem;
+    object-fit: contain;
+}
+.mainOrderBlock{
+    width: 50%;
+    overflow-x: auto;
+}
+.orderItem{
+    display: flex !important;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.secondOrderBlock{
+    width: fit-content;
+}
