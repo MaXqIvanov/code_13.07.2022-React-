@@ -3,10 +3,9 @@ import {Button, Card, FloatingLabel, Form, ListGroup, Modal} from "react-bootstr
 import styles from "./CartPage.module.css";
 import stylez from './PirckupOrder.module.css'
 import DatePicker from "react-datepicker";
-import Map, {Marker, GeolocateControl, NavigationControl,AttributionControl} from "react-map-gl";
+import Map, {Marker, GeolocateControl, NavigationControl} from "react-map-gl";
 import api from "../../plugins/axios/api";
 import {useCookies} from "react-cookie";
-import {Pin} from "react-bootstrap-icons";
 
 
 
@@ -16,26 +15,24 @@ const PickupOrder = (props) => {
     const [selectedCoord, setSelectedCoord] = useState(null)
     const [selectedItem, setSelectedItem] = useState(null)
     const [showPopup, setShowPopup] = useState(false);
-    let [addressModalStatus, setAddressModalStatus] = useState(false)
-    let [pickupTypes, setPickupTypes] = useState(props.pickupData)
+    const [addressModalStatus, setAddressModalStatus] = useState(false)
+    const [pickupTypes, setPickupTypes] = useState([...props.pickupData,{...props.pickupData[0],pickup_type:'Выбор точек' ,type:{...props.pickupData[0].type, url:'custom_pickup'}}])
     let [choosenType, setChoosenType] = useState(props.pickupData[0])
     const [cookies] = useCookies(['userCity']);
-    let [shopAddresses, setShopAddresses] = useState([])
-    let [selectedShop,setSelectedShop] = useState(null)
+    const [shopAddresses, setShopAddresses] = useState([])
+    const [selectedShop,setSelectedShop] = useState(null)
 
 
     const handleModalClose = () => setAddressModalStatus(false);
-    const handleModalOpen = async (item) => {
-       await setSelectedItem(item)
-    }
+    const handleModalOpen = (item) => setSelectedItem(item)
+
     useEffect(()=>{
     },[selectedShop])
     useEffect(()=>{
-
     },[showPopup])
 
     useEffect(()=>{
-if(selectedItem == null){ return}
+        if(selectedItem == null){ return}
         api(`marketplace/shop/get_similar/?cart_position=${selectedItem.id}&city=${cookies.userCity.id}`)
             .then((response)=>{
                 setShopAddresses(response.data)
@@ -44,21 +41,57 @@ if(selectedItem == null){ return}
                 setAddressModalStatus(true)
             })
         setSelectedShop(selectedItem._shop)
-        console.log(selectedShop)
-
     },[selectedItem])
 
     function selectShop(shop) {
-        console.log(selectedShop)
         setSelectedShop(shop)
-        console.log(selectedShop)
     }
     async function addToCustomCart(){
-        setChoosenType({...choosenType, cart: choosenType.cart.map((item,index)=>
+console.log(selectedShop)
+         setChoosenType({...choosenType, cart: choosenType.cart.map((item,index)=>
             item.id === selectedItem.id ? {...item, shop_address:selectedShop} : item
             )
         })
+        console.log(choosenType)
+        console.log(selectedItem)
+
+            api.post('marketplace/order/pickup_custom_price/', {
+                cart:
+                    choosenType.cart.map((item) => {
+                            if (item.id === selectedItem.id) {
+                                return {id: item.id, shop: selectedShop.id}
+                            }
+                            //TODO баг при отправке запроса ,роасписать условие
+
+                        }
+                    )
+            })
+                .then((response) => {
+                    setChoosenType((prevState) => ({
+                        ...prevState,
+                        cost: response.data.cost,
+                        delivery_date: response.data.cost,
+                        cart: response.data.cart
+                    }))
+                })
+
+
+
         handleModalClose()
+    }
+    useEffect(()=>{
+        if (choosenType.pickup_type === "Выбор точек") {
+            console.log(choosenType)
+        }
+    },[choosenType.cart])
+
+    async function createPickupOrder(){
+        if (choosenType.pickup_type=== 'Выбор точек'){
+            api('marketplace/order/pickup_custom/')
+        }
+        else {
+            api()
+        }
     }
     const pins = shopAddresses.map((shop) => (
                 <Marker
@@ -88,11 +121,12 @@ if(selectedItem == null){ return}
                             onClick={()=>{
                                 setChoosenType(item)
                             }}
-                            checked={choosenType === item ? true : false}
+                            checked={choosenType.pickup_type === item.pickup_type ? true : false}
                             label={ `${item.pickup_type} (${item.delivery_date}) ` }
                         />
                     ))
                 }
+
                 <Card>
                         <ListGroup className={styles.finishCartList}>
                             {choosenType.cart.map((item) => (
@@ -105,10 +139,13 @@ if(selectedItem == null){ return}
                                     <div className={styles.finishItemName}>
                                         {item._nomenclature.name}
                                         <br/>
-                                        <b>{item.shop_address.address}</b> <span className={stylez.changeAddress}
-                                                                                 onClick={() => {
-                                                                                     handleModalOpen(item)
-                                                                                 }}>Изменить адрес</span>
+                                        <b>{item.shop_address.address}</b>
+                                        {choosenType.type.url === 'custom_pickup' &&
+                                            <span className={stylez.changeAddress}
+                                                  onClick={() => {
+                                                      handleModalOpen(item)
+                                                  }}> Изменить адрес</span>
+                                        }
                                     </div>
                                     <span className={styles.itemPrice}> {item.middle_cost} руб.</span>
                                 </ListGroup.Item>
@@ -123,18 +160,13 @@ if(selectedItem == null){ return}
 
             <Modal.Footer>
                 <Button variant="secondary">Закрыть</Button>
-                <Button  variant="primary">Добавить</Button>
+                <Button onClick={createPickupOrder} variant="primary">Добавить</Button>
             </Modal.Footer>
-
-
-
-
         </Modal>
     <Modal size={'lg'} show={addressModalStatus} onHide={handleModalClose}>
         <Modal.Header closeButton>
             <Modal.Title>Итог</Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
             {selectedItem !== null &&
                 <Map
@@ -152,12 +184,9 @@ if(selectedItem == null){ return}
                         <span>Выбранный адрес: {selectedShop.address}</span>
                     </div>
                     }
-
                     <GeolocateControl />
                     <NavigationControl></NavigationControl>
-
                     {pins}
-
                     }
                 </Map>
             }

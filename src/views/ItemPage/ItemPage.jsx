@@ -13,7 +13,6 @@ const ItemPage = () => {
     let pageParams = useParams()
      useEffect(()=>{
         getData()
-         console.log(itemHolder)
      }, [pageParams.id])
 
 async function getData(){

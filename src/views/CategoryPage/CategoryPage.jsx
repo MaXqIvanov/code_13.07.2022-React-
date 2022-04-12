@@ -6,8 +6,6 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Cart2, Check} from "react-bootstrap-icons";
 import cart from "../../store/cart";
 import {observer} from "mobx-react-lite";
-import { HoverSlideshow } from "react-hover-slideshow";
-import itemPage from "../ItemPage/ItemPage";
 
 const CategoryPage = observer(() => {
     const ref = useRef()
@@ -29,8 +27,6 @@ const CategoryPage = observer(() => {
             count: qty
         })
             .then((response)=>{
-
-
                 if (response.status === 200){
                     setItemsHolder(
                         itemsHolder.map((item) =>
@@ -69,7 +65,7 @@ const CategoryPage = observer(() => {
                         {itemsHolder.map((item, cardIndex)=>(
                             <Card key={item.id} className={styles.item}>
                                 <div  onClick={()=>{ navigate('/item/' + item.id)}} className={styles.imgBlock} >
-                                    <img  className={styles.itemImg + ' ' + 'img' + '-' +cardIndex} ref={ref} src={item.images[0]} alt={item.name}>
+                                    <img  className={styles.itemImg + ' ' + 'img' + '-' + cardIndex} ref={ref} src={item.images[0]} alt={item.name}>
                                     </img>
                                 </div>
 
@@ -96,7 +92,6 @@ const CategoryPage = observer(() => {
                                 {/*{item.images.map((img,index)=>(*/}
                                 {/*    <div></div>*/}
                                 {/*))}*/}
-
                                 {/*</div>*/}
                             </Card>
                         ))}
