@@ -34,8 +34,11 @@ const [ordersList, setOrdersList] = useState([])
                                     ))}
                                 </div>
                             </div>
+                            <div className={styles.infoBlock}>
+                                Время: {order.est_time}
+                            </div>
                             <div className={styles.secondOrderBlock}>
-                                <Badge bg="secondary">{order.status}</Badge>
+                                <Badge className={styles.orderStatus} bg="secondary">{order.status}</Badge>
                             </div>
 
                         </ListGroup.Item>

@@ -23,6 +23,7 @@ import DatePicker from 'react-datepicker'
 import user from "../../store/user";
 import cart from "../../store/cart";
 import PickupOrder from "./PickupOrder";
+import {useNavigate} from "react-router-dom";
 import SuccessOrder from "../../components/SuccessOrder/SuccessOrder";
 
 
@@ -48,6 +49,13 @@ const CartPage = () => {
     let [pickupModalHolder, setPickupModalHolder] = useState(false)
     const [successModal, setSuccessModal] = useState(false)
     const [orderNumber, setOrderNumber] = useState(null)
+    const [cartIsEmpry, setCartIsEmpry] = useState(false)
+    const navigate = useNavigate()
+    useEffect(()=>{
+        if (cartHolder.length === 0 && isLoading === false){
+            navigate('/')
+        }
+    },[cartHolder])
 
 
     const handleSuccessShow = (orderNumber) => {
@@ -149,6 +157,9 @@ const CartPage = () => {
                     setCardHolder(cartHolder.filter((item,i) => index !== i))
                     cart.requestInfo()
                 }
+            })
+            .finally(()=>{
+
             })
     }
     async function createDeliveryOrder(){

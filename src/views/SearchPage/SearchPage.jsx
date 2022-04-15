@@ -68,6 +68,9 @@ const SearchPage = () => {
                         <Card.Title><h3>Результат поиска</h3></Card.Title>
                     </Card.Header>
                     <Card.Body className={styles.itemBlock}>
+                        {itemsHolder.length === 0 &&
+                            <div className={styles.searchNull}>Поиск не дал результатов</div>
+                        }
                         {itemsHolder.map((item, cardIndex)=>(
                             <Card className={styles.item}>
                                 <Card.Img onClick={()=>{goToItem(item.id)}} alt={item.name} title={item.name}  className={styles.itemImg} variant="top" src={item.images[0]} />

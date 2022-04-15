@@ -10,8 +10,11 @@
     object-fit: contain;
 }
 .mainOrderBlock{
-    width: 50%;
+    width:30%;
     overflow-x: auto;
+}
+.infoBlock{
+    width:30%
 }
 .orderItem{
     display: flex !important;
@@ -20,5 +23,8 @@
     cursor: pointer;
 }
 .secondOrderBlock{
-    width: fit-content;
+    width:30%;
+}
+.orderStatus{
+    float: right;
 }

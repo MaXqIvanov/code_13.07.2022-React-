@@ -39,7 +39,10 @@ useEffect(()=>{
 
 
 
-     function goToSearch(){
+     function goToSearch(e){
+        console.log(e)
+        if(searchHolder === '') {return}
+        else if ((e.type="keypress" && e.code==='Enter') || e._reactName === 'onClick')
          navigate(`/search/?q=${searchHolder}`)
      }
     async function unAuthUser(){
@@ -90,6 +93,7 @@ useEffect(()=>{
                         <FormControl
                             placeholder="Поиск"
                             aria-label="Поиск"
+                            onKeyPress={(e)=>{goToSearch(e)}}
                             aria-describedby="basic-addon1"
                             onChange={(event)=>{setSearchHolder(event.target.value)}}
                         />
@@ -98,6 +102,7 @@ useEffect(()=>{
                             variant="outline-secondary"
                             title="Action"
                             id="button"
+                            disabled={searchHolder === ''}
                             onClick={goToSearch}
                         >
                             <Search></Search>
@@ -108,7 +113,7 @@ useEffect(()=>{
     }
     { cookies.isAuth === 'true' &&
         <div className={'nav-buttons'}>
-        <Button onClick={()=>{navigate('/cart')}} className={'cart-button'}><span>Корзина</span> <Badge  bg="secondary">{cart.itemsAmount}</Badge></Button>
+        <Button disabled={cart.itemsAmount === 0} onClick={()=>{navigate('/cart')}} className={'cart-button'}><span>Корзина</span> <Badge  bg="secondary">{cart.itemsAmount}</Badge></Button>
         <DropdownButton id="dropdown-basic-button" title={'Профиль'}>
         <Dropdown.Item onClick={()=>{navigate('/orders')}}>Мои заказы</Dropdown.Item>
         <Dropdown.Item href="#/action-2">Настройки</Dropdown.Item>

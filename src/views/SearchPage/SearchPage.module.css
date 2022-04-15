@@ -11,6 +11,9 @@
     min-width: 270px;
     cursor: pointer;
 }
+.searchNull{
+   margin: 0 auto;
+}
 .itemImg{
     min-width: 100%;
     height: 150px;
