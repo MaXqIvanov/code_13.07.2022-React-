@@ -10,7 +10,7 @@ const [ordersList, setOrdersList] = useState([])
     useEffect(() => {
        api('marketplace/order/')
            .then((response)=>{
-               setOrdersList(response.data)
+               setOrdersList(response.data.results)
            })
     }, []);
 

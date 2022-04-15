@@ -50,6 +50,8 @@ const CartPage = () => {
     const [successModal, setSuccessModal] = useState(false)
     const [orderNumber, setOrderNumber] = useState(null)
     const [cartIsEmpry, setCartIsEmpry] = useState(false)
+    const [orderNum,setOrderNum] = useState()
+
     const navigate = useNavigate()
     useEffect(()=>{
         if (cartHolder.length === 0 && isLoading === false){
@@ -162,7 +164,8 @@ const CartPage = () => {
 
             })
     }
-    async function createDeliveryOrder(){
+    async function createDeliveryOrder(e){
+        e.preventDefault()
         api.post(`marketplace/order/${choosenType.type.url}/?city=${cookies.userCity.id}&address=${chosenAddress}`,{
             phone:phonetHolder,
             est_time: startDate.toLocaleString('ru',{year: 'numeric',month:'numeric', day:'numeric', hour:'numeric', minute:'numeric'}).split(',').join(''),
@@ -172,6 +175,7 @@ const CartPage = () => {
             .then(response =>{
                 console.log(response)
                 if (response.status === 200){
+                    setOrderNum(response.data.id)
                     handleCountClose()
                     handleSuccessShow(response.data.id)
                 }
@@ -240,7 +244,7 @@ const CartPage = () => {
                     </Card.Body>
                 </Card>
                     {successModal &&
-                        <SuccessOrder></SuccessOrder>
+                        <SuccessOrder setOrderNum={setOrderNum} orderNum={orderNum}></SuccessOrder>
                     }
 
 
@@ -259,14 +263,18 @@ const CartPage = () => {
                     </Tab.Container>
 
 <div>
-                                        Выберите адрес доставки или <a className={styles.addNewAddress} onClick={handleAddressShow}>добавьте новый</a>
-                                        <ListGroup defaultActiveKey={addressHolder[0].id}>
-                                            {addressHolder.map((item)=>(
-                                                <ListGroup.Item key={item.id} eventKey={item.id}>{item.address}</ListGroup.Item>
-                                            ))}
+
+    {addressHolder.length !== 0 &&
+        <div>        Выберите адрес доставки или <a className={styles.addNewAddress} onClick={handleAddressShow}>добавьте новый</a>
+        <ListGroup defaultActiveKey={addressHolder[0].id}>
+            {addressHolder.map((item) => (
+                <ListGroup.Item key={item.id} eventKey={item.id}>{item.address}</ListGroup.Item>
+            ))}
 
 
-                                        </ListGroup>
+        </ListGroup>
+        </div>
+    }
                                         <Button onClick={handleAddressShow} variant={'success'} className={'mt-2 mb-2'}> Новый адрес</Button>
                                         <Card>
                                             <Card.Body className={styles.cartCountBlock}>
@@ -298,97 +306,107 @@ const CartPage = () => {
                     </Modal.Footer>
                 </Modal>
             </Card>
+                    {!typesIsLoading &&
+                        <Modal size={'lg'} className={styles.finishModal} show={showCount} onHide={handleCountClose}>
+                            <form onSubmit={(e)=>{createDeliveryOrder(e)}}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Итог</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>Выберите вариант доставки:
 
-                    <Modal  size={'lg'} className={styles.finishModal}  show={showCount} onHide={handleCountClose}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Итог</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>Выберите вариант доставки:
-                            {!typesIsLoading &&
                                 <div>
-                                {
-                                    deliveryTypes.map((item) => (
-                                        <Form.Check
-                                            key={item.name}
-                                            type={"radio"}
-                                            onClick={()=>{
-                                                setChoosenType(item)
-                                                setStartDate(choosenType.type.change_date ? new Date() : '')
-                                            }}
-                                            checked={choosenType == item ? true : false}
-                                            label={ `${item.delivery_type} (${item.delivery_date}) ` }
+                                    {
+                                        deliveryTypes.map((item) => (
+                                            <Form.Check
+                                                key={item.name}
+                                                type={"radio"}
+                                                onClick={() => {
+                                                    setChoosenType(item)
+                                                    setStartDate(choosenType.type.change_date ? new Date() : '')
+                                                }}
+                                                checked={choosenType == item ? true : false}
+                                                label={`${item.delivery_type} (${item.delivery_date}) `}
+                                            />
+                                        ))
+                                    }
+                                    <Card>
+                                        <ListGroup className={styles.finishCartList}>
+                                            {choosenType.cart.map((item) => (
+                                                <ListGroup.Item className={styles.finishCartBlock}>
+                                                    <div className={styles.itemImgBlock}>
+                                                        <img className={styles.itemImg} src={item.images[0]}
+                                                             alt="Фото товара"/>
+                                                        <span className={styles.itemCode}>Код товара: {item.id}</span>
+                                                    </div>
+
+                                                    <div
+                                                        className={styles.finishItemName}>{item._nomenclature.name}</div>
+                                                    <span className={styles.itemPrice}> {item.middle_cost} руб.</span>
+                                                </ListGroup.Item>
+                                            ))}
+
+
+                                        </ListGroup>
+                                        <div className={styles.finishPricesBlock}>
+                                            <p className={'mt-2'} style={{
+                                                fontSize: '1.5rem',
+                                                fontWeight: 'bolder'
+                                            }}>Итого: {choosenType.cost_with_delivery} руб.</p>
+                                            <p>Доставка: {choosenType.delivery_cost} руб.</p>
+                                            <p>Товары: {choosenType.cost} руб.</p>
+                                        </div>
+                                        <span>Дата и время доставки</span>
+                                        <DatePicker
+                                            required
+                                            selected={startDate}
+                                            onChange={(date) => setStartDate(date)}
+                                            timeInputLabel="Время доставки:"
+                                            dateFormat="dd.MM.yyyy HH:mm"
+                                            locale="pt-BR"
+                                            timeFormat="HH:mm"
+                                            timeIntervals={15}
+                                            showTimeSelect={choosenType.type.change_time ? true : false}
+                                            showTimeSelectOnly={choosenType.type.change_time && !choosenType.type.change_date ? true : false}
                                         />
-                                    ))
-                                }
-                                <Card>
-                                    <ListGroup className={styles.finishCartList}>
-                                        {choosenType.cart.map((item)=>(
-                                            <ListGroup.Item className={styles.finishCartBlock}>
-                                                <div className={styles.itemImgBlock}>
-                                                    <img className={styles.itemImg} src={item.images[0]} alt="Фото товара"/>
-                                                    <span className={styles.itemCode}>Код товара: {item.id}</span>
-                                                </div>
-
-                                                <div className={styles.finishItemName}>{item._nomenclature.name}</div>
-                                                <span className={styles.itemPrice}> {item.middle_cost} руб.</span>
-                                            </ListGroup.Item>
-                                        ))}
-
-
-                                    </ListGroup>
-                                    <div className={styles.finishPricesBlock}>
-                                        <p className={'mt-2'} style={{fontSize:'1.5rem', fontWeight:'bolder'}}>Итого: {choosenType.cost_with_delivery} руб.</p>
-                                        <p >Доставка: {choosenType.delivery_cost} руб.</p>
-                                        <p>Товары: {choosenType.cost} руб.</p>
-                                    </div>
-                                    <span>Дата и время доставки</span>
-                                    <DatePicker
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        timeInputLabel="Время доставки:"
-                                        dateFormat="dd.MM.yyyy HH:mm"
-                                        locale="pt-BR"
-                                        timeFormat="HH:mm"
-                                        timeIntervals={15}
-                                        minDate={new Date()}
-                                        showTimeSelect={choosenType.type.change_time ? true : false}
-                                        showTimeSelectOnly={choosenType.type.change_time && !choosenType.type.change_date ? true : false}
-                                    />
-                                    <FloatingLabel
-                                        controlId="floatingInput"
-                                        label="Номер телефона"
-                                        className="mt-2"
-                                    >
-                                        <Form.Control onChange={(e)=>{
-                                            setPhoneHolder(e.target.value)}
-                                        } type="email" placeholder="+7 (___)___ -__-__" />
-                                    </FloatingLabel>
-                                    <FloatingLabel controlId="floatingTextarea2" label="Комментарий к заказу (дополнительно)">
-                                        <Form.Control
-                                            as="textarea"
-                                            onChange={(event)=>{
-                                                setCommentHolder(event.target.value)
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label="Номер телефона"
+                                            className="mt-2"
+                                        >
+                                            <Form.Control required onChange={(e) => {
+                                                setPhoneHolder(e.target.value)
                                             }
-                                            }
-                                            placeholder="Leave a comment here"
-                                            style={{ height: '100px' }}
-                                            className={'mt-2'}
-                                        />
-                                    </FloatingLabel>
-                                </Card>
+                                            } type="tel" placeholder="+7 (___)___ -__-__"/>
+                                        </FloatingLabel>
+                                        <FloatingLabel controlId="floatingTextarea2"
+                                                       label="Комментарий к заказу (дополнительно)">
+                                            <Form.Control
+                                                as="textarea"
+                                                onChange={(event) => {
+                                                    setCommentHolder(event.target.value)
+                                                }
+                                                }
+                                                placeholder="Leave a comment here"
+                                                style={{height: '100px'}}
+                                                className={'mt-2'}
+                                            />
+                                        </FloatingLabel>
+                                    </Card>
                                 </div>
-                            }
 
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleCountClose}>
-                                Закрыть
-                            </Button>
-                            <Button variant="primary" onClick={createDeliveryOrder}>
-                                Оформить
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
+
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleCountClose}>
+                                    Закрыть
+                                </Button>
+                                <Button variant="primary" type={'submit'} >
+                                    Оформить
+                                </Button>
+                            </Modal.Footer>
+                            </form>
+                        </Modal>
+                    }
                 </div>
             }
         </div>
@@ -397,3 +415,8 @@ const CartPage = () => {
 };
 
 export default CartPage;
+//TODO delete acc
+//TODO доставка убрать прошедшее время
+//TODO закрытие модального окна
+//TODO открыто сейчас , есть всё. фильтр на самовывозе
+//TODO редактирование количества товаров в корзине

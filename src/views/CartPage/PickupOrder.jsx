@@ -91,7 +91,8 @@ console.log(selectedShop)
         }
     },[choosenType.cart])
 
-     function createPickupOrder(){
+     function createPickupOrder(e){
+        e.preventDefault()
         if (choosenType.pickup_type=== 'Выбор точек'){
             api.post(`marketplace/order/pickup_custom/`,{
                 phone:phoneHolder,
@@ -105,6 +106,7 @@ console.log(selectedShop)
                 .then(response =>{
                     if (response.status === 200){
                         props.handlePickupClose()
+                        props.setOrderNum(response.data.id)
                         props.handleSuccessShow(response.data.id)
                     }
                 })
@@ -140,6 +142,7 @@ console.log(selectedShop)
     return (
         <div>
         <Modal  size={'xl'} show={addressModalStatus ? false : true} onHide={props.handlePickupClose}>
+            <form onSubmit={(e)=>{createPickupOrder(e)}}>
             <Modal.Header closeButton>
                 <Modal.Title>Итог</Modal.Title>
             </Modal.Header>
@@ -194,7 +197,7 @@ console.log(selectedShop)
                     >
                         <Form.Control onChange={(e)=>{
                             setPhoneHolder(e.target.value)}
-                        } type="email" placeholder="+7 (___)___ -__-__" />
+                        } required type="tel" placeholder="+7 (___)___ -__-__" />
                     </FloatingLabel>
                     <FloatingLabel controlId="floatingTextarea2" label="Комментарий к заказу (дополнительно)">
                         <Form.Control
@@ -213,8 +216,9 @@ console.log(selectedShop)
 
             <Modal.Footer>
                 <Button variant="secondary">Закрыть</Button>
-                <Button onClick={createPickupOrder} variant="primary">Добавить</Button>
+                <Button type={'submit'} variant="primary">Добавить</Button>
             </Modal.Footer>
+            </form>
         </Modal>
     <Modal size={'lg'} show={addressModalStatus} onHide={handleModalClose}>
         <Modal.Header closeButton>
@@ -234,7 +238,9 @@ console.log(selectedShop)
                 >
                     {selectedShop !== null &&
                     <div className={stylez.controlPanel}>
-                        <span>Выбранный адрес: {selectedShop.address}</span>
+
+                        <span><b>Выбранный адрес:</b> {selectedShop.address}</span>
+                        <span>{selectedShop.description}</span>
                     </div>
                     }
                     <GeolocateControl />

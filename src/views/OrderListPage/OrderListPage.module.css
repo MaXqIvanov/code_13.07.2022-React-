@@ -4,6 +4,7 @@
 .imgBlock{
     display: flex;
     gap: 0.5rem;
+    overflow-x: auto;
 }
 .orderImg{
     width:3rem;
@@ -11,7 +12,7 @@
 }
 .mainOrderBlock{
     width:30%;
-    overflow-x: auto;
+
 }
 .infoBlock{
     width:30%
