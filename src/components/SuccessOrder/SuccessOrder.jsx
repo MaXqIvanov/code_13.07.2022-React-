@@ -8,7 +8,7 @@ const SuccessOrder = (props) => {
     const navigate = useNavigate()
 
     return (
-        <Modal show={'true'}>
+        <Modal backdrop={'static'} show={true}>
             <Modal.Header>
                 <Modal.Title>Заказ успешно создан</Modal.Title>
             </Modal.Header>
@@ -16,11 +16,11 @@ const SuccessOrder = (props) => {
             <Modal.Body>
                 <div className={styles.successBlock}>
                 <img className={styles.successImg} src={success} alt=""/>
-                    <p>Ваш заказ <a onClick={()=>{navigate(`order/${props.orderNum}`)}}>#88</a> создан. Статус заказа вы можете отследить <a href="">здесь</a></p>
+                    <p>Ваш заказ <a className={styles.link} onClick={()=>{navigate(`/order/${props.orderNum}`)}}>#{props.orderNum}</a> создан. Статус заказа вы можете отследить <a onClick={()=>{navigate(`/order/${props.orderNum}`)}} className={styles.link}>здесь</a></p>
                 </div>
             </Modal.Body>
 <Modal.Footer>
-    <Button>Закрыть</Button>
+    <Button onClick={()=>{navigate('/')}}>Закрыть</Button>
 </Modal.Footer>
             </Modal>
     );

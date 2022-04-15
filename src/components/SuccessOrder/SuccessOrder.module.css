@@ -10,3 +10,11 @@
     text-align: center;
     gap: 1rem;
 }
+.link{
+    color: #0031ff;
+}
+.link:hover{
+    color: #0031ff;
+    text-decoration: underline;
+    cursor: pointer;
+}

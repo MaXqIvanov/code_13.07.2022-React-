@@ -64,7 +64,7 @@ const CartPage = () => {
         setOrderNumber(orderNumber)
         setSuccessModal(true)
     };
-    const handleSuccessHide = (orderNumber) => {
+    const handleSuccessHide = () => {
         setSuccessModal(false)
     };
 
@@ -180,8 +180,13 @@ const CartPage = () => {
                     handleSuccessShow(response.data.id)
                 }
             })
+            .finally(()=>{
+                cart.requestInfo()
+            })
     }
-
+function setOrderId(id){
+        setOrderNum(id)
+    }
     //  useEffect(()=>{
     //      console.log(cartHolder)
     //  },[cartHolder])
@@ -289,7 +294,7 @@ const CartPage = () => {
 
                 </Card.Body>
                 {pickupModalHolder &&
-                <PickupOrder handleSuccessShow={handleSuccessShow} chosenAddress={chosenAddress} pickupData={pickupTypes} handlePickupClose={handlePickupClose}></PickupOrder>
+                <PickupOrder setOrderId={setOrderId} handleSuccessShow={handleSuccessShow} chosenAddress={chosenAddress} pickupData={pickupTypes} handlePickupClose={handlePickupClose}></PickupOrder>
                 }
                 <Modal show={addressShow} onHide={handleAddressClose}>
                     <Modal.Header closeButton>
@@ -417,6 +422,5 @@ const CartPage = () => {
 export default CartPage;
 //TODO delete acc
 //TODO доставка убрать прошедшее время
-//TODO закрытие модального окна
 //TODO открыто сейчас , есть всё. фильтр на самовывозе
 //TODO редактирование количества товаров в корзине

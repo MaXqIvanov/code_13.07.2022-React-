@@ -7,6 +7,7 @@ import Map, {Marker, GeolocateControl, NavigationControl} from "react-map-gl";
 import api from "../../plugins/axios/api";
 import {useCookies} from "react-cookie";
 import SuccessOrder from "../../components/SuccessOrder/SuccessOrder";
+import cart from "../../store/cart";
 
 
 
@@ -105,11 +106,18 @@ console.log(selectedShop)
             })
                 .then(response =>{
                     if (response.status === 200){
+                        console.log(response.data.id)
+                        props.setOrderId(response.data.id)
                         props.handlePickupClose()
-                        props.setOrderNum(response.data.id)
-                        props.handleSuccessShow(response.data.id)
                     }
                 })
+                .then((response)=>{
+                    props.handleSuccessShow(response.data.id)
+                })
+                .finally(()=>{
+                    cart.requestInfo()
+                })
+
         } else {
             api.post(`marketplace/order/${choosenType.type.url}/?city=${cookies.userCity.id}&address=${props.chosenAddress}`,{
                 phone:phoneHolder,
