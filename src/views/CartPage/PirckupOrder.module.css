@@ -18,3 +18,28 @@
     justify-content: center;
     align-items: center;
 }
+.itemImgMore{
+    width: 4rem;
+    height: 4rem;
+    object-fit: contain;
+}
+.itemImgBlockMore{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: fit-content;
+}
+.itemInfoMore{
+    width: 50% !important;
+    font-size: 0.8rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+}
+.itemBlockMore{
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+
+}

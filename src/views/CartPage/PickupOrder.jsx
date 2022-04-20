@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {Button, Card, FloatingLabel, Form, ListGroup, Modal} from "react-bootstrap";
+import {Button, Card, FloatingLabel, Form, ListGroup, Modal, Offcanvas} from "react-bootstrap";
 import styles from "./CartPage.module.css";
 import stylez from './PirckupOrder.module.css'
 import DatePicker from "react-datepicker";
@@ -17,6 +17,7 @@ const PickupOrder = (props) => {
     const [selectedCoord, setSelectedCoord] = useState(null)
     const [selectedItem, setSelectedItem] = useState(null)
     const [showPopup, setShowPopup] = useState(false);
+    const [showMoreItems, setShowMoreItems] = useState(false);
     const [addressModalStatus, setAddressModalStatus] = useState(false)
     const [pickupTypes, setPickupTypes] = useState([...props.pickupData,{...props.pickupData[0],pickup_type:'Выбор точек' ,type:{...props.pickupData[0].type, url:'custom_pickup'}}])
     let [choosenType, setChoosenType] = useState(props.pickupData[0])
@@ -25,12 +26,22 @@ const PickupOrder = (props) => {
     const [selectedShop,setSelectedShop] = useState(null)
     let [commentHolder, setCommentHolder] = useState('')
     let [phoneHolder, setPhoneHolder] = useState('')
+    const [moreInShop, setMoreInShop] = useState([])
+    const [moreItems,setMoreItems] = useState([])
 
 
     const handleModalClose = () => setAddressModalStatus(false);
     const handleModalOpen = (item) => setSelectedItem(item)
+    const handleCanvasClose = () => {
+        setShowMoreItems(false)
+        setMoreItems([])
+    }
+    const handleCanvasOpen = () => setShowMoreItems(true)
 
     useEffect(()=>{
+        if (selectedShop !== null){
+            getMorePosInShop()
+        }
     },[selectedShop])
     useEffect(()=>{
     },[showPopup])
@@ -50,41 +61,102 @@ const PickupOrder = (props) => {
     function selectShop(shop) {
         setSelectedShop(shop)
     }
-    async function addToCustomCart(){
-console.log(selectedShop)
-         setChoosenType({...choosenType, cart: choosenType.cart.map((item,index)=>
-            item.id === selectedItem.id ? {...item, shop_address:selectedShop} : item
-            )
+    async function openMoreItems(){
+        handleCanvasOpen(true)
+       console.log(selectedItem)
+        }
+        async function addMoreToCart(item){
+        if (moreItems.includes(item)){return}
+        setMoreItems((prevState)=>[...prevState,item])
+        }
+        useEffect(()=>{
+            console.log(moreItems)
+        },[moreItems])
+
+
+    function requesAddToCartMore() {
+        let result = choosenType
+        console.log(selectedShop)
+        for (let i = 0; i < result.cart.length; i++){
+            if (result.cart[i].id === selectedItem.id){
+                result.cart[i].shop = selectedShop.id
+                result.cart[i].shop_address = selectedShop
+            }
+            for (let j=0; j < moreItems.length; j++){
+                if (result.cart[i].id === moreItems[j].id ){
+                    result.cart[i] = moreItems[j]
+                    result.cart[i].shop = selectedShop.id
+                    result.cart[i].shop_address = selectedShop
+                }
+            }
+        }
+        console.log(result)
+        api.post('marketplace/order/pickup_custom_price/', {
+            cart:
+                 choosenType.cart.map((item) => {
+                             return {id: item.id, shop: item.shop}
+                     })
         })
-        console.log(choosenType)
-        console.log(selectedItem)
-
-            api.post('marketplace/order/pickup_custom_price/', {
-                cart:
-                    choosenType.cart.map((item) => {
-                            if (item.id === selectedItem.id) {
-                                return {id: item.id, shop: selectedShop.id}
-                            }
-                            else {
-                                return item
-
-
-                            }
-                        }
-                    )
+            .then((response) => {
+                setChoosenType((prevState) => ({
+                    ...prevState,
+                    cost: response.data.cost,
+                    delivery_date: response.data.delivery_date,
+                    cart: response.data.cart
+                }))
             })
-                .then((response) => {
-                    setChoosenType((prevState) => ({
-                        ...prevState,
-                        cost: response.data.cost,
-                        delivery_date: response.data.delivery_date,
-                        cart: response.data.cart
-                    }))
-                })
+            .finally(()=>{
+                handleCanvasClose()
+                handleModalClose()
+            })
+
+        //
+        //          choosenType.cart.map((item) => {
+        //             if (item.id  === selectedItem.id) {
+        //                 return {id: item.id, shop: selectedShop.id}
+        //             }
+        //             else {
+        //                 return item
+        //             }
+        //         }
+        //         )
+        // })
+
+    }
+
+    function requesAddToCart() {
+        api.post('marketplace/order/pickup_custom_price/', {
+            cart:
+                choosenType.cart.map((item) => {
+                        if (item.id === selectedItem.id) {
+                            return {id: item.id, shop: selectedShop.id}
+                        }
+                        else {
+                            return item
 
 
-
+                        }
+                    }
+                )
+        })
+            .then((response) => {
+                setChoosenType((prevState) => ({
+                    ...prevState,
+                    cost: response.data.cost,
+                    delivery_date: response.data.delivery_date,
+                    cart: response.data.cart
+                }))
+            })
         handleModalClose()
+    }
+
+
+
+    function getMorePosInShop(){
+        api(`marketplace/cart/get_by_shop/?shop=${selectedShop.id}&ex=${selectedItem.id}`)
+            .then((response)=>{
+                setMoreInShop(response.data)
+            })
     }
     useEffect(()=>{
         if (choosenType.pickup_type === "Выбор точек") {
@@ -94,7 +166,7 @@ console.log(selectedShop)
 
      function createPickupOrder(e){
         e.preventDefault()
-        if (choosenType.pickup_type=== 'Выбор точек'){
+        if (choosenType.pickup_type === 'Выбор точек'){
             api.post(`marketplace/order/pickup_custom/`,{
                 phone:phoneHolder,
                 est_time:choosenType.delivery_date + ' 14:30',
@@ -106,13 +178,10 @@ console.log(selectedShop)
             })
                 .then(response =>{
                     if (response.status === 200){
-                        console.log(response.data.id)
                         props.setOrderId(response.data.id)
                         props.handlePickupClose()
+                        props.handleSuccessShow(response.data.id)
                     }
-                })
-                .then((response)=>{
-                    props.handleSuccessShow(response.data.id)
                 })
                 .finally(()=>{
                     cart.requestInfo()
@@ -127,19 +196,21 @@ console.log(selectedShop)
                 card: [...choosenType.cart]
 
             })
-                .then(response =>{
+                .then((response) =>{
                     if (response.status === 200){
+                        props.setOrderId(response.data.id)
                         props.handlePickupClose()
                         props.handleSuccessShow(response.data.id)
                     }
                 })
         }
     }
-    const pins = shopAddresses.map((shop) => (
+    let pins = shopAddresses.map((shop) => (
                 <Marker
                     key={shop.id}
                     longitude={shop.longitude}
                     latitude={shop.latitude}
+                    color={shop === selectedShop ? 'red' : ''}
                     anchor="bottom"
                     onClick={()=>{selectShop(shop)}}
                 >
@@ -228,7 +299,7 @@ console.log(selectedShop)
             </Modal.Footer>
             </form>
         </Modal>
-    <Modal size={'lg'} show={addressModalStatus} onHide={handleModalClose}>
+    <Modal size={'lg'} show={addressModalStatus && !showMoreItems} onHide={handleModalClose}>
         <Modal.Header closeButton>
             <Modal.Title>Итог</Modal.Title>
         </Modal.Header>
@@ -262,11 +333,32 @@ console.log(selectedShop)
         <Modal.Footer>
             <Button variant="secondary">Закрыть</Button>
             <Button onClick={
-                addToCustomCart
+                openMoreItems
             } variant="primary">Добавить</Button>
         </Modal.Footer>
     </Modal>
+            <Offcanvas style={{zIndex:10000, width:'40%'}} show={showMoreItems} onHide={handleCanvasClose}>
+                <Offcanvas.Header closeButton>
+                    <Offcanvas.Title>Больше доступных позиций в магазине</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                    <ListGroup>
+                        {moreInShop.map((item)=>(
+                            <ListGroup.Item className={stylez.itemBlockMore}>
+                                <div className={stylez.itemImgBlockMore} >
+                                    <img className={stylez.itemImgMore} src={item.images[0]} alt=""/>
+                                </div>
+                                <div className={stylez.itemInfoMore}>
+                                    <span>{item._nomenclature.name}</span>
+                                </div>
+                                <Button onClick={()=>{addMoreToCart(item)}}>Выбрать</Button>
+                            </ListGroup.Item>
+                        ))}
 
+                    </ListGroup>
+                </Offcanvas.Body>
+                <Button onClick={requesAddToCartMore}  style={{margin:4}} >Готово</Button>
+            </Offcanvas>
     </div>
     );
 };
