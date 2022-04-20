@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {Badge, Card} from "react-bootstrap";
+import {Badge, Button, Card, ListGroup} from "react-bootstrap";
 import {useParams} from "react-router-dom";
 import api from "../../plugins/axios/api";
 import styles from './OrderItem.module.css'
+import OrderMap from "../../components/OrderMap/OrderMap";
 
 const OrderItem = () => {
     const [orderInfo,setOrderInfo] = useState({})
-    const [orderPositions,setOrderPositions] = useState({})
+    const [orderPositions,setOrderPositions] = useState([])
     const [isLoading,setIsLoading] = useState(false)
+    const [showMap, setShowMap] = useState(false)
+    const [selectedItem, setSelectedItem] = useState({})
     const urlParams = useParams()
     useEffect(()=>{
         setIsLoading(true)
@@ -18,12 +21,17 @@ const OrderItem = () => {
             .finally(()=>{
                 setIsLoading(false)
             })
-        api(`marketplace/order/3/get_order_positions/`)
+        api(`marketplace/order/${urlParams.id}/get_order_positions/`)
             .then((response)=>{
                 setOrderPositions(response.data)
             })
         {}
     },[])
+    async function selectItem(item){
+        await setSelectedItem(item)
+        await setShowMap(true)
+    }
+
     return (
         <Card>
             {!isLoading &&
@@ -47,8 +55,36 @@ const OrderItem = () => {
             </Card.Body>
                 </div>
             }
-            {isLoading &&
-                <Card></Card>
+            {!isLoading &&
+                <Card>
+                    <ListGroup className={styles.finishCartList}>
+                        {orderPositions.map((item) => (
+                            <ListGroup.Item className={styles.finishCartBlock}>
+                                <div className={styles.itemImgBlock}>
+                                    <img className={styles.itemImg} src={item.nomenclature.images[0]}
+                                         alt="Фото товара"/>
+                                    <span className={styles.itemCode}>Код товара: {item.id}</span>
+                                </div>
+
+                                <div
+                                    className={styles.finishItemName}>
+                                    <span>{item.nomenclature.name}</span>
+                                    {orderInfo.pickup &&
+                                        <span><b>Адрес: {item.shop_address.address}</b></span>
+                                    }
+                                </div>
+                                <div className={'flex-column d-flex align-items-center gap-1'}>
+                                <span className={styles.itemPrice}> {item.cost} руб.</span>
+                                    <Button onClick={()=>{selectItem(item)}} variant={'primary'}>Посмотреть на карте</Button>
+                                </div>
+                            </ListGroup.Item>
+                            ))}
+                    </ListGroup>
+
+                </Card>
+            }
+            {showMap &&
+                <OrderMap orderInfo={selectedItem.shop_address}></OrderMap>
             }
         </Card>
     );

@@ -3,3 +3,41 @@
     justify-content: space-between;
     padding: 0 4rem 0 4rem
 }
+.finishCartBlock{
+    display: flex !important;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.finishItemName{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.finishCartList{
+    height: fit-content;
+    overflow-y:auto;
+}
+.finishPricesBlock{
+    margin-left: auto;
+    text-align: right;
+    width: fit-content;
+    line-height: 1rem;
+}
+.finishPricesBlock:first-child{
+    font-size: 5px !important;
+
+}
+.itemImgBlock{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: fit-content;
+}
+.itemImg{
+    width: 6rem;
+    height: 6rem;
+    object-fit: contain;
+}
