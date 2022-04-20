@@ -35,7 +35,8 @@ const [ordersList, setOrdersList] = useState([])
                                 </div>
                             </div>
                             <div className={styles.infoBlock}>
-                                Время: {order.est_time}
+                                <span><b>Время:</b> {order.est_time}</span>
+                                <span><b>Тип:</b> {order.pickup ? 'Самовывоз' : 'Доставка'}</span>
                             </div>
                             <div className={styles.secondOrderBlock}>
                                 <Badge className={styles.orderStatus} bg="secondary">{order.status}</Badge>

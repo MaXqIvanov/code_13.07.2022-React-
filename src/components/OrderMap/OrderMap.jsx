@@ -6,7 +6,7 @@ import styles from './OrderMap.module.css'
 const OrderMap = (props) => {
     return (
         <div>
-            <Modal show={true}>
+            <Modal show={true} onHide={props.handleMapClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Адрес заказа</Modal.Title>
                 </Modal.Header>
@@ -24,7 +24,6 @@ const OrderMap = (props) => {
                             <div className={styles.controlPanel}>
 
                                 <span><b>Адрес:</b> {props.orderInfo.address}</span>
-                                {/*<span>{selectedShop.description}</span>*/}
                             </div>
                             {/*{showPopup && selectedCoord !== null && (*/}
                             {/*    <Popup longitude={selectedCoord.longitude} latitude={selectedCoord.latitude}*/}
@@ -43,11 +42,8 @@ const OrderMap = (props) => {
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" >
-                        Close
-                    </Button>
-                    <Button variant="primary" >
-                        Save Changes
+                    <Button onClick={props.handleMapClose} variant="secondary" >
+                        Закрыть
                     </Button>
                 </Modal.Footer>
             </Modal>

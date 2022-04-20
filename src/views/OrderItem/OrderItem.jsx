@@ -12,6 +12,8 @@ const OrderItem = () => {
     const [showMap, setShowMap] = useState(false)
     const [selectedItem, setSelectedItem] = useState({})
     const urlParams = useParams()
+
+    const handleMapClose = () => { setShowMap(false) }
     useEffect(()=>{
         setIsLoading(true)
         api(`marketplace/order/${urlParams.id}/`)
@@ -75,7 +77,11 @@ const OrderItem = () => {
                                 </div>
                                 <div className={'flex-column d-flex align-items-center gap-1'}>
                                 <span className={styles.itemPrice}> {item.cost} руб.</span>
-                                    <Button onClick={()=>{selectItem(item)}} variant={'primary'}>Посмотреть на карте</Button>
+                                    {orderInfo.pickup === true &&
+                                        <Button onClick={() => {
+                                            selectItem(item)
+                                        }} variant={'primary'}>Посмотреть на карте</Button>
+                                    }
                                 </div>
                             </ListGroup.Item>
                             ))}
@@ -84,7 +90,7 @@ const OrderItem = () => {
                 </Card>
             }
             {showMap &&
-                <OrderMap orderInfo={selectedItem.shop_address}></OrderMap>
+                <OrderMap handleMapClose={handleMapClose} orderInfo={selectedItem.shop_address}></OrderMap>
             }
         </Card>
     );
