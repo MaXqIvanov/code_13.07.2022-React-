@@ -148,5 +148,13 @@ input::-webkit-inner-spin-button {
 }
 .finishPricesBlock:first-child{
     font-size: 5px !important;
-
+}
+.addressItem{
+    display: flex !important;
+    justify-content: space-between;
+}
+.deleteBtn{
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
 }

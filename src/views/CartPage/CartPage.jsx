@@ -16,7 +16,7 @@ import {
     FloatingLabel
 } from "react-bootstrap";
 import api from "../../plugins/axios/api";
-
+import cross from "../../assets/xmark-solid.svg"
 import DeliveryMap from "../../components/DeliveryMap/DeliveryMap";
 import {useCookies} from "react-cookie";
 import DatePicker from 'react-datepicker'
@@ -184,8 +184,79 @@ const CartPage = () => {
                 cart.requestInfo()
             })
     }
+    function incremetCount(count,id){
+        api.post('marketplace/cart/change/',{
+            "nomenclature": id,
+            "count": count + 1
+        })
+            .then((response)=>{
+                if (response.status === 200){
+                    setCardHolder(cartHolder.map((item)=>{
+                            if (item._nomenclature.id === id){
+                                return {...item, count:response.data.count}
+                            } else {
+                                return item
+                            }
+                }))
+                }
+            })
+    }
+    function decremetCount(count,id){
+        if (count === 1) return
+        api.post('marketplace/cart/change/',{
+            "nomenclature": id,
+            "count": count - 1
+        })
+            .then((response)=>{
+                if (response.status === 200){
+                    setCardHolder(cartHolder.map((item)=>{
+                        if (item._nomenclature.id === id){
+                            return {...item, count:response.data.count}
+                        } else {
+                            return item
+                        }
+                    }))
+                }
+            })
+    }
 function setOrderId(id){
         setOrderNum(id)
+    }
+    function sendChanges(e,id){
+        if (e.target.value === "0"){
+            setCardHolder(cartHolder.map((item)=>{
+                if (item._nomenclature.id === id){
+                    return {...item, count:1}
+                } else {
+                    return item
+                }
+            }))
+        } else{
+            api.post('marketplace/cart/change/',{
+                "nomenclature": id,
+                "count": e.target.value
+            })
+        }
+    }
+    function deleteAddress(item){
+        api.delete(`marketplace/order-address/${item.id}/`)
+            .then((response)=>{
+               if (response.status === 204){
+                   // setAddressHolder(
+                   //     addressHolder.map((address)=>{
+                   //         if (address.id === item.id){
+                   //             return
+                   //         }
+                   //         else {
+                   //             return item
+                   //         }
+                   //     })
+                   // )
+                   setAddressHolder(addressHolder.filter((address) => address.id !== item.id))
+
+
+               }
+            })
     }
     //  useEffect(()=>{
     //      console.log(cartHolder)
@@ -223,7 +294,7 @@ function setOrderId(id){
                                     <div className={styles.actionsBlock}>
                                         <span className={styles.itemPrice}>от {item.middle_cost} руб.</span>
                                         <InputGroup className={styles.changeCountAction} >
-                                            <InputGroup.Text className={styles.countDecrementBtn} id="inputGroup-sizing-default">-</InputGroup.Text>
+                                            <InputGroup.Text onClick={()=>{decremetCount(item.count,item._nomenclature.id)}} className={styles.countDecrementBtn} id="inputGroup-sizing-default">-</InputGroup.Text>
                                             <FormControl
                                                 type={'number'}
                                                 aria-label="Default"
@@ -232,13 +303,15 @@ function setOrderId(id){
                                                     handleChanges(event,item.id,index)
 
                                                 }}
+                                                onBlur={(e)=>{
+                                                    sendChanges(e,item._nomenclature.id)
+                                                }}
                                                 step="1"
-                                                min="0"
-                                                max="27"
+                                                min="1"
                                                 aria-describedby="inputGroup-sizing-default"
                                                 value={item.count}
                                             />
-                                            <InputGroup.Text className={styles.countIncrementBtn} id="inputGroup-sizing-default">+</InputGroup.Text>
+                                            <InputGroup.Text onClick={()=>{incremetCount(item.count,item._nomenclature.id)}} className={styles.countIncrementBtn} id="inputGroup-sizing-default">+</InputGroup.Text>
                                         </InputGroup>
                                         <span onClick={()=>{deleteItemFromCart(index,item.id)}}  className={styles.actionsDeleteBtn}>Удалить</span>
                                     </div>
@@ -273,7 +346,11 @@ function setOrderId(id){
         <div>        Выберите адрес доставки или <a className={styles.addNewAddress} onClick={handleAddressShow}>добавьте новый</a>
         <ListGroup defaultActiveKey={addressHolder[0].id}>
             {addressHolder.map((item) => (
-                <ListGroup.Item key={item.id} eventKey={item.id}>{item.address}</ListGroup.Item>
+                <ListGroup.Item className={styles.addressItem}  key={item.id} eventKey={item.id}>
+                    {item.address}
+                    <img onClick={()=>{deleteAddress(item)}} className={styles.deleteBtn} src={cross} alt="rh"/>
+
+                </ListGroup.Item>
             ))}
 
 
