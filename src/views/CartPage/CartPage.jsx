@@ -440,6 +440,7 @@ function setOrderId(id){
                                         <span>Дата и время доставки</span>
                                         <DatePicker
                                             required
+                                            minDate={new Date()}
                                             selected={startDate}
                                             onChange={(date) => setStartDate(date)}
                                             timeInputLabel="Время доставки:"
