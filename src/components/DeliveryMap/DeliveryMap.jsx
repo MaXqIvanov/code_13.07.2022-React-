@@ -1,11 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
 import marker from '../../assets/map-marker.png'
 import styles from './DeliveryMap.module.css'
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import mapboxgl from '!mapbox-gl';
+
+import mapboxgl from 'mapbox-gl';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import Map, {Marker, Popup,ControlPanel} from "!react-map-gl";
 import axios from "axios"; // eslint-disable-line import/no-webpack-loader-syntax
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 mapboxgl.accessToken = 'pk.eyJ1IjoiZGllbGl0IiwiYSI6ImNreGJ3b3RlOTByOHQycHE5bWwzaXlxZ2cifQ.1QkwgR8DegdGymUZL3iTjg';
 
 
