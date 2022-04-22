@@ -20,11 +20,14 @@ const [ordersList, setOrdersList] = useState([])
            })
     }, []);
 function fetchData() {
-    axios.get(nextPage)
+    let parsedNext = nextPage.split('')
+    console.log(parsedNext)
+    api(`marketplace/order/?page=${parsedNext[parsedNext.length - 1]}`)
         .then((response)=>{
             setPagesTotal(response.data.count)
             setNextPage(response.data.next)
-            setOrdersList([...ordersList, response.data.result])
+            console.log([...ordersList, ...response.data.results])
+            setOrdersList([...ordersList, ...response.data.results])
         })
 }
 
