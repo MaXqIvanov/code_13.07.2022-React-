@@ -1,18 +1,32 @@
 import React, {useEffect, useState} from 'react';
-import {Card, ListGroup, Badge} from "react-bootstrap";
+import {Card, ListGroup, Badge, Pagination, Button} from "react-bootstrap";
 import api from "../../plugins/axios/api";
 import styles from './OrderListPage.module.css'
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
+
 
 const OrderListPage = () => {
 const [ordersList, setOrdersList] = useState([])
+    const [pagesTotal,setPagesTotal] = useState(null)
+    const [nextPage,setNextPage] = useState(null)
     let navigate = useNavigate()
     useEffect(() => {
        api('marketplace/order/')
            .then((response)=>{
+               setPagesTotal(response.data.count)
+               setNextPage(response.data.next)
                setOrdersList(response.data.results)
            })
     }, []);
+function fetchData() {
+    axios.get(nextPage)
+        .then((response)=>{
+            setPagesTotal(response.data.count)
+            setNextPage(response.data.next)
+            setOrdersList([...ordersList, response.data.result])
+        })
+}
 
 
     return (
@@ -47,6 +61,12 @@ const [ordersList, setOrdersList] = useState([])
                     )}
 
                 </ListGroup>
+                <div style={{width:'100%', display:'flex', justifyContent:'center'}}>
+                    {nextPage &&
+                        <Button onClick={fetchData} className={'mt-2'} style={{width: '30%'}}>Ещё</Button>
+                    }
+                </div>
+
             </Card.Body>
         </Card>
     );
