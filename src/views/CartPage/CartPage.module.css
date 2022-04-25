@@ -12,10 +12,11 @@
     flex-wrap: wrap;
 }
 .itemImgBlock{
+    width: 25%;
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: fit-content;
+
 }
 .itemCode{
     font-size: 0.8rem;
@@ -49,6 +50,8 @@
 .itemPrice{
     word-break: keep-all;
     white-space: nowrap;
+    width: 25%;
+    text-align: right;
 }
 .countDecrementBtn{
     cursor: pointer;
@@ -145,6 +148,7 @@ input::-webkit-inner-spin-button {
     text-align: right;
     width: fit-content;
     line-height: 1rem;
+    width: 25%;
 }
 .finishPricesBlock:first-child{
     font-size: 5px !important;

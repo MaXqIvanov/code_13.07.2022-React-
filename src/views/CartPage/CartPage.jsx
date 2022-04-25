@@ -390,7 +390,7 @@ function setOrderId(id){
                 </Modal>
             </Card>
                     {!typesIsLoading &&
-                        <Modal size={'lg'} className={styles.finishModal} show={showCount} onHide={handleCountClose}>
+                        <Modal size={'xl'} className={styles.finishModal} show={showCount} onHide={handleCountClose}>
                             <form onSubmit={(e)=>{createDeliveryOrder(e)}}>
                             <Modal.Header closeButton>
                                 <Modal.Title>Итог</Modal.Title>
