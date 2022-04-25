@@ -167,6 +167,7 @@ const CartPage = () => {
     }
     async function createDeliveryOrder(e){
         e.preventDefault()
+        console.log(choosenType)
         api.post(`marketplace/order/${choosenType.type.url}/?city=${cookies.userCity.id}&address=${chosenAddress}`,{
             phone:phonetHolder,
             est_time: startDate.toLocaleString('ru',{year: 'numeric',month:'numeric', day:'numeric', hour:'numeric', minute:'numeric'}).split(',').join(''),
@@ -441,7 +442,7 @@ function setOrderId(id){
                                         <span>Дата и время доставки</span>
                                         <DatePicker
                                             required
-                                            minDate={choosenType.type.url = 'delivery_today' ? new Date() : new Date().setDate(new Date().getDate() + 1)}
+                                            minDate={choosenType.type.url === 'delivery_today' ? new Date() : new Date().setDate(new Date().getDate() + 1)}
                                             selected={startDate}
 
                                             onChange={(date) => setStartDate(date)}

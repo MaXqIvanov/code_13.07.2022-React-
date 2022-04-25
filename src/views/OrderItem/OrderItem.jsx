@@ -76,7 +76,7 @@ const OrderItem = () => {
                                     }
                                 </div>
                                 <div className={'flex-column d-flex align-items-center gap-1'}>
-                                <span className={styles.itemPrice}>{item.count} {item.nomenclature._measurement.code} x {item.cost} руб.</span>
+                                <span className={styles.itemPrice}>{item.count} {item.nomenclature._measurement.code} x <b>{item.cost} руб.</b></span>
                                     {orderInfo.pickup === true &&
                                         <Button onClick={() => {
                                             selectItem(item)
