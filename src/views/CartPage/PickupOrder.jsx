@@ -90,7 +90,6 @@ const PickupOrder = (props) => {
                 }
             }
         }
-        console.log(result)
         api.post('marketplace/order/pickup_custom_price/', {
             cart:
                  choosenType.cart.map((item) => {
@@ -294,7 +293,7 @@ const PickupOrder = (props) => {
             </Modal.Body>
 
             <Modal.Footer>
-                <Button variant="secondary">Закрыть</Button>
+                <Button onClick={()=>{props.handlePickupClose()}} variant="secondary">Закрыть</Button>
                 <Button type={'submit'} variant="primary">Добавить</Button>
             </Modal.Footer>
             </form>
