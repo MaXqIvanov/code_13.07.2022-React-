@@ -51,6 +51,7 @@ const CartPage = () => {
     const [orderNumber, setOrderNumber] = useState(null)
     const [cartIsEmpry, setCartIsEmpry] = useState(false)
     const [orderNum,setOrderNum] = useState()
+    const [currentDate, setCurrentDate] = useState(new Date())
 
     const navigate = useNavigate()
     useEffect(()=>{
@@ -440,8 +441,9 @@ function setOrderId(id){
                                         <span>Дата и время доставки</span>
                                         <DatePicker
                                             required
-                                            minDate={new Date()}
+                                            minDate={choosenType.type.url = 'delivery_today' ? new Date() : new Date().setDate(new Date().getDate() + 1)}
                                             selected={startDate}
+
                                             onChange={(date) => setStartDate(date)}
                                             timeInputLabel="Время доставки:"
                                             dateFormat="dd.MM.yyyy HH:mm"
