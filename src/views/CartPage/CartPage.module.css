@@ -53,6 +53,11 @@
     width: 25%;
     text-align: right;
 }
+.itemMainPrice{
+    word-break: keep-all;
+    white-space: nowrap;
+    text-align: center;
+}
 .countDecrementBtn{
     cursor: pointer;
     -webkit-touch-callout: none; /* iOS Safari */

@@ -293,7 +293,7 @@ function setOrderId(id){
                                     <div className={styles.itemName}>{item._nomenclature.name}</div>
 
                                     <div className={styles.actionsBlock}>
-                                        <span className={styles.itemPrice}>от {item.middle_cost} руб.</span>
+                                        <span className={styles.itemMainPrice}>от {item.middle_cost} руб.</span>
                                         <InputGroup className={styles.changeCountAction} >
                                             <InputGroup.Text onClick={()=>{decremetCount(item.count,item._nomenclature.id)}} className={styles.countDecrementBtn} id="inputGroup-sizing-default">-</InputGroup.Text>
                                             <FormControl
