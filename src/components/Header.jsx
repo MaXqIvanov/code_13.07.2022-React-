@@ -68,7 +68,7 @@ useEffect(()=>{
                             <Popover.Header as="h3">{`Выбор города`}</Popover.Header>
                             <Popover.Body>
                                 {cityVar.map((city)=>(
-                                    <div onClick={()=>{changeCity(city)}}>{city.name}</div>
+                                    <div key={city.name} onClick={()=>{changeCity(city)}}>{city.name}</div>
                                 ))}
                             </Popover.Body>
                         </Popover>

@@ -78,12 +78,9 @@ const CartPage = () => {
                     .then((response) => {
                         setDeliveryTypes(response.data)
                         setChoosenType(response.data[0])
-                        console.log(deliveryTypes)
                     })
                     .finally(() => {
                         setTypesIsLoading(false)
-
-                        console.log(choosenType)
                         setCountShow(true)
                     })
                 :
@@ -96,15 +93,13 @@ const CartPage = () => {
                     setChoosenPickupType(response.data[0])
                 })
                 .finally(() => {
-
-                    console.log(choosenType)
                     setPickupModalHolder(true)
                 })
         }
     };
 
     const handleAddressClose = () => setAddressShow(false);
-    const handleAddressShow = () => setAddressShow(true);
+    const handleAddressShow = () => { setAddressShow(true) }
 
 
 
@@ -147,9 +142,12 @@ const CartPage = () => {
         api.post('marketplace/order-address/',newAddress)
             .then((response)=>{
                 if (response.status === 201) {
+                    console.log(response.data);          // delete this line
                     setAddressHolder((prevState => ([...prevState,response.data])))
                     setAddressShow(false)
                 }
+            }).catch(function (thrown){
+                alert("Пожалуйста, уточните введённый вами адресс")
             })
      }
       function deleteItemFromCart(index,id){
@@ -167,7 +165,6 @@ const CartPage = () => {
     }
     async function createDeliveryOrder(e){
         e.preventDefault()
-        console.log(choosenType)
         api.post(`marketplace/order/${choosenType.type.url}/?city=${cookies.userCity.id}&address=${chosenAddress}`,{
             phone:phonetHolder,
             est_time: startDate.toLocaleString('ru',{year: 'numeric',month:'numeric', day:'numeric', hour:'numeric', minute:'numeric'}).split(',').join(''),
@@ -175,7 +172,6 @@ const CartPage = () => {
             comment:commentHolder
         })
             .then(response =>{
-                console.log(response)
                 if (response.status === 200){
                     setOrderNum(response.data.id)
                     handleCountClose()
@@ -334,10 +330,10 @@ function setOrderId(id){
                     <Tab.Container onSelect={(e)=>{setNavStatus(e)}}  defaultActiveKey={navStatus}>
                                 <Nav variant="pills" >
                                     <Nav.Item>
-                                        <Nav.Link eventKey="delivery">Доставка</Nav.Link>
+                                        <Nav.Link className='btn' eventKey="delivery">Доставка</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="pickup">Самовывоз</Nav.Link>
+                                        <Nav.Link className='btn' eventKey="pickup">Самовывоз</Nav.Link>
                                     </Nav.Item>
                                 </Nav>
                     </Tab.Container>
@@ -350,8 +346,7 @@ function setOrderId(id){
             {addressHolder.map((item) => (
                 <ListGroup.Item className={styles.addressItem}  key={item.id} eventKey={item.id}>
                     {item.address}
-                    <img onClick={()=>{deleteAddress(item)}} className={styles.deleteBtn} src={cross} alt="rh"/>
-
+                    <img title='удалить адрес' onClick={()=>{deleteAddress(item)}} className={styles.deleteBtn} src={cross} alt="rh"/>
                 </ListGroup.Item>
             ))}
 
@@ -416,7 +411,7 @@ function setOrderId(id){
                                     <Card>
                                         <ListGroup className={styles.finishCartList}>
                                             {choosenType.cart.map((item) => (
-                                                <ListGroup.Item className={styles.finishCartBlock}>
+                                                <ListGroup.Item key={item.id} className={styles.finishCartBlock}>
                                                     <div className={styles.itemImgBlock}>
                                                         <img className={styles.itemImg} src={item.images[0]}
                                                              alt="Фото товара"/>

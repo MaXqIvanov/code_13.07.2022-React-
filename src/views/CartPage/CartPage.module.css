@@ -82,11 +82,10 @@
     white-space: nowrap !important;
     display: flex !important;
     flex-wrap: nowrap !important;
-}
-.countInput{
-
+    min-width: 100px;
 }
 input[type='number'] {
+    text-align: center;
     -moz-appearance: textfield;
 }
 input::-webkit-outer-spin-button,
@@ -161,6 +160,7 @@ input::-webkit-inner-spin-button {
 .addressItem{
     display: flex !important;
     justify-content: space-between;
+    cursor: pointer;
 }
 .deleteBtn{
     width: 1.5rem;

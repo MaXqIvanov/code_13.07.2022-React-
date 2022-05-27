@@ -22,20 +22,20 @@ const DeliveryMap = (props) => {
 
     async function selectCoord(e) {
         await setSelectedCoord({longitude:e.lngLat.lng, latitude:e.lngLat.lat})
-       await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${selectedCoord.longitude},${selectedCoord.latitude}.json?access_token=` + token)
+        // this is change selectedCoord.longtitude on e.lngLat.lng
+        let newAddress;
+       await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?access_token=` + token)
             .then((response)=>{
                 setSelectedCoord((prevState)=>({...prevState, address: response.data.features[0].place_name}))
-                console.log(response.data.features[0].place_name)
+                newAddress = response.data.features[0].place_name
             })
             .finally(()=>{
                  setShowPopup(true)
-                props.takeAddressHandler(selectedCoord)
+                //  this is change 
+                // props.takeAddressHandler(selectedCoord)
+                props.takeAddressHandler({longitude:e.lngLat.lng, latitude:e.lngLat.lat, address: newAddress})
             })
-
-
     }
-
-
     return (
         <Map
             initialViewState={{
@@ -54,12 +54,15 @@ const DeliveryMap = (props) => {
                        onClose={() => setShowPopup(false)}>
                     {selectedCoord.address}
                 </Popup>)}
-            {/*{selectedCoord !== null &&*/}
-            {/*    <Marker  longitude={selectedCoord.longitude} latitude={selectedCoord.latitude} anchor="bottom">*/}
-            {/*        <img style={{width:32}} src={marker}/>*/}
-            {/*       */}
-            {/*    </Marker>*/}
-            {/*}*/}
+            {selectedCoord !== null &&
+              <Marker  longitude={selectedCoord.longitude} latitude={selectedCoord.latitude} anchor="bottom">
+                    <img style={{width:28}} src={marker}/>
+              </Marker> }
+            {/* {selectedCoord == null &&
+            <Marker longitude={this.longitude} latitude={this.latitude} anchor="bottom">
+                <img style={{width:28}} src={marker}/>
+            </Marker>
+            } */}
         </Map>
     );
 };

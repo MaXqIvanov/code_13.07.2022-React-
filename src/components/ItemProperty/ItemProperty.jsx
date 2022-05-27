@@ -33,7 +33,7 @@ const ItemProperty = ({itemName}) => {
     <Card className={styles.mainBlock}>
 <Card.Title>Характеристики {itemName}</Card.Title>
         {itemProperty.map((item, index) => (
-            <div className={styles.property}>
+            <div key={item.name} className={styles.property}>
                 {item.name} : {item.str_value}
             </div>
         ))}
