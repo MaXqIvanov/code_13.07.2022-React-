@@ -74,7 +74,7 @@ useEffect(()=>{
                         </Popover>
                     }
                 >
-                    <p className={'chosenCity'}>{cookies.userCity.name}</p>
+                    <p className={'chosenCity'}>{cookies.userCity?.name}</p>
                 </OverlayTrigger>
             </Navbar>
         <Navbar bg="light">
