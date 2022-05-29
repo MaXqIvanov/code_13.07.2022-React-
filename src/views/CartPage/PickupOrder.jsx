@@ -13,6 +13,7 @@ import cart from "../../store/cart";
 
 
 const PickupOrder = (props) => {
+    console.log(props);
     const [token, setToken] = useState('pk.eyJ1IjoiZGllbGl0IiwiYSI6ImNreGJ3b3RlOTByOHQycHE5bWwzaXlxZ2cifQ.1QkwgR8DegdGymUZL3iTjg')
     const [selectedCoord, setSelectedCoord] = useState(null)
     const [selectedItem, setSelectedItem] = useState(null)
@@ -317,14 +318,14 @@ const PickupOrder = (props) => {
                     {selectedShop !== null &&
                     <div className={stylez.controlPanel}>
 
-                        <span><b>Выбранный адрес:</b> {selectedShop.address}</span>
+                        <span><b>Выбранный адрес:</b> {selectedShop?.address}</span>
                         <span>{selectedShop.description}</span>
                     </div>
                     }
                     <GeolocateControl />
                     <NavigationControl></NavigationControl>
                     {pins}
-                    }
+                    
                 </Map>
             }
         </Modal.Body>

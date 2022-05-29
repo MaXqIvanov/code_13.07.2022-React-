@@ -152,7 +152,6 @@ input::-webkit-inner-spin-button {
     text-align: right;
     width: fit-content;
     line-height: 1rem;
-    width: 25%;
 }
 .finishPricesBlock:first-child{
     font-size: 5px !important;

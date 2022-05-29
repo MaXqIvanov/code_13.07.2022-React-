@@ -7,8 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const MainPage = () => {
     let navigate = useNavigate();
-    const [categoryHolder, setCategoryHolder] = useState([
-        ])
+    const [categoryHolder, setCategoryHolder] = useState([])
     useEffect(()=>{
         api.get('marketplace/category')
             .then((response)=>{

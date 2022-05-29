@@ -89,6 +89,9 @@ const CartPage = () => {
         if (navStatus === 'pickup'){
             api(`marketplace/order/pickup_all/?city=${cookies.userCity.id}&address=${chosenAddress}`)
                 .then((response) => {
+                    console.log('====================================');
+                    console.log(response);
+                    console.log('====================================');
                     setPickupTypes(response.data)
                     setChoosenPickupType(response.data[0])
                 })
@@ -327,7 +330,8 @@ function setOrderId(id){
             <Card className={styles.cartSubmitBlock}>
                 <Card.Title>Выберите способ получения</Card.Title>
                 <Card.Body className={styles.cartDeliveryBody}>
-                    <Tab.Container onSelect={(e)=>{setNavStatus(e)}}  defaultActiveKey={navStatus}>
+                    <Tab.Container onSelect={(e)=>{
+                        setNavStatus(e)}}  defaultActiveKey={navStatus}>
                                 <Nav variant="pills" >
                                     <Nav.Item>
                                         <Nav.Link className='btn' eventKey="delivery">Доставка</Nav.Link>
@@ -354,7 +358,7 @@ function setOrderId(id){
         </ListGroup>
         </div>
     }
-                                        <Button onClick={handleAddressShow} variant={'success'} className={'mt-2 mb-2'}> Новый адрес</Button>
+                                        <Button onClick={handleAddressShow} variant={'success'} className={'mt-2 mb-2'}> { navStatus === 'delivery' ? 'новый адрес' : 'укажите ваш адрес'}</Button>
                                         <Card>
                                             <Card.Body className={styles.cartCountBlock}>
                                                 <h3>Итого: {amountHolder} руб.</h3>
@@ -399,7 +403,7 @@ function setOrderId(id){
                                             <Form.Check
                                                 key={item.name}
                                                 type={"radio"}
-                                                onClick={() => {
+                                                onChange={() => {
                                                     setChoosenType(item)
                                                     setStartDate(choosenType.type.change_date ? new Date() : '')
                                                 }}
@@ -443,7 +447,7 @@ function setOrderId(id){
                                             onChange={(date) => setStartDate(date)}
                                             timeInputLabel="Время доставки:"
                                             dateFormat="dd.MM.yyyy HH:mm"
-                                            locale="pt-BR"
+                                            locale="pt-br"
                                             timeFormat="HH:mm"
                                             timeIntervals={15}
                                             showTimeSelect={choosenType.type.change_time ? true : false}
