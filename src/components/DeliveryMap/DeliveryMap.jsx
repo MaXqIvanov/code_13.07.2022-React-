@@ -23,7 +23,6 @@ const DeliveryMap = (props) => {
 
     async function selectCoord(e) {
         setSelectedCoord({ longitude: e.lngLat.lng, latitude: e.lngLat.lat })
-        // this is change selectedCoord.longtitude on e.lngLat.lng
         let newAddress;
        await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?access_token=` + token)
             .then((response)=>{
@@ -32,8 +31,6 @@ const DeliveryMap = (props) => {
             })
             .finally(()=>{
                  setShowPopup(true)
-                //  this is change 
-                // props.takeAddressHandler(selectedCoord)
                 props.takeAddressHandler({longitude:e.lngLat.lng, latitude:e.lngLat.lat, address: newAddress})
             })
     }
@@ -71,10 +68,6 @@ const DeliveryMap = (props) => {
             searchCoord(event.result.geometry);
             });
     }, [])
-    console.log("this is shopPopup");
-    console.log(showPopup);
-    console.log("this is selectedCoord");
-    console.log(selectedCoord);
     const [viewState, setViewState] = React.useState({
         longitude: 30.3158,
         latitude: 59.93901,
@@ -84,11 +77,6 @@ const DeliveryMap = (props) => {
         <>
         <div className={styles.geocoder} id='geocoder'></div>
         <Map
-            // initialViewState={{
-            //     longitude: 30.3158,
-            //     latitude: 59.93901,
-            //     zoom: 10,
-            // }}
             {...viewState}
             onClick={(e)=>{selectCoord(e)}}
             mapboxAccessToken={token}
