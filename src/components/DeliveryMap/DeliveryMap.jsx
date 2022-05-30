@@ -73,6 +73,7 @@ const DeliveryMap = (props) => {
         latitude: 59.93901,
         zoom: 10,
       });
+    //   
     return (
         <>
         <div className={styles.geocoder} id='geocoder'></div>
