@@ -4,7 +4,7 @@ import marker from '../../assets/map-marker.png'
 import styles from './DeliveryMap.module.css'
 import mapboxgl from 'mapbox-gl';
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import Map, { Marker, Popup,NavigationControl, GeolocateControl  } from "react-map-gl";
+import Map, { Marker, Popup,NavigationControl, GeolocateControl, MapContext  } from "react-map-gl";
 import axios from "axios"; // eslint-disable-line import/no-webpack-loader-syntax
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import './search.css'
@@ -39,9 +39,10 @@ const DeliveryMap = (props) => {
     }
     //MapboxGeocoder
     async function searchCoord(e) {
-        console.log("this is e");
-        console.log(e);
         setSelectedCoord({ longitude: e.coordinates[0], latitude: e.coordinates[1] })
+        setViewState({ longitude: e.coordinates[0],
+            latitude: e.coordinates[1],
+            zoom: 10,})
         let newAddress;
        await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${e.coordinates[0]},${e.coordinates[1]}.json?access_token=` + token)
             .then((response)=>{
@@ -63,7 +64,7 @@ const DeliveryMap = (props) => {
             mapboxgl: mapboxgl,
             reverseGeocode: true,
             countries: 'ru',
-            language: 'ru'
+            language: 'ru',
             });
             geocoder.addTo('#geocoder');
             geocoder.on('result', (event) => {
@@ -74,20 +75,27 @@ const DeliveryMap = (props) => {
     console.log(showPopup);
     console.log("this is selectedCoord");
     console.log(selectedCoord);
+    const [viewState, setViewState] = React.useState({
+        longitude: 30.3158,
+        latitude: 59.93901,
+        zoom: 10,
+      });
     return (
         <>
         <div className={styles.geocoder} id='geocoder'></div>
         <Map
-            initialViewState={{
-                longitude: 30.3158,
-                latitude: 59.93901,
-                zoom: 10,
-            }}
+            // initialViewState={{
+            //     longitude: 30.3158,
+            //     latitude: 59.93901,
+            //     zoom: 10,
+            // }}
+            {...viewState}
             onClick={(e)=>{selectCoord(e)}}
             mapboxAccessToken={token}
             style={{width: '100%', height: 400}}
             mapStyle="mapbox://styles/mapbox/streets-v11"
             reverseGeocode= {true}
+            onMove={evt => setViewState(evt.viewState)}
         >
             {showPopup && selectedCoord !== null && (
                 <Popup longitude={selectedCoord.longitude} latitude={selectedCoord.latitude}
@@ -99,11 +107,6 @@ const DeliveryMap = (props) => {
               <Marker  longitude={selectedCoord.longitude} latitude={selectedCoord.latitude} anchor="bottom">
                     <img style={{width:28}} src={marker}/>
               </Marker> }
-            {/* {selectedCoord == null &&
-            <Marker longitude={this.longitude} latitude={this.latitude} anchor="bottom">
-                <img style={{width:28}} src={marker}/>
-            </Marker>
-            } */}
             <NavigationControl >
             </NavigationControl>
             <GeolocateControl >

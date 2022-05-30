@@ -145,7 +145,6 @@ const CartPage = () => {
         api.post('marketplace/order-address/',newAddress)
             .then((response)=>{
                 if (response.status === 201) {
-                    console.log(response.data);          // delete this line
                     setAddressHolder((prevState => ([...prevState,response.data])))
                     setAddressShow(false)
                 }
@@ -153,11 +152,12 @@ const CartPage = () => {
                 alert("Пожалуйста, уточните введённый вами адресс")
             })
      }
-      function deleteItemFromCart(index,id){
-
-        api.delete(`marketplace/cart/${id}/`)
+      function deleteItemFromCart(index,item){
+        console.log(item);
+        api.delete(`marketplace/cart/${item.id}/`)
             .then((response)=>{
                 if(response.status === 204) {
+                    setAmountHolder(amountHolder - item.middle_cost)
                     setCardHolder(cartHolder.filter((item,i) => index !== i))
                     cart.requestInfo()
                 }
@@ -175,6 +175,8 @@ const CartPage = () => {
             comment:commentHolder
         })
             .then(response =>{
+                console.log("this is response");
+                console.log(response);
                 if (response.status === 200){
                     setOrderNum(response.data.id)
                     handleCountClose()
@@ -191,10 +193,15 @@ const CartPage = () => {
             "count": count + 1
         })
             .then((response)=>{
+                //change middle cost
+                console.log("this is response");
+                console.log(response);
                 if (response.status === 200){
                     setCardHolder(cartHolder.map((item)=>{
                             if (item._nomenclature.id === id){
-                                return {...item, count:response.data.count}
+                                let diffAmount = item.middle_cost / item.count
+                                setAmountHolder(amountHolder + diffAmount)
+                                return {...item, count:response.data.count, middle_cost:response.data.middle_cost}
                             } else {
                                 return item
                             }
@@ -209,10 +216,13 @@ const CartPage = () => {
             "count": count - 1
         })
             .then((response)=>{
+                //change middle cost
                 if (response.status === 200){
                     setCardHolder(cartHolder.map((item)=>{
                         if (item._nomenclature.id === id){
-                            return {...item, count:response.data.count}
+                            let diffAmount = item.middle_cost / item.count
+                            setAmountHolder(amountHolder - diffAmount)
+                            return {...item, count:response.data.count, middle_cost:response.data.middle_cost}
                         } else {
                             return item
                         }
@@ -275,6 +285,8 @@ function setOrderId(id){
     // //         (res, cart) => cart.id == id ? cart[prop] : res
     // //         , '');
     // // }
+    console.log("this is choosenType");
+    console.log(choosenType);
     return (
         <div className={styles.mainBlock}>
             {isLoading === false &&
@@ -314,7 +326,7 @@ function setOrderId(id){
                                             />
                                             <InputGroup.Text onClick={()=>{incremetCount(item.count,item._nomenclature.id)}} className={styles.countIncrementBtn} id="inputGroup-sizing-default">+</InputGroup.Text>
                                         </InputGroup>
-                                        <span onClick={()=>{deleteItemFromCart(index,item.id)}}  className={styles.actionsDeleteBtn}>Удалить</span>
+                                        <span onClick={()=>{deleteItemFromCart(index,item)}}  className={styles.actionsDeleteBtn}>Удалить</span>
                                     </div>
                                 </ListGroup.Item>
                             ))}
@@ -424,7 +436,8 @@ function setOrderId(id){
 
                                                     <div
                                                         className={styles.finishItemName}>{item._nomenclature.name}</div>
-                                                    <span className={styles.itemPrice}> {item.middle_cost} руб.</span>
+                                                        {/* change middle cost on cost  */}
+                                                    <span className={styles.itemPrice}> {item.cost} руб.</span>
                                                 </ListGroup.Item>
                                             ))}
 

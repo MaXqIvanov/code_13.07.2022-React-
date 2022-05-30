@@ -44,3 +44,32 @@
     font-size: 0.8rem;
     text-decoration: unset;
 }
+.input-group{
+    width: 300px;
+    float: left;
+}
+.search_btn{
+    margin-right: 20px;
+}
+
+@media(max-width:610px){
+    .group_btn_header{
+        display: grid;
+        grid-template-columns: 100%;
+    }
+    .search_btn{
+        width: 100%;
+    }
+    .cart-button{
+        margin-top: 10px;
+    }
+    .btn_profile_header{
+        margin-top: 10px;
+    }
+    .nav-buttons{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
