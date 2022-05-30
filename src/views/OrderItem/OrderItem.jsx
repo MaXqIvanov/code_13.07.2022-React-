@@ -33,7 +33,6 @@ const OrderItem = () => {
         await setSelectedItem(item)
         await setShowMap(true)
     }
-
     return (
         <Card>
             {!isLoading &&
@@ -61,7 +60,7 @@ const OrderItem = () => {
                 <Card>
                     <ListGroup className={styles.finishCartList}>
                         {orderPositions.map((item) => (
-                            <ListGroup.Item className={styles.finishCartBlock}>
+                            <ListGroup.Item key={item.id} className={styles.finishCartBlock}>
                                 <div className={styles.itemImgBlock}>
                                     <img className={styles.itemImg} src={item.nomenclature.images[0]}
                                          alt="Фото товара"/>

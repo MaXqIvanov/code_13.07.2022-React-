@@ -35,3 +35,13 @@ margin-top:1rem ;
     justify-content: space-around;
     flex-wrap: wrap;
 }
+.Spinner_MainPage{
+    height: 45px;
+    width: 45px;
+}
+.wrapper_spinner{
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

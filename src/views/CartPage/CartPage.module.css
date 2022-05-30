@@ -82,7 +82,7 @@
     display: flex !important;
     flex-wrap: nowrap !important;
     min-width: 100px;
-    max-width: 100px;
+    max-width: 106px;
 }
 input[type='number'] {
     text-align: center;
@@ -128,8 +128,6 @@ input::-webkit-inner-spin-button {
 .cartBlock{
     display: flex;
 }
-.finishModal{
-}
 .cartList{
     display: flex;
     flex-direction: column;
@@ -165,4 +163,16 @@ input::-webkit-inner-spin-button {
     width: 1.5rem;
     height: 1.5rem;
     cursor: pointer;
+}
+.wrapper_spinner{
+    height: 150px;
+    width: 100%;
+    position: relative;
+}
+.spinner{
+    height: 45px;
+    width: 45px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }

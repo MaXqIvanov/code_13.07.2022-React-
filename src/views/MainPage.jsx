@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styles from './MainPage.module.css'
-import {Card, Carousel, Col, ListGroup, Row} from "react-bootstrap";
+import {Card, Carousel, Col, Spinner, Row} from "react-bootstrap";
 import api from '../plugins/axios/api'
 import { useNavigate } from "react-router-dom";
 
@@ -8,11 +8,14 @@ import { useNavigate } from "react-router-dom";
 const MainPage = () => {
     let navigate = useNavigate();
     const [categoryHolder, setCategoryHolder] = useState([])
+    const [load, isLoad] = useState(false)
+    let spinnerArray = [1,2,3,4,5,6]
     useEffect(()=>{
         api.get('marketplace/category')
             .then((response)=>{
                 setCategoryHolder(response.data)
             })
+            .finally(()=>isLoad(true))
     },[])
 
 
@@ -49,18 +52,26 @@ const MainPage = () => {
                         </Carousel>
                     </Card>
                     <Card className={styles.categoryCard}>
+                        {/* add spinner */}
                         <Card.Header>
                             <Card.Title><h3>Категории товаров</h3></Card.Title>
                         </Card.Header>
                             <Card.Body className={styles.categoryBlock}>
-                                {categoryHolder.map((item)=>(
+                                {load == true ? categoryHolder.map((item)=>(
                                     <Card key={item.id} onClick={ ()=>{navigate(`/category/${item.id}`)} } className={styles.categoryItem}>
                                         <Card.Img alt={item.name} title={item.name}  className={styles.categoryImg} variant="top" src={item.img} />
                                         <Card.Body >
                                             <Card.Title className={styles.categoryTitle}>{item.name}</Card.Title>
                                         </Card.Body>
                                     </Card>
-                                    ))}
+                                    ))
+                                :spinnerArray.map((elem, index)=>
+                                <Card key={index} className={styles.categoryItem}>
+                                    <Card.Body className={styles.wrapper_spinner}>
+                                         <Spinner className={styles.Spinner_MainPage} animation="grow" />
+                                    </Card.Body>
+                                </Card>)
+                                }
                             </Card.Body>
                     </Card>
                 </Col>

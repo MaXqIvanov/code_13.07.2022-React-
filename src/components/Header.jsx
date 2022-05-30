@@ -42,7 +42,6 @@ useEffect(()=>{
 
 
      function goToSearch(e){
-        console.log(e)
         if(searchHolder === '') {return}
         else if ((e.type="keypress" && e.code==='Enter') || e._reactName === 'onClick')
          navigate(`/search/?q=${searchHolder}`)
@@ -187,3 +186,4 @@ useEffect(()=>{
 });
 
 export default Header;
+// setting - ?

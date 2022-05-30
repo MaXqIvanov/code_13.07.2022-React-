@@ -20,7 +20,6 @@ async function getData(){
 
         .then((response)=>{
             setItemHolder(response.data)
-            console.log(itemHolder)
         })
        .finally(()=>{
            setIsLoading(false)
@@ -37,7 +36,6 @@ async function getData(){
 
                 if (response.status === 200){
                     setItemHolder({...itemHolder, cart_position:1})
-                    console.log(itemHolder)
                     cart.requestInfo()
                 }
             })
@@ -50,7 +48,7 @@ async function getData(){
             .then((response)=>{
                 if (response.status === 204){
                     setItemHolder({...itemHolder, cart_position:0})
-                    console.log(itemHolder)
+
                 }
                 cart.requestInfo()
             })

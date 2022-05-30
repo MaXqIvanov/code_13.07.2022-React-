@@ -8,6 +8,7 @@
     display: flex;
     gap: 24px;
     align-items: center !important;
+    margin-left: 20px;
 }
 .sidebar-button{
     display: flex !important;
@@ -24,6 +25,7 @@
 .nav-buttons{
     display: flex;
     gap: 1rem;
+    margin-right: 20px;
 }
 .exit-button{
     color: red !important;
@@ -71,5 +73,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    .navbar-brand{
+        margin-left: 2px;
+    }
+    .nav-buttons{
+        margin-right: 2px;
     }
 }

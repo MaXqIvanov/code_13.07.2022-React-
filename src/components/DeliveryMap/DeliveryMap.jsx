@@ -4,7 +4,7 @@ import marker from '../../assets/map-marker.png'
 import styles from './DeliveryMap.module.css'
 import mapboxgl from 'mapbox-gl';
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import Map, { Marker, Popup,NavigationControl, GeolocateControl, MapContext  } from "react-map-gl";
+import Map, { Marker, Popup,NavigationControl, GeolocateControl, useMap  } from "react-map-gl";
 import axios from "axios"; // eslint-disable-line import/no-webpack-loader-syntax
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import './search.css'
@@ -39,12 +39,10 @@ const DeliveryMap = (props) => {
         setSelectedCoord({ longitude: e.coordinates[0], latitude: e.coordinates[1] })
         setViewState({ longitude: e.coordinates[0],
             latitude: e.coordinates[1],
-            zoom: 10,})
+            zoom: 12,})
         let newAddress;
        await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${e.coordinates[0]},${e.coordinates[1]}.json?access_token=` + token)
             .then((response)=>{
-                console.log("this is respo");
-                console.log(response);
                 setSelectedCoord((prevState)=>({...prevState, address: response.data.features[0].place_name}))
                 newAddress = response.data.features[0].place_name
             })

@@ -13,7 +13,6 @@ import cart from "../../store/cart";
 
 
 const PickupOrder = (props) => {
-    console.log(props);
     const [token, setToken] = useState('pk.eyJ1IjoiZGllbGl0IiwiYSI6ImNreGJ3b3RlOTByOHQycHE5bWwzaXlxZ2cifQ.1QkwgR8DegdGymUZL3iTjg')
     const [selectedCoord, setSelectedCoord] = useState(null)
     const [selectedItem, setSelectedItem] = useState(null)
@@ -64,7 +63,6 @@ const PickupOrder = (props) => {
     }
     async function openMoreItems(){
         handleCanvasOpen(true)
-       console.log(selectedItem)
         }
         async function addMoreToCart(item){
         if (moreItems.includes(item)){return}
@@ -77,7 +75,6 @@ const PickupOrder = (props) => {
 
     function requesAddToCartMore() {
         let result = choosenType
-        console.log(selectedShop)
         for (let i = 0; i < result.cart.length; i++){
             if (result.cart[i].id === selectedItem.id){
                 result.cart[i].shop = selectedShop.id
@@ -216,8 +213,6 @@ const PickupOrder = (props) => {
                 >
                 </Marker>
             ))
-
-
     return (
         <div>
         <Modal  size={'xl'} show={addressModalStatus ? false : true} onHide={props.handlePickupClose}>
@@ -232,7 +227,7 @@ const PickupOrder = (props) => {
                         <Form.Check
                             key={item.name}
                             type={"radio"}
-                            onClick={()=>{
+                            onChange={()=>{
                                 setChoosenType(item)
                             }}
                             checked={choosenType.pickup_type === item.pickup_type ? true : false}
@@ -261,7 +256,7 @@ const PickupOrder = (props) => {
                                                   }}> Изменить адрес</span>
                                         }
                                     </div>
-                                    <span className={styles.itemPrice}> {item.middle_cost} руб.</span>
+                                    <span className={styles.itemPrice}> {item.cost} руб.</span>
                                 </ListGroup.Item>
 
                             ))}
@@ -310,7 +305,7 @@ const PickupOrder = (props) => {
                     initialViewState={{
                         longitude: selectedItem.shop_address.longitude,
                         latitude: selectedItem.shop_address.latitude,
-                        zoom: 14
+                        zoom: 9
                     }}
                     style={{width: '100%', height: 400}}
                     mapStyle="mapbox://styles/mapbox/streets-v9"
@@ -343,8 +338,8 @@ const PickupOrder = (props) => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <ListGroup>
-                        {moreInShop.map((item)=>(
-                            <ListGroup.Item className={stylez.itemBlockMore}>
+                        {moreInShop.map((item, index)=>(
+                            <ListGroup.Item key={index} className={stylez.itemBlockMore}>
                                 <div className={stylez.itemImgBlockMore} >
                                     <img className={stylez.itemImgMore} src={item.images[0]} alt=""/>
                                 </div>

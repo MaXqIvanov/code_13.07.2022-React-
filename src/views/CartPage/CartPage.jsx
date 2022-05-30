@@ -13,7 +13,8 @@ import {
     Col,
     Row,
     Modal,
-    FloatingLabel
+    FloatingLabel,
+    Spinner
 } from "react-bootstrap";
 import api from "../../plugins/axios/api";
 import cross from "../../assets/xmark-solid.svg"
@@ -52,6 +53,7 @@ const CartPage = () => {
     const [cartIsEmpry, setCartIsEmpry] = useState(false)
     const [orderNum,setOrderNum] = useState()
     const [currentDate, setCurrentDate] = useState(new Date())
+    const [load, isLoad] = useState(false);
 
     const navigate = useNavigate()
     useEffect(()=>{
@@ -89,9 +91,6 @@ const CartPage = () => {
         if (navStatus === 'pickup'){
             api(`marketplace/order/pickup_all/?city=${cookies.userCity.id}&address=${chosenAddress}`)
                 .then((response) => {
-                    console.log('====================================');
-                    console.log(response);
-                    console.log('====================================');
                     setPickupTypes(response.data)
                     setChoosenPickupType(response.data[0])
                 })
@@ -117,6 +116,9 @@ const CartPage = () => {
                 setCardHolder(response.data.result)
                 setAmountHolder(response.data.amount)
             })
+            .finally(()=>{
+                isLoad(true)
+            })
         api('marketplace/order-address/')
             .then((response)=>{
                 setAddressHolder(response.data)
@@ -128,7 +130,16 @@ const CartPage = () => {
                 setIsLoading(false)
             })
     },[])
-       function handleChanges(e,id,index) {
+       function handleChanges(e,id,middle_cost,index) {
+           //this is work on thursday
+           console.log("this is e");
+           console.log(e);
+           console.log("this is id ");
+           console.log(id);
+           console.log("this is index");
+           console.log(index);
+           console.log("this is middle_cost");
+           console.log(middle_cost);
            setCardHolder(
               cartHolder.map((item) =>
                  item.id === id ? {...item, count: e.target.value} : item
@@ -153,7 +164,6 @@ const CartPage = () => {
             })
      }
       function deleteItemFromCart(index,item){
-        console.log(item);
         api.delete(`marketplace/cart/${item.id}/`)
             .then((response)=>{
                 if(response.status === 204) {
@@ -175,8 +185,6 @@ const CartPage = () => {
             comment:commentHolder
         })
             .then(response =>{
-                console.log("this is response");
-                console.log(response);
                 if (response.status === 200){
                     setOrderNum(response.data.id)
                     handleCountClose()
@@ -193,9 +201,6 @@ const CartPage = () => {
             "count": count + 1
         })
             .then((response)=>{
-                //change middle cost
-                console.log("this is response");
-                console.log(response);
                 if (response.status === 200){
                     setCardHolder(cartHolder.map((item)=>{
                             if (item._nomenclature.id === id){
@@ -270,7 +275,6 @@ function setOrderId(id){
             })
     }
     //  useEffect(()=>{
-    //      console.log(cartHolder)
     //  },[cartHolder])
     // //   function sendChanges(id, index){
     // //       api.post('marketplace/cart/change/',
@@ -285,8 +289,6 @@ function setOrderId(id){
     // //         (res, cart) => cart.id == id ? cart[prop] : res
     // //         , '');
     // // }
-    console.log("this is choosenType");
-    console.log(choosenType);
     return (
         <div className={styles.mainBlock}>
             {isLoading === false &&
@@ -295,7 +297,7 @@ function setOrderId(id){
                     <Card.Title>Ваша корзина</Card.Title>
                     <Card.Body>
                         <ListGroup>
-                            {cartHolder.map((item, index)=>(
+                            {load ? cartHolder.map((item, index)=>(
                                 <ListGroup.Item key={item.id} className={styles.listItem}>
                                     <div className={styles.itemImgBlock}>
                                     <img className={styles.itemImg} src={item.images[0]} alt="Фото товара"/>
@@ -308,13 +310,14 @@ function setOrderId(id){
                                         <span className={styles.itemMainPrice}>от {item.middle_cost} руб.</span>
                                         <InputGroup className={styles.changeCountAction} >
                                             <InputGroup.Text onClick={()=>{decremetCount(item.count,item._nomenclature.id)}} className={styles.countDecrementBtn} id="inputGroup-sizing-default">-</InputGroup.Text>
+                                            {/* добавить функция для обработки ввода и правильного отображения данных */}
                                             <FormControl
                                                 type={'number'}
                                                 aria-label="Default"
                                                 className={styles.countInput}
                                                 onChange={(event)=>{
-                                                    handleChanges(event,item.id,index)
-
+                                                    handleChanges(event,item.id, item.middle_cost, index)
+                                                    
                                                 }}
                                                 onBlur={(e)=>{
                                                     sendChanges(e,item._nomenclature.id)
@@ -329,7 +332,7 @@ function setOrderId(id){
                                         <span onClick={()=>{deleteItemFromCart(index,item)}}  className={styles.actionsDeleteBtn}>Удалить</span>
                                     </div>
                                 </ListGroup.Item>
-                            ))}
+                            )): <div className={styles.wrapper_spinner}><Spinner className={styles.spinner} animation="grow" /></div>}
 
                         </ListGroup>
                     </Card.Body>
@@ -370,7 +373,7 @@ function setOrderId(id){
         </ListGroup>
         </div>
     }
-                                        <Button onClick={handleAddressShow} variant={'success'} className={'mt-2 mb-2'}> { navStatus === 'delivery' ? 'новый адрес' : 'укажите ваш адрес'}</Button>
+                                        <Button title={navStatus=== 'delivery' ? 'укажите ваш адрес, на который будет доставлен товар' : 'Адрес нужен, чтобы система могла наиболее точно подсказать вам лучшие предложения'} onClick={handleAddressShow} variant={'success'} className={'mt-2 mb-2'}> { navStatus === 'delivery' ? 'новый адрес' : 'укажите ваш адрес'}</Button>
                                         <Card>
                                             <Card.Body className={styles.cartCountBlock}>
                                                 <h3>Итого: {amountHolder} руб.</h3>

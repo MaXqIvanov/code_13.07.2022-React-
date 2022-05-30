@@ -31,3 +31,23 @@
 .orderStatus{
     float: right;
 }
+.div_widthout_orders{
+    min-height: 75vh;
+    position: relative;
+}
+.Spinner_orderlistPage{
+    height: 45px;
+    width: 45px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+@media(max-width:450px){
+    .orderItem{
+        display: flex !important;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        cursor: pointer;
+        padding: 0.2rem 0.3rem;
+    }
+}
