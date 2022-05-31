@@ -391,7 +391,7 @@ function setOrderId(id){
                                         <Button title={navStatus=== 'delivery' ? 'укажите ваш адрес, на который будет доставлен товар' : 'Адрес нужен, чтобы система могла наиболее точно подсказать вам лучшие предложения'} onClick={handleAddressShow} variant={'success'} className={'mt-2 mb-2'}> { navStatus === 'delivery' ? 'новый адрес' : 'укажите ваш адрес'}</Button>
                                         <Card>
                                             <Card.Body className={styles.cartCountBlock}>
-                                                <h3>Итого: {amountHolder?.toFixed(2)} руб.</h3>
+                                                <h3>Итого: {amountHolder} руб.</h3>
                                                 <Button className={styles.btn_count_price} disabled={addressHolder.length === 0} onClick={handleCountShow}>Посчитать цену</Button>
                                             </Card.Body>
 
