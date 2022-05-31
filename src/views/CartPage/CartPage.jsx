@@ -130,23 +130,38 @@ const CartPage = () => {
                 setIsLoading(false)
             })
     },[])
-       function handleChanges(e,id,middle_cost,index) {
-           //this is work on thursday
-           console.log("this is e");
-           console.log(e);
-           console.log("this is id ");
-           console.log(id);
-           console.log("this is index");
-           console.log(index);
-           console.log("this is middle_cost");
-           console.log(middle_cost);
+       function handleChanges(e,id,middle_cost,index, count) {
+           let oneCost;
+           let newPrice; 
+           let newCount;
+           let changesValue;
+           let diffNumber;
+           if(e.target.value > 0 && count > 0){
+            oneCost = middle_cost / count
+            newPrice = oneCost * Number(e.target.value)
+            newCount = Number(e.target.value)
+           } else{
+            oneCost = middle_cost / count
+            newPrice = oneCost * 1
+            newCount = 1
+           }
            setCardHolder(
               cartHolder.map((item) =>
-                 item.id === id ? {...item, count: e.target.value} : item
+                 item.id === id ? {...item, count: newCount, middle_cost: newPrice} : item
              )
-
          )
-         // sendChanges(id,index)
+         if(e.target.value.length > 0){
+            if(count < e.target.value){
+                diffNumber = e.target.value - count
+                changesValue = amountHolder + oneCost * diffNumber
+             }
+             else{
+                diffNumber = count - e.target.value
+                changesValue = amountHolder - oneCost * diffNumber
+             }
+             setAmountHolder(changesValue)
+         }
+        // sendChanges(id,index)
      }
 
      function takeAddressHandler(props){
@@ -206,7 +221,7 @@ const CartPage = () => {
                             if (item._nomenclature.id === id){
                                 let diffAmount = item.middle_cost / item.count
                                 setAmountHolder(amountHolder + diffAmount)
-                                return {...item, count:response.data.count, middle_cost:response.data.middle_cost}
+                                return {...item, count:Number(response.data.count), middle_cost:response.data.middle_cost}
                             } else {
                                 return item
                             }
@@ -227,7 +242,7 @@ const CartPage = () => {
                         if (item._nomenclature.id === id){
                             let diffAmount = item.middle_cost / item.count
                             setAmountHolder(amountHolder - diffAmount)
-                            return {...item, count:response.data.count, middle_cost:response.data.middle_cost}
+                            return {...item, count:Number(response.data.count), middle_cost:response.data.middle_cost}
                         } else {
                             return item
                         }
@@ -250,7 +265,7 @@ function setOrderId(id){
         } else{
             api.post('marketplace/cart/change/',{
                 "nomenclature": id,
-                "count": e.target.value
+                "count": Number(e.target.value)
             })
         }
     }
@@ -316,7 +331,7 @@ function setOrderId(id){
                                                 aria-label="Default"
                                                 className={styles.countInput}
                                                 onChange={(event)=>{
-                                                    handleChanges(event,item.id, item.middle_cost, index)
+                                                    handleChanges(event,item.id, item.middle_cost, index, item.count)
                                                     
                                                 }}
                                                 onBlur={(e)=>{
@@ -376,8 +391,8 @@ function setOrderId(id){
                                         <Button title={navStatus=== 'delivery' ? 'укажите ваш адрес, на который будет доставлен товар' : 'Адрес нужен, чтобы система могла наиболее точно подсказать вам лучшие предложения'} onClick={handleAddressShow} variant={'success'} className={'mt-2 mb-2'}> { navStatus === 'delivery' ? 'новый адрес' : 'укажите ваш адрес'}</Button>
                                         <Card>
                                             <Card.Body className={styles.cartCountBlock}>
-                                                <h3>Итого: {amountHolder} руб.</h3>
-                                                <Button disabled={addressHolder.length === 0} onClick={handleCountShow}>Посчитать цену</Button>
+                                                <h3>Итого: {amountHolder?.toFixed(2)} руб.</h3>
+                                                <Button className={styles.btn_count_price} disabled={addressHolder.length === 0} onClick={handleCountShow}>Посчитать цену</Button>
                                             </Card.Body>
 
                                         </Card>

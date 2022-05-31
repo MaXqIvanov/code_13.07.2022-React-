@@ -1,5 +1,5 @@
 import './App.css';
-
+import React, { Suspense } from 'react';
 import Header from "./components/Header";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import MainPage from "./views/MainPage";
@@ -12,6 +12,8 @@ import ItemPage from "./views/ItemPage/ItemPage";
 import CartPage from "./views/CartPage/CartPage";
 import OrderListPage from "./views/OrderListPage/OrderListPage";
 import OrderItem from "./views/OrderItem/OrderItem";
+import { Spinner } from "react-bootstrap";
+const UserPage = React.lazy(() => import('./views/UserPage/UserPage'));
 
 const App = observer(() => {
   return (
@@ -29,6 +31,11 @@ const App = observer(() => {
                 <Route exact path={'/order/:id'} element={<OrderItem/>} key={':id'} />
                 <Route exact  path={'/item/:id'} element={<ItemPage key={':id'} />} />
                 <Route exact  path={'/category/:id'}  element={<CategoryPage key={':id'} />} />
+                <Route path="/user" element={
+                  <Suspense fallback={<div className='async_loading'><Spinner className='spinner_fallback' animation="grow" /></div>}>
+                      <UserPage />
+                  </Suspense>
+                }/>
             </Routes>
             </div>
         </Router>

@@ -6,7 +6,6 @@ import user from "../../store/user";
     baseURL : "http://dev1.itpw.ru:8005/",
     headers : {
         'Authorization': Cookies.get('token') ? "Bearer " + Cookies.get('token') : null,
-
     }
 });
 api.interceptors.response.use(undefined, (error) => {

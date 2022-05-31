@@ -24,3 +24,14 @@
 .dropdown-menu[data-bs-popper] {
   left: -1.5rem;
 }
+.spinner_fallback{
+  height: 45px;
+  width: 45px;
+}
+.async_loading{
+  min-height: 70vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

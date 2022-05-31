@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+.main{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.wrapper{
+    height: 100%;
+    width: 90%;
+    min-height: 85vh;
+    margin-top: 30px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    font-family: 'Montserrat', sans-serif;
+
+    @media(max-width:630px){
+        grid-template-columns: 100%;
+        grid-template-rows: 50% 50%;
+        min-height: 75vh;
+    }
+}
+.wrapper_image{
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.authFailed{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.image{
+    height: 300px;
+    width: 300px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    @media(max-width:900px){
+        height: 250px;
+        width: 250px;
+        margin-left: -25px;
+    }
+    @media(max-width:450px){
+        width: 250px;
+        height: 250px;
+        margin-left: 0px;
+    }
+}
+.wrappe_profile{
+    width: 100%;
+    height: fit-content;
+    margin-top: 20px;
+    @media(min-width: 630px){
+        font-size: large;
+    }
+    @media(max-width: 629px){
+        margin-left: 20px;
+    }
+}
+.group_phone{
+    width: fit-content;
+    display: flex;
+    margin-top: 20px;
+}
+.phone{
+
+    span{
+        margin-right: 5px;
+    }
+}
+.phone_btn{
+    margin-left: 20px;
+    height: 25px;
+    width: 25px;
+    background-image: url('../../assets/user/change_numb.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+.group_name{
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+}
+.name{
+
+    span{
+        margin-left: 5px;
+    }
+}
+.name_btn{
+    margin-left: 20px;
+    height: 25px;
+    width: 25px;
+    background-image: url('../../assets/user/change_numb.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+
+// form group modalName
+.modal_name{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 0px 5px rgb(37, 37, 37);
+    height: 300px;
+    width: 500px;
+    background: white;
+    @media(max-width:630px){
+        width: 94%;
+        height: fit-content;
+        min-height: 220px;
+    }
+}
+.btn_close_modal_name{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    background-image: url('../../assets/user/close_btn.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.form_group_inputname{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+}
+.wrap_btn_name{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.errors_name{
+    font-size: small;
+    color: red;
+    margin-left: 13px;
+}
+.wrapper_modal_name{
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+.btn_numberModal{
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translate(-50%,0);
+    @media(max-width:450px){
+        bottom: 15px;
+    }
+}
+.wrapper_form_group_inputname{
+    margin-top: 20px;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    @media(max-width:450px){
+        margin-top: 5px;
+    }
+}
+.form_group_inputphone{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 100%;
+}

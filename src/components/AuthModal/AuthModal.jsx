@@ -50,11 +50,6 @@ const AuthModal = observer(() => {
                     console.log(error)
                 })
     }
-    function resetLoginForm(){
-        setPhoneHolder('')
-        setOtcHolder('')
-        setFormStageHolder(1)
-    }
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -70,6 +65,11 @@ const AuthModal = observer(() => {
 
         setLoginValidated(true);
     };
+    function resetLoginForm(){
+        setPhoneHolder('')
+        setOtcHolder('')
+        setFormStageHolder(1)
+    }
     async function unAuthUser(){
         await user.unAuthUser()
         await navigate(0)

@@ -5,8 +5,8 @@ import api from "../plugins/axios/api";
 import axios from "axios";
 
 
-
 class user {
+    user = {}
     authModal = false
     userCity = Cookies.get('userCity')
     userData = Cookies.get('userData')
@@ -17,9 +17,6 @@ class user {
         if (!Cookies.get('userCity')){
             axios.get('http://dev1.itpw.ru:8005/marketplace/city/')
                 .then((response)=>{
-                    console.log('====================================');
-                    console.log(response);
-                    console.log('====================================');
                     Cookies.set('userCity', JSON.stringify(response.data[0]), {expires:7, path:'/'})
                 })
         }
@@ -43,6 +40,24 @@ class user {
     setUserCity(props){
         Cookies.set('userCity', JSON.stringify(props), {expires:7, path:'/'})
     }
+    getProfile(){
+        api('accounts/profile/profile/')
+        .then((response)=>{
+            console.log(response)
+            this.user = response.data
+        })
+    }
+    changeName = ({input_name})=>{
+        api.put('accounts/profile/change_name/',{
+            name: input_name
+        })
+        .then((response)=>{
+            this.user = response.data
+        })
+    }  
+    changePhone = (data)=>{
+        this.user = data.user;
+    } 
 }
 
 
