@@ -78,56 +78,6 @@ useEffect(()=>{
                     <p className={'chosenCity'}>{cookies.userCity?.name}</p>
                 </OverlayTrigger>
             </Navbar>
-
-        {/* <Navbar bg="light">
-            <Container>
-                <Navbar.Brand className={'navbar-brand'} ><span onClick={()=>{navigate('/')}}>STROYROOM</span>
-                    <Button onClick={()=>{sidebar.changeSidebarStatus()}} className={'sidebar-button'}><List></List> Каталог</Button>
-
-                </Navbar.Brand>
-
-                {user.authModal &&
-                    <AuthModal></AuthModal>
-                }
-                <NavItem>
-        <div className={'rightNavbar'}>
-                    <InputGroup>
-                        <FormControl
-                            placeholder="Поиск"
-                            aria-label="Поиск"
-                            onKeyPress={(e)=>{goToSearch(e)}}
-                            aria-describedby="basic-addon1"
-                            onChange={(event)=>{setSearchHolder(event.target.value)}}
-                        />
-                        <Button
-                            className={'search-btn qwe'}
-                            variant="outline-secondary"
-                            title="Action"
-                            id="button"
-                            disabled={searchHolder === ''}
-                            onClick={goToSearch}
-                        >
-                            <Search></Search>
-                        </Button>
-                    </InputGroup>
-            { cookies.isAuth === (false || undefined) &&
-            <Button onClick={()=>{user.showAuthModal(true)}} >Войти</Button>
-            }
-            { cookies.isAuth === 'true' &&
-                <div className={'nav-buttons'}>
-                <Button disabled={cart.itemsAmount === 0} onClick={()=>{navigate('/cart')}} className={'cart-button'}><span>Корзина</span> <Badge  bg="secondary">{cart.itemsAmount}</Badge></Button>
-                <DropdownButton id="dropdown-basic-button" title={'Профиль'}>
-                    <Dropdown.Item onClick={()=>{navigate('/orders')}}>Мои заказы</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Настройки</Dropdown.Item>
-                    <Dropdown.Item  className={'exit-button'} onClick={unAuthUser}>Выйти</Dropdown.Item>
-                </DropdownButton>
-                </div>
-    }
-        </div>
-            </NavItem>
-            </Container>
-        </Navbar> */}
-
     <Navbar bg="light" expand="lg">
         <Container fluid>
             <Navbar.Brand className={'navbar-brand'} ><span onClick={()=>{navigate('/')}}>STROYROOM</span>
@@ -165,14 +115,18 @@ useEffect(()=>{
                     </Button>
                 </InputGroup>
                         { cookies.isAuth === (false || undefined) &&
-                    <Button onClick={()=>{user.showAuthModal(true)}} >Войти</Button>
+                    <div className='group_btn_unauth'>
+                        {/* <Button disabled={cart.itemsAmount === 0} onClick={()=>{navigate('/cart')}} className={'cart-button_unauth'}><span>Корзина</span> <Badge  bg="secondary">{cart.itemsAmount}</Badge></Button> */}
+                        <Button onClick={()=>{navigate('/cart')}} className={'cart-button_unauth'}><span>Корзина</span> <Badge  bg="secondary">{cart.itemsAmount}</Badge></Button>
+                        <Button onClick={()=>{user.showAuthModal(true)}} >Войти</Button>
+                    </div>
                     }
                     { cookies.isAuth === 'true' &&
                         <div className={'nav-buttons'}>
                         <Button disabled={cart.itemsAmount === 0} onClick={()=>{navigate('/cart')}} className={'cart-button'}><span>Корзина</span> <Badge  bg="secondary">{cart.itemsAmount}</Badge></Button>
                         <DropdownButton className='btn_profile_header' id="dropdown-basic-button" title={'Профиль'}>
                             <Dropdown.Item onClick={()=>{navigate('/orders')}}>Мои заказы</Dropdown.Item>
-                            <Dropdown.Item onClick={()=>navigate('/user')}>Настройки</Dropdown.Item>
+                            <Dropdown.Item onClick={()=>user.changeProfileVisible()}>Настройки</Dropdown.Item>
                             <Dropdown.Item  className={'exit-button'} onClick={unAuthUser}>Выйти</Dropdown.Item>
                         </DropdownButton>
                         </div>

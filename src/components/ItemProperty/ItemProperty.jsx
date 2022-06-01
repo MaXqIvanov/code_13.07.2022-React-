@@ -18,10 +18,8 @@ const ItemProperty = ({itemName}) => {
     async function getData(){
 
         await api(`marketplace/nomenclature-properties/?nomenclature=${pageParams.id}`)
-
             .then((response)=>{
                 setItemProperty(response.data)
-                console.log(itemProperty)
             })
             .finally(()=>{
                 setIsLoading(false)

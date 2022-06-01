@@ -10,7 +10,7 @@ import user from "../../store/user";
 });
 api.interceptors.response.use(undefined, (error) => {
     if (error.response && error.response.status === 401) {
-       user.showAuthModal(true)
+    //    user.showAuthModal(true)
     }
 });
 

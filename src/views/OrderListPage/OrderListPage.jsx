@@ -3,7 +3,6 @@ import {Card, ListGroup, Badge, Pagination, Button, Spinner} from "react-bootstr
 import api from "../../plugins/axios/api";
 import styles from './OrderListPage.module.css'
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
 
 
 const OrderListPage = () => {
@@ -15,6 +14,7 @@ const [ordersList, setOrdersList] = useState([])
     useEffect(() => {
        api('marketplace/order/')
            .then((response)=>{
+               console.log(response);
                setPagesTotal(response.data.count)
                setNextPage(response.data.next)
                setOrdersList(response.data.results)
@@ -40,7 +40,7 @@ function fetchData() {
             </Card.Header>
             <Card.Body>
                 <ListGroup>
-                    {load == true && ordersList.length > 0 ? ordersList.map((order)=>(
+                    {load === true && ordersList.length > 0 ? ordersList.map((order)=>(
                         <ListGroup.Item key={order.id} onClick={()=>{
                             navigate(`/order/${order.id}`)
                         }} className={styles.orderItem}>
@@ -63,7 +63,7 @@ function fetchData() {
                         </ListGroup.Item>
                         )
                     ) : <div className={styles.div_widthout_orders}><Spinner className={styles.Spinner_orderlistPage} animation="grow" /></div>}
-                    {ordersList.length == 0 && load == false ? <div style={{marginTop: '20px'}}>В данный момент заказов нет</div> : <></>}
+                    {ordersList.length === 0 && load === false ? <div style={{marginTop: '20px'}}>В данный момент заказов нет</div> : <></>}
                 </ListGroup>
                 <div style={{width:'100%', display:'flex', justifyContent:'center'}}>
                     {nextPage &&

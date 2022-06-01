@@ -5,13 +5,12 @@ import {Cart2, Check, Search} from "react-bootstrap-icons";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import api from "../../plugins/axios/api";
 import cart from "../../store/cart";
+import {useCookies} from "react-cookie";
 
 const SearchPage = () => {
-    let [ itemsHolder, setItemsHolder] = useState([
-
-
-    ])
+    let [ itemsHolder, setItemsHolder] = useState([])
     let navigate = useNavigate()
+    const [cookies] = useCookies(['userCity, tmt, token']);
     let [searchParams] = useSearchParams()
     useEffect(() => {
         console.log('Гайка' == 'гайка')
@@ -25,7 +24,7 @@ const SearchPage = () => {
         navigate('/item/' + id)
     }
     function addToCart(id, qty){
-        api.post('marketplace/cart/change/',{
+        api.post(`marketplace/cart/change/?tmp=${cookies.tmt}`,{
             nomenclature: id,
             count: qty
         })
@@ -43,7 +42,7 @@ const SearchPage = () => {
             })
     }
     function deleteFromCart(id,qty){
-        api.post('marketplace/cart/change/',{
+        api.post(`marketplace/cart/change/?tmp=${cookies.tmt}`,{
             nomenclature: id,
             count: qty
         })
@@ -59,7 +58,6 @@ const SearchPage = () => {
             })
     }
 
-
     return (
         <Row>
             <Col>
@@ -72,7 +70,7 @@ const SearchPage = () => {
                             <div className={styles.searchNull}>Поиск не дал результатов</div>
                         }
                         {itemsHolder.map((item, cardIndex)=>(
-                            <Card className={styles.item}>
+                            <Card key={item.id} className={styles.item}>
                                 <Card.Img onClick={()=>{goToItem(item.id)}} alt={item.name} title={item.name}  className={styles.itemImg} variant="top" src={item.images[0]} />
                                 <Card.Body >
                                     <Card.Title onClick={()=>{goToItem(item.id)}} className={styles.itemTitle}>{item.name}</Card.Title>

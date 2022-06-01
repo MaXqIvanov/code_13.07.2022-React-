@@ -1,16 +1,11 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Card, FloatingLabel, Form, ListGroup, Modal, Offcanvas} from "react-bootstrap";
 import styles from "./CartPage.module.css";
 import stylez from './PirckupOrder.module.css'
-import DatePicker from "react-datepicker";
 import Map, {Marker, GeolocateControl, NavigationControl} from "react-map-gl";
 import api from "../../plugins/axios/api";
 import {useCookies} from "react-cookie";
-import SuccessOrder from "../../components/SuccessOrder/SuccessOrder";
 import cart from "../../store/cart";
-
-
-
 
 const PickupOrder = (props) => {
     const [token, setToken] = useState('pk.eyJ1IjoiZGllbGl0IiwiYSI6ImNreGJ3b3RlOTByOHQycHE5bWwzaXlxZ2cifQ.1QkwgR8DegdGymUZL3iTjg')

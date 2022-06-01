@@ -6,10 +6,11 @@ import user from "../../store/user";
 import {useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import {observer} from "mobx-react-lite";
-
+import Cookies from "js-cookie";
+import axios from 'axios';
 
 const AuthModal = observer(() => {
-    const [cookies, setCookie, removeCookie] = useCookies(['token','isAuth','userData']);
+    const [cookies, setCookie, removeCookie] = useCookies(['token','isAuth','userData', 'tmt']);
     let [phoneHolder, setPhoneHolder] = useState('')
     let [otcHolder, setOtcHolder] = useState('')
     let [formStageHolder, setFormStageHolder] = useState(1)
@@ -42,12 +43,33 @@ const AuthModal = observer(() => {
                         setCookie("userData",response.data.user, {maxAge: 31536000, path: '/'})
                         setCookie("isAuth",true, {maxAge: 31536000, path: '/' })
                         user.changeUserData(response.data.user)
-                        user.showAuthModal(false)
-                        navigate(0)
+                        //user.showAuthModal(false)
+                        //navigate(0)
                     }
                 })
                 .catch((error)=>{
-                    console.log(error)
+    
+                })
+                .then(()=>{
+                    axios.post(`http://dev1.itpw.ru:8005/marketplace/cart/sync/`,{
+                        tmp: cookies.tmt
+                    },{ headers : {
+                        'Authorization': Cookies.get('token') ? "Bearer " + Cookies.get('token') : null,
+                    }})
+                    .then((response)=>{
+                        axios.post(`http://dev1.itpw.ru:8005/marketplace/order-address/sync/`,{
+                            tmp: cookies.tmt
+                        },{
+                            headers : {
+                            'Authorization': Cookies.get('token') ? "Bearer " + Cookies.get('token') : null,
+                        }
+                        })
+                        .then(()=>{
+                            removeCookie("tmt")
+                            user.showAuthModal(false)
+                            navigate(0)
+                        })
+                    })
                 })
     }
 

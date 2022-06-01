@@ -16,9 +16,10 @@ export const UserPage = observer(() => {
     <div className={s.main}>
         {user.authModal === false ? 
         <div className={s.wrapper}>
-            <div className={s.wrapper_image}>
+            {/* <div className={s.wrapper_image}>
                 <div style={{backgroundImage: user.user.image ? `url(${user.user.image})`:`url(${image})`}} className={s.image}></div>
-            </div>
+            </div> */}
+            <div onClick={()=> user.changeProfileVisible()} className={s.close_btn_profile}></div>
             <div className={s.wrappe_profile}>
                 <span>Профиль пользователя:</span>
                 <div className={s.group_name}>

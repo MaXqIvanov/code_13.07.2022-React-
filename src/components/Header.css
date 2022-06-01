@@ -80,4 +80,15 @@
     .nav-buttons{
         margin-right: 2px;
     }
+    .group_btn_unauth{
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+    }
+}
+.group_btn_unauth{
+    display: flex;
+}
+.cart-button_unauth{
+    margin-right: 20px;
 }

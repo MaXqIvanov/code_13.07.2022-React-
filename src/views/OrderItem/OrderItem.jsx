@@ -60,7 +60,7 @@ const OrderItem = () => {
                 <Card>
                     <ListGroup className={styles.finishCartList}>
                         {orderPositions.map((item) => (
-                            <ListGroup.Item key={item.id} className={styles.finishCartBlock}>
+                            <ListGroup.Item key={item.id} className={styles.finishCartBlockOrder}>
                                 <div className={styles.itemImgBlock}>
                                     <img className={styles.itemImg} src={item.nomenclature.images[0]}
                                          alt="Фото товара"/>

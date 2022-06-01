@@ -7,6 +7,7 @@ import axios from "axios";
 
 class user {
     user = {}
+    profileVisible = false
     authModal = false
     userCity = Cookies.get('userCity')
     userData = Cookies.get('userData')
@@ -43,9 +44,11 @@ class user {
     getProfile(){
         api('accounts/profile/profile/')
         .then((response)=>{
-            console.log(response)
             this.user = response.data
         })
+    }
+    changeProfileVisible(){
+        this.profileVisible = !this.profileVisible
     }
     changeName = ({input_name})=>{
         api.put('accounts/profile/change_name/',{

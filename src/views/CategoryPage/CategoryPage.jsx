@@ -6,23 +6,29 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Cart2, Check} from "react-bootstrap-icons";
 import cart from "../../store/cart";
 import {observer} from "mobx-react-lite";
+import {useCookies} from "react-cookie";
+import axios from 'axios';
 
 const CategoryPage = observer(() => {
     const ref = useRef()
     const navigate = useNavigate()
     const [itemsHolder, setItemsHolder] = useState([])
+    const [cookies] = useCookies(['userCity, tmt']);
     let pageParams = useParams()
 
 
     useEffect(()=>{
         api(`marketplace/nomenclature/?category=${pageParams.id}`)
             .then((response)=>{
+                // setItemsHolder((prevState => ([...prevState,response.data.results])))
+                // change this
+                console.log(response);
                 setItemsHolder(response.data.results)
             })
     },[pageParams.id])
 
     function addToCart(id, qty){
-        api.post('marketplace/cart/change/',{
+        api.post(`marketplace/cart/change/?tmp=${cookies.tmt}`,{
             nomenclature: id,
             count: qty
         })
@@ -38,11 +44,13 @@ const CategoryPage = observer(() => {
             })
     }
     function deleteFromCart(id,qty){
-        api.post('marketplace/cart/change/',{
+      api.post(`marketplace/cart/change/?tmp=${cookies.tmt}`,{
             nomenclature: id,
             count: qty
         })
             .then((response)=>{
+                console.log("this is response categ");
+                console.log(response);
                 if (response.status === 204){
                     setItemsHolder(
                         itemsHolder.map((item) =>

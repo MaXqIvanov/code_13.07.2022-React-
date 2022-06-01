@@ -50,4 +50,9 @@
         cursor: pointer;
         padding: 0.2rem 0.3rem;
     }
+    .orderStatus{
+        font-size: x-small;
+        /* max-width: 100px; */
+        white-space: pre-line;
+    }
 }

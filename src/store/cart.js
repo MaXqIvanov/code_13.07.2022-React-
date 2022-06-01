@@ -15,10 +15,21 @@ class cart {
 console.log()
     }
     requestInfo(){
-        api('marketplace/cart/')
+        try {
+            let allCookie = document.cookie.split(';');
+            let cookie = allCookie.filter((elem)=> elem.includes('tmt'))
+            cookie = cookie[0].split('=')
+            api(`marketplace/cart/?tmp=${cookie[1]}`)
             .then((response)=>{
                 this.itemsAmount = response.data.result.length
             })
+        } catch (error) { 
+            api(`marketplace/cart/`)
+            .then((response)=>{
+                this.itemsAmount = response.data.result.length
+            }) 
+        }
+        // api(`marketplace/cart/?tmp=${twt}`)
     }
 
 }

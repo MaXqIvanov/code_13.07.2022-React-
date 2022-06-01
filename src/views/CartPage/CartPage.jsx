@@ -29,7 +29,7 @@ import SuccessOrder from "../../components/SuccessOrder/SuccessOrder";
 
 
 const CartPage = () => {
-    const [cookies] = useCookies(['userCity']);
+    const [cookies] = useCookies(['userCity, tmt, token']);
     let [cartHolder, setCardHolder] = useState([])
     let [amountHolder, setAmountHolder] = useState(null)
     let [isLoading,setIsLoading] = useState(true)
@@ -62,7 +62,6 @@ const CartPage = () => {
         }
     },[cartHolder])
 
-
     const handleSuccessShow = (orderNumber) => {
         setOrderNumber(orderNumber)
         setSuccessModal(true)
@@ -73,11 +72,14 @@ const CartPage = () => {
 
     const handleCountClose = () => setCountShow(false);
     const handleCountShow =  () => {
+      if(cookies.token){
+          console.log("user is auth");
         if (navStatus === 'delivery') {
-            deliveryTypes.length === 0
-                ?
+            console.log("navStatus is delivery");
+            // deliveryTypes.length == 0 ?
                 api(`marketplace/order/delivery_all/?city=${cookies.userCity.id}&address=${chosenAddress}`)
                     .then((response) => {
+                        console.log(response);
                         setDeliveryTypes(response.data)
                         setChoosenType(response.data[0])
                     })
@@ -85,8 +87,8 @@ const CartPage = () => {
                         setTypesIsLoading(false)
                         setCountShow(true)
                     })
-                :
-                setCountShow(true)
+                // :
+                // setCountShow(true)
         }
         if (navStatus === 'pickup'){
             api(`marketplace/order/pickup_all/?city=${cookies.userCity.id}&address=${chosenAddress}`)
@@ -98,6 +100,10 @@ const CartPage = () => {
                     setPickupModalHolder(true)
                 })
         }
+      }
+      else{
+          user.showAuthModal(true)
+      }
     };
 
     const handleAddressClose = () => setAddressShow(false);
@@ -111,7 +117,7 @@ const CartPage = () => {
 
 
     useEffect(()=>{
-        api('marketplace/cart/')
+            api(`marketplace/cart/?tmp=${cookies.tmt}`)
             .then((response)=>{
                 setCardHolder(response.data.result)
                 setAmountHolder(response.data.amount)
@@ -119,7 +125,7 @@ const CartPage = () => {
             .finally(()=>{
                 isLoad(true)
             })
-        api('marketplace/order-address/')
+        api(`marketplace/order-address/?tmp=${cookies.tmt}`)
             .then((response)=>{
                 setAddressHolder(response.data)
                 if (response.data.length !== 0){
@@ -150,7 +156,7 @@ const CartPage = () => {
                  item.id === id ? {...item, count: newCount, middle_cost: newPrice} : item
              )
          )
-         if(e.target.value.length > 0){
+         if(e.target.value > 0){
             if(count < e.target.value){
                 diffNumber = e.target.value - count
                 changesValue = amountHolder + oneCost * diffNumber
@@ -161,6 +167,11 @@ const CartPage = () => {
              }
              setAmountHolder(changesValue)
          }
+         else{
+            diffNumber = count - 1
+            changesValue = amountHolder - oneCost * diffNumber
+            setAmountHolder(changesValue)
+         }
         // sendChanges(id,index)
      }
 
@@ -168,7 +179,7 @@ const CartPage = () => {
         setNewAddress(props)
      }
      function addNewAddress(){
-        api.post('marketplace/order-address/',newAddress)
+        api.post(`marketplace/order-address/?tmp=${cookies.tmt}`,newAddress)
             .then((response)=>{
                 if (response.status === 201) {
                     setAddressHolder((prevState => ([...prevState,response.data])))
@@ -179,7 +190,7 @@ const CartPage = () => {
             })
      }
       function deleteItemFromCart(index,item){
-        api.delete(`marketplace/cart/${item.id}/`)
+        api.delete(`marketplace/cart/${item.id}/?tmp=${cookies.tmt}`)
             .then((response)=>{
                 if(response.status === 204) {
                     setAmountHolder(amountHolder - item.middle_cost)
@@ -211,7 +222,7 @@ const CartPage = () => {
             })
     }
     function incremetCount(count,id){
-        api.post('marketplace/cart/change/',{
+        api.post(`marketplace/cart/change/?tmp=${cookies.tmt}`,{
             "nomenclature": id,
             "count": count + 1
         })
@@ -231,7 +242,7 @@ const CartPage = () => {
     }
     function decremetCount(count,id){
         if (count === 1) return
-        api.post('marketplace/cart/change/',{
+        api.post(`marketplace/cart/change/?tmp=${cookies.tmt}`,{
             "nomenclature": id,
             "count": count - 1
         })
@@ -263,14 +274,14 @@ function setOrderId(id){
                 }
             }))
         } else{
-            api.post('marketplace/cart/change/',{
+            api.post(`marketplace/cart/change/?tmp=${cookies.tmt}`,{
                 "nomenclature": id,
                 "count": Number(e.target.value)
             })
         }
     }
     function deleteAddress(item){
-        api.delete(`marketplace/order-address/${item.id}/`)
+        api.delete(`marketplace/order-address/${item.id}/?tmp=${cookies.tmt}`)
             .then((response)=>{
                if (response.status === 204){
                    // setAddressHolder(
@@ -325,7 +336,6 @@ function setOrderId(id){
                                         <span className={styles.itemMainPrice}>от {item.middle_cost} руб.</span>
                                         <InputGroup className={styles.changeCountAction} >
                                             <InputGroup.Text onClick={()=>{decremetCount(item.count,item._nomenclature.id)}} className={styles.countDecrementBtn} id="inputGroup-sizing-default">-</InputGroup.Text>
-                                            {/* добавить функция для обработки ввода и правильного отображения данных */}
                                             <FormControl
                                                 type={'number'}
                                                 aria-label="Default"
@@ -379,7 +389,7 @@ function setOrderId(id){
         <ListGroup defaultActiveKey={addressHolder[0].id}>
             {addressHolder.map((item) => (
                 <ListGroup.Item className={styles.addressItem}  key={item.id} eventKey={item.id}>
-                    {item.address}
+                    <span style={{paddingLeft: '5px'}}>{item.address}</span>
                     <img title='удалить адрес' onClick={()=>{deleteAddress(item)}} className={styles.deleteBtn} src={cross} alt="rh"/>
                 </ListGroup.Item>
             ))}
@@ -391,7 +401,7 @@ function setOrderId(id){
                                         <Button title={navStatus=== 'delivery' ? 'укажите ваш адрес, на который будет доставлен товар' : 'Адрес нужен, чтобы система могла наиболее точно подсказать вам лучшие предложения'} onClick={handleAddressShow} variant={'success'} className={'mt-2 mb-2'}> { navStatus === 'delivery' ? 'новый адрес' : 'укажите ваш адрес'}</Button>
                                         <Card>
                                             <Card.Body className={styles.cartCountBlock}>
-                                                <h3>Итого: {amountHolder} руб.</h3>
+                                                <h3>Итого: {amountHolder?.toFixed(2)} руб.</h3>
                                                 <Button className={styles.btn_count_price} disabled={addressHolder.length === 0} onClick={handleCountShow}>Посчитать цену</Button>
                                             </Card.Body>
 

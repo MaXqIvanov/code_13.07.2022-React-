@@ -6,10 +6,13 @@ import styles from './ItemPage.module.css'
 import ItemProperty from "../../components/ItemProperty/ItemProperty";
 import {Cart2, Check} from "react-bootstrap-icons";
 import cart from "../../store/cart";
+import {useCookies} from "react-cookie";
 
 const ItemPage = () => {
     let [itemHolder, setItemHolder] = useState([])
     let [isLoading, setIsLoading] = useState(true)
+    const [imageNumber, setImageNumber] = useState(0)
+    const [cookies] = useCookies(['userCity, tmt, token']);
     let pageParams = useParams()
      useEffect(()=>{
         getData()
@@ -17,8 +20,9 @@ const ItemPage = () => {
 
 async function getData(){
    await api(`marketplace/nomenclature/${pageParams.id}`)
-
         .then((response)=>{
+            console.log("this is radasd");
+            console.log(response);
             setItemHolder(response.data)
         })
        .finally(()=>{
@@ -27,7 +31,8 @@ async function getData(){
 }
 
     function addToCart(id, qty){
-        api.post('marketplace/cart/change/',{
+        console.log("addToCart");
+        api.post(`marketplace/cart/change/?tmp=${cookies.tmt}`,{
             nomenclature: id,
             count: qty
         })
@@ -41,7 +46,7 @@ async function getData(){
             })
     }
     function deleteFromCart(id,qty){
-        api.post('marketplace/cart/change/',{
+        api.post(`marketplace/cart/change/?tmp=${cookies.tmt}`,{
             nomenclature: id,
             count: qty
         })
@@ -63,14 +68,15 @@ async function getData(){
                <div className={styles.imgBlock}>
                    <div className={styles.imgVarsBlock}>
                        {itemHolder.images.map((item,index)=>(
-                           <img key={item} className={styles.imgVars} src={item} alt=""/>
+                           //work with this 
+                           <img onClick={()=>setImageNumber(index)} key={item} className={styles.imgVars} src={item} alt=""/>
                        ))}
                    </div>
-                  <img className={styles.mainImg} src={itemHolder.images[0]} alt="Фото"/>
+                  <img className={styles.mainImg} src={itemHolder.images[imageNumber]} alt="Фото"/>
                </div>}
             <div className={styles.infoBlock}>
                 <div className={styles.infoHeader}>
-                <Card.Title><h3>{itemHolder.name}</h3></Card.Title>
+                <Card.Title className={styles.card_title_custom}><h3>{itemHolder.name}</h3></Card.Title>
             <div className={styles.itemCode}>Код товара: {itemHolder.id}</div>
                 </div>
                 <div className={styles.description}>

@@ -1,5 +1,5 @@
 import './App.css';
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import Header from "./components/Header";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import MainPage from "./views/MainPage";
@@ -13,9 +13,24 @@ import CartPage from "./views/CartPage/CartPage";
 import OrderListPage from "./views/OrderListPage/OrderListPage";
 import OrderItem from "./views/OrderItem/OrderItem";
 import { Spinner } from "react-bootstrap";
-const UserPage = React.lazy(() => import('./views/UserPage/UserPage'));
+import user from './store/user';
+import UserPage from './views/UserPage/UserPage';
+import {useCookies} from "react-cookie";
+import { v4 as uuidv4 } from 'uuid';
+// const UserPage = React.lazy(() => import('./views/UserPage/UserPage'));
 
 const App = observer(() => {
+  const [cookies, setCookie] = useCookies(['token', 'tmt']);
+  if(cookies.token){
+  }else {
+    if(cookies.tmt){
+
+    }else{
+      let tempToken = uuidv4();
+      setCookie("tmt", tempToken, {maxAge: 31536000, path: '/' })
+    }
+  }
+  
   return (
     <div  className={sidebar.sidebarIsOpen === true ? 'AppOverflowOff' : 'App'}>
 
@@ -31,15 +46,15 @@ const App = observer(() => {
                 <Route exact path={'/order/:id'} element={<OrderItem/>} key={':id'} />
                 <Route exact  path={'/item/:id'} element={<ItemPage key={':id'} />} />
                 <Route exact  path={'/category/:id'}  element={<CategoryPage key={':id'} />} />
-                <Route path="/user" element={
+                {/* <Route path="/user" element={
                   <Suspense fallback={<div className='async_loading'><Spinner className='spinner_fallback' animation="grow" /></div>}>
                       <UserPage />
                   </Suspense>
-                }/>
+                }/> */}
             </Routes>
             </div>
         </Router>
-
+        {user.profileVisible ? <UserPage /> :<></>}
     </div>
   );
 })
