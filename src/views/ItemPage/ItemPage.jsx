@@ -21,8 +21,6 @@ const ItemPage = () => {
 async function getData(){
    await api(`marketplace/nomenclature/${pageParams.id}`)
         .then((response)=>{
-            console.log("this is radasd");
-            console.log(response);
             setItemHolder(response.data)
         })
        .finally(()=>{
@@ -31,7 +29,6 @@ async function getData(){
 }
 
     function addToCart(id, qty){
-        console.log("addToCart");
         api.post(`marketplace/cart/change/?tmp=${cookies.tmt}`,{
             nomenclature: id,
             count: qty

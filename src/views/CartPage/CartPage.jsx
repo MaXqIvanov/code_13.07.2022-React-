@@ -73,13 +73,10 @@ const CartPage = () => {
     const handleCountClose = () => setCountShow(false);
     const handleCountShow =  () => {
       if(cookies.token){
-          console.log("user is auth");
         if (navStatus === 'delivery') {
-            console.log("navStatus is delivery");
             // deliveryTypes.length == 0 ?
                 api(`marketplace/order/delivery_all/?city=${cookies.userCity.id}&address=${chosenAddress}`)
                     .then((response) => {
-                        console.log(response);
                         setDeliveryTypes(response.data)
                         setChoosenType(response.data[0])
                     })

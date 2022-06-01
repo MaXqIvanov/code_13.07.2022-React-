@@ -14,7 +14,6 @@ const [ordersList, setOrdersList] = useState([])
     useEffect(() => {
        api('marketplace/order/')
            .then((response)=>{
-               console.log(response);
                setPagesTotal(response.data.count)
                setNextPage(response.data.next)
                setOrdersList(response.data.results)
@@ -23,16 +22,13 @@ const [ordersList, setOrdersList] = useState([])
     }, []);
 function fetchData() {
     let parsedNext = nextPage.split('')
-    console.log(parsedNext)
     api(`marketplace/order/?page=${parsedNext[parsedNext.length - 1]}`)
         .then((response)=>{
             setPagesTotal(response.data.count)
             setNextPage(response.data.next)
-            console.log([...ordersList, ...response.data.results])
             setOrdersList([...ordersList, ...response.data.results])
         })
 }
-    console.log(ordersList);
     return (
         <Card>
             <Card.Header>

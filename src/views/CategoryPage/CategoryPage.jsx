@@ -22,7 +22,6 @@ const CategoryPage = observer(() => {
             .then((response)=>{
                 // setItemsHolder((prevState => ([...prevState,response.data.results])))
                 // change this
-                console.log(response);
                 setItemsHolder(response.data.results)
             })
     },[pageParams.id])
@@ -49,8 +48,6 @@ const CategoryPage = observer(() => {
             count: qty
         })
             .then((response)=>{
-                console.log("this is response categ");
-                console.log(response);
                 if (response.status === 204){
                     setItemsHolder(
                         itemsHolder.map((item) =>

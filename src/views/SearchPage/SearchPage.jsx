@@ -13,7 +13,6 @@ const SearchPage = () => {
     const [cookies] = useCookies(['userCity, tmt, token']);
     let [searchParams] = useSearchParams()
     useEffect(() => {
-        console.log('Гайка' == 'гайка')
         api('marketplace/nomenclature/?search=' + searchParams.get('q'))
             .then((response)=>{
                 setItemsHolder(response.data.results)
