@@ -64,3 +64,11 @@
         width: 80%;
     }
 }
+
+
+@media(max-width:500px){
+    .mainImg{
+        background-size: contain;
+        max-width: 300px;
+    }
+}

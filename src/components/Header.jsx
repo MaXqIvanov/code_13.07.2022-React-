@@ -123,12 +123,12 @@ useEffect(()=>{
                     }
                     { cookies.isAuth === 'true' &&
                         <div className={'nav-buttons'}>
-                        <Button disabled={cart.itemsAmount === 0} onClick={()=>{navigate('/cart')}} className={'cart-button'}><span>Корзина</span> <Badge  bg="secondary">{cart.itemsAmount}</Badge></Button>
-                        <DropdownButton className='btn_profile_header' id="dropdown-basic-button" title={'Профиль'}>
-                            <Dropdown.Item onClick={()=>{navigate('/orders')}}>Мои заказы</Dropdown.Item>
-                            <Dropdown.Item onClick={()=>user.changeProfileVisible()}>Настройки</Dropdown.Item>
-                            <Dropdown.Item  className={'exit-button'} onClick={unAuthUser}>Выйти</Dropdown.Item>
-                        </DropdownButton>
+                            <Button disabled={cart.itemsAmount === 0} onClick={()=>{navigate('/cart')}} className={'cart-button'}><span>Корзина</span> <Badge  bg="secondary">{cart.itemsAmount}</Badge></Button>
+                            <DropdownButton className='btn_profile_header' id="dropdown-basic-button" title={'Профиль'}>
+                                <Dropdown.Item onClick={()=>{navigate('/orders')}}>Мои заказы</Dropdown.Item>
+                                <Dropdown.Item onClick={()=>user.changeProfileVisible()}>Настройки</Dropdown.Item>
+                                <Dropdown.Item  className={'exit-button'} onClick={unAuthUser}>Выйти</Dropdown.Item>
+                            </DropdownButton>
                         </div>
                     }
                 </div>

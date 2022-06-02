@@ -50,9 +50,26 @@
         cursor: pointer;
         padding: 0.2rem 0.3rem;
     }
+}
+@media(max-width:920px){
     .orderStatus{
         font-size: x-small;
         /* max-width: 100px; */
         white-space: pre-line;
     }
 }
+
+/* custom scroll */
+.imgBlock::-webkit-scrollbar {
+    width: 6px; /* ширина scrollbar */
+    height: 8px;
+  }
+.imgBlock::-webkit-scrollbar-track {
+    background: rgb(255, 255, 255); /* цвет дорожки */
+    border-radius: 25px;
+  }
+.imgBlock::-webkit-scrollbar-thumb {
+    background-color: #018bdb; /* цвет плашки */
+    border-radius: 20px; /* закругления плашки */
+    border: 2px solid #000000; /* padding вокруг плашки */
+  }

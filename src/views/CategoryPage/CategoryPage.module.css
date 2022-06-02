@@ -71,6 +71,15 @@
 .cartBtn{
     width: 100%;
 }
+.wrapper_categoryPage{
+    min-height: 75vh;
+    position: relative;
+}
+.pagination_block{
+    position: absolute;
+    bottom: -50px;
+    left: 30px;
+}
 /*@media screen and (min-width: 1008px){*/
 /*    .itemBlock{*/
 /*  margin: 0 auto;*/

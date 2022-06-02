@@ -20,8 +20,10 @@ import { v4 as uuidv4 } from 'uuid';
 // const UserPage = React.lazy(() => import('./views/UserPage/UserPage'));
 
 const App = observer(() => {
-  const [cookies, setCookie] = useCookies(['token', 'tmt']);
+  const [cookies, setCookie, removeCookie] = useCookies(['token', 'tmt']);
   if(cookies.token){
+    // вопрос
+    removeCookie("tmt")
   }else {
     if(cookies.tmt){
 

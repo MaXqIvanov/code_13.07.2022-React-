@@ -53,7 +53,9 @@
 .search_btn{
     margin-right: 20px;
 }
-
+/* @media(max-width:1000px){
+    
+} */
 @media(max-width:610px){
     .group_btn_header{
         display: grid;
