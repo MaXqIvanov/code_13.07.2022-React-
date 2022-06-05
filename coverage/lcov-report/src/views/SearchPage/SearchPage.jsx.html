@@ -164,10 +164,8 @@
 <a name='L99'></a><a href='#L99'>99</a>
 <a name='L100'></a><a href='#L100'>100</a>
 <a name='L101'></a><a href='#L101'>101</a>
-<a name='L102'></a><a href='#L102'>102</a>
-<a name='L103'></a><a href='#L103'>103</a>
-<a name='L104'></a><a href='#L104'>104</a>
-<a name='L105'></a><a href='#L105'>105</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L102'></a><a href='#L102'>102</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -177,9 +175,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -225,7 +220,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -278,16 +272,14 @@ import {Cart2, Check, Search} from "react-bootstrap-icons";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import api from "../../plugins/axios/api";
 import cart from "../../store/cart";
+import {useCookies} from "react-cookie";
 &nbsp;
 const SearchPage = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-    let [ itemsHolder, setItemsHolder] = <span class="cstat-no" title="statement not covered" >useState([</span>
-&nbsp;
-&nbsp;
-    ])
+    let [ itemsHolder, setItemsHolder] = <span class="cstat-no" title="statement not covered" >useState([])</span>
     let navigate = <span class="cstat-no" title="statement not covered" >useNavigate()</span>
+    const [cookies] = <span class="cstat-no" title="statement not covered" >useCookies(['userCity, tmt, token']);</span>
     let [searchParams] = <span class="cstat-no" title="statement not covered" >useSearchParams()</span>
 <span class="cstat-no" title="statement not covered" >    useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        console.log('Гайка' == 'гайка')</span>
 <span class="cstat-no" title="statement not covered" >        api('marketplace/nomenclature/?search=' + searchParams.get('q'))</span>
             .then(<span class="fstat-no" title="function not covered" >(r</span>esponse)=&gt;{
 <span class="cstat-no" title="statement not covered" >                setItemsHolder(response.data.results)</span>
@@ -298,7 +290,7 @@ const SearchPage = <span class="cstat-no" title="statement not covered" ><span c
 <span class="cstat-no" title="statement not covered" >        navigate('/item/' + id)</span>
     }
     function <span class="fstat-no" title="function not covered" >addToCart(</span>id, qty){
-<span class="cstat-no" title="statement not covered" >        api.post('marketplace/cart/change/',{</span>
+<span class="cstat-no" title="statement not covered" >        api.post(`marketplace/cart/change/?tmp=${cookies.tmt}`,{</span>
             nomenclature: id,
             count: qty
         })
@@ -316,7 +308,7 @@ const SearchPage = <span class="cstat-no" title="statement not covered" ><span c
             })
     }
     function <span class="fstat-no" title="function not covered" >deleteFromCart(</span>id,qty){
-<span class="cstat-no" title="statement not covered" >        api.post('marketplace/cart/change/',{</span>
+<span class="cstat-no" title="statement not covered" >        api.post(`marketplace/cart/change/?tmp=${cookies.tmt}`,{</span>
             nomenclature: id,
             count: qty
         })
@@ -332,7 +324,6 @@ const SearchPage = <span class="cstat-no" title="statement not covered" ><span c
             })
     }
 &nbsp;
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    return (</span>
         &lt;Row&gt;
             &lt;Col&gt;
@@ -345,7 +336,7 @@ const SearchPage = <span class="cstat-no" title="statement not covered" ><span c
                             &lt;div className={styles.searchNull}&gt;Поиск не дал результатов&lt;/div&gt;
                         }
                         {itemsHolder.map(<span class="fstat-no" title="function not covered" >(i</span>tem, cardIndex)=&gt;(
-<span class="cstat-no" title="statement not covered" >                            &lt;Card className={styles.item}&gt;</span>
+<span class="cstat-no" title="statement not covered" >                            &lt;Card key={item.id} className={styles.item}&gt;</span>
                                 &lt;Card.Img onClick={<span class="fstat-no" title="function not covered" >()</span>=&gt;{<span class="cstat-no" title="statement not covered" >goToItem(item.id)}</span>} alt={item.name} title={item.name}  className={styles.itemImg} variant="top" src={item.images[0]} /&gt;
                                 &lt;Card.Body &gt;
                                     &lt;Card.Title onClick={<span class="fstat-no" title="function not covered" >()</span>=&gt;{<span class="cstat-no" title="statement not covered" >goToItem(item.id)}</span>} className={styles.itemTitle}&gt;{item.name}&lt;/Card.Title&gt;
@@ -382,7 +373,7 @@ export default SearchPage;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sun May 29 2022 14:31:35 GMT+0300 (Москва, стандартное время)
+                at Sun Jun 05 2022 12:01:11 GMT+0300 (Москва, стандартное время)
             </div>
         <script src="../../../prettify.js"></script>
         <script>

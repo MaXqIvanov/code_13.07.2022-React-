@@ -13,7 +13,7 @@ const SearchPage = () => {
     const [cookies] = useCookies(['userCity, tmt, token']);
     let [searchParams] = useSearchParams()
     useEffect(() => {
-        api('marketplace/nomenclature/?search=' + searchParams.get('q'))
+        api('marketplace/nomenclature/?search=' + searchParams.get('q')+`&tmp=${cookies.tmt}`)
             .then((response)=>{
                 setItemsHolder(response.data.results)
             })

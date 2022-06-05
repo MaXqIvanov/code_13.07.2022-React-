@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/104</span>
+                <span class='fraction'>0/101</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/94</span>
+                <span class='fraction'>0/91</span>
             </div>
         
             
@@ -419,17 +419,7 @@
 <a name='L354'></a><a href='#L354'>354</a>
 <a name='L355'></a><a href='#L355'>355</a>
 <a name='L356'></a><a href='#L356'>356</a>
-<a name='L357'></a><a href='#L357'>357</a>
-<a name='L358'></a><a href='#L358'>358</a>
-<a name='L359'></a><a href='#L359'>359</a>
-<a name='L360'></a><a href='#L360'>360</a>
-<a name='L361'></a><a href='#L361'>361</a>
-<a name='L362'></a><a href='#L362'>362</a>
-<a name='L363'></a><a href='#L363'>363</a>
-<a name='L364'></a><a href='#L364'>364</a>
-<a name='L365'></a><a href='#L365'>365</a>
-<a name='L366'></a><a href='#L366'>366</a>
-<a name='L367'></a><a href='#L367'>367</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L357'></a><a href='#L357'>357</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -438,11 +428,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -459,7 +444,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -494,7 +478,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -512,7 +495,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -644,8 +626,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -795,22 +775,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, {useEffect, useMemo, useState} from 'react';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, {useEffect, useState} from 'react';
 import {Button, Card, FloatingLabel, Form, ListGroup, Modal, Offcanvas} from "react-bootstrap";
 import styles from "./CartPage.module.css";
 import stylez from './PirckupOrder.module.css'
-import DatePicker from "react-datepicker";
 import Map, {Marker, GeolocateControl, NavigationControl} from "react-map-gl";
 import api from "../../plugins/axios/api";
 import {useCookies} from "react-cookie";
-import SuccessOrder from "../../components/SuccessOrder/SuccessOrder";
 import cart from "../../store/cart";
 &nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
 const PickupOrder = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(p</span>rops) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    console.log(props);</span>
     const [token, setToken] = <span class="cstat-no" title="statement not covered" >useState('pk.eyJ1IjoiZGllbGl0IiwiYSI6ImNreGJ3b3RlOTByOHQycHE5bWwzaXlxZ2cifQ.1QkwgR8DegdGymUZL3iTjg')</span>
     const [selectedCoord, setSelectedCoord] = <span class="cstat-no" title="statement not covered" >useState(null)</span>
     const [selectedItem, setSelectedItem] = <span class="cstat-no" title="statement not covered" >useState(null)</span>
@@ -861,7 +835,6 @@ const PickupOrder = <span class="cstat-no" title="statement not covered" ><span 
     }
     async function <span class="fstat-no" title="function not covered" >openMoreItems(</span>){
 <span class="cstat-no" title="statement not covered" >        handleCanvasOpen(true)</span>
-<span class="cstat-no" title="statement not covered" >       console.log(selectedItem)</span>
         }
         async function <span class="fstat-no" title="function not covered" >addMoreToCart(</span>item){
 <span class="cstat-no" title="statement not covered" >        if (moreItems.includes(item)){<span class="cstat-no" title="statement not covered" >return}</span></span>
@@ -874,7 +847,6 @@ const PickupOrder = <span class="cstat-no" title="statement not covered" ><span 
 &nbsp;
     function <span class="fstat-no" title="function not covered" >requesAddToCartMore(</span>) {
         let result = <span class="cstat-no" title="statement not covered" >choosenType</span>
-<span class="cstat-no" title="statement not covered" >        console.log(selectedShop)</span>
 <span class="cstat-no" title="statement not covered" >        for (let i = <span class="cstat-no" title="statement not covered" >0;</span> i &lt; result.cart.length; i++){</span>
 <span class="cstat-no" title="statement not covered" >            if (result.cart[i].id === selectedItem.id){</span>
 <span class="cstat-no" title="statement not covered" >                result.cart[i].shop = selectedShop.id</span>
@@ -1013,8 +985,6 @@ const PickupOrder = <span class="cstat-no" title="statement not covered" ><span 
                 &gt;
                 &lt;/Marker&gt;
             ))
-&nbsp;
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    return (</span>
         &lt;div&gt;
         &lt;Modal  size={'xl'} show={addressModalStatus ? false : true} onHide={props.handlePickupClose}&gt;
@@ -1029,7 +999,7 @@ const PickupOrder = <span class="cstat-no" title="statement not covered" ><span 
 <span class="cstat-no" title="statement not covered" >                        &lt;Form.Check</span>
                             key={item.name}
                             type={"radio"}
-                            onClick={<span class="fstat-no" title="function not covered" >()</span>=&gt;{
+                            onChange={<span class="fstat-no" title="function not covered" >()</span>=&gt;{
 <span class="cstat-no" title="statement not covered" >                                setChoosenType(item)</span>
                             }}
                             checked={choosenType.pickup_type === item.pickup_type ? true : false}
@@ -1058,7 +1028,7 @@ const PickupOrder = <span class="cstat-no" title="statement not covered" ><span 
                                                   }}&gt; Изменить адрес&lt;/span&gt;
                                         }
                                     &lt;/div&gt;
-                                    &lt;span className={styles.itemPrice}&gt; {item.middle_cost} руб.&lt;/span&gt;
+                                    &lt;span className={styles.itemPrice}&gt; {item.cost} руб.&lt;/span&gt;
                                 &lt;/ListGroup.Item&gt;
 &nbsp;
                             ))}
@@ -1107,7 +1077,7 @@ const PickupOrder = <span class="cstat-no" title="statement not covered" ><span 
                     initialViewState={{
                         longitude: selectedItem.shop_address.longitude,
                         latitude: selectedItem.shop_address.latitude,
-                        zoom: 14
+                        zoom: 9
                     }}
                     style={{width: '100%', height: 400}}
                     mapStyle="mapbox://styles/mapbox/streets-v9"
@@ -1140,8 +1110,8 @@ const PickupOrder = <span class="cstat-no" title="statement not covered" ><span 
                 &lt;/Offcanvas.Header&gt;
                 &lt;Offcanvas.Body&gt;
                     &lt;ListGroup&gt;
-                        {moreInShop.map(<span class="fstat-no" title="function not covered" >(i</span>tem)=&gt;(
-<span class="cstat-no" title="statement not covered" >                            &lt;ListGroup.Item className={stylez.itemBlockMore}&gt;</span>
+                        {moreInShop.map(<span class="fstat-no" title="function not covered" >(i</span>tem, index)=&gt;(
+<span class="cstat-no" title="statement not covered" >                            &lt;ListGroup.Item key={index} className={stylez.itemBlockMore}&gt;</span>
                                 &lt;div className={stylez.itemImgBlockMore} &gt;
                                     &lt;img className={stylez.itemImgMore} src={item.images[0]} alt=""/&gt;
                                 &lt;/div&gt;
@@ -1168,7 +1138,7 @@ export default PickupOrder;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sun May 29 2022 14:31:35 GMT+0300 (Москва, стандартное время)
+                at Sun Jun 05 2022 12:01:11 GMT+0300 (Москва, стандартное время)
             </div>
         <script src="../../../prettify.js"></script>
         <script>

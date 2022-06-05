@@ -32,14 +32,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
@@ -138,17 +138,14 @@
 <a name='L73'></a><a href='#L73'>73</a>
 <a name='L74'></a><a href='#L74'>74</a>
 <a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L76'></a><a href='#L76'>76</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -161,18 +158,15 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -220,17 +214,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, {useEffect, useState} from 'react';
-import {Card, ListGroup, Badge, Pagination, Button} from "react-bootstrap";
+import {Card, ListGroup, Badge, Pagination, Button, Spinner} from "react-bootstrap";
 import api from "../../plugins/axios/api";
 import styles from './OrderListPage.module.css'
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
 &nbsp;
 &nbsp;
 const OrderListPage = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 const [ordersList, setOrdersList] = <span class="cstat-no" title="statement not covered" >useState([])</span>
     const [pagesTotal,setPagesTotal] = <span class="cstat-no" title="statement not covered" >useState(null)</span>
     const [nextPage,setNextPage] = <span class="cstat-no" title="statement not covered" >useState(null)</span>
+    const [load, isLoad] = <span class="cstat-no" title="statement not covered" >useState(false)</span>
     let navigate = <span class="cstat-no" title="statement not covered" >useNavigate()</span>
 <span class="cstat-no" title="statement not covered" >    useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >       api('marketplace/order/')</span>
@@ -239,20 +233,17 @@ const [ordersList, setOrdersList] = <span class="cstat-no" title="statement not 
 <span class="cstat-no" title="statement not covered" >               setNextPage(response.data.next)</span>
 <span class="cstat-no" title="statement not covered" >               setOrdersList(response.data.results)</span>
            })
+           .finally(<span class="fstat-no" title="function not covered" >()</span>=&gt;<span class="cstat-no" title="statement not covered" >isLoad(true))</span>
     }, []);
 function <span class="fstat-no" title="function not covered" >fetchData(</span>) {
     let parsedNext = <span class="cstat-no" title="statement not covered" >nextPage.split('')</span>
-<span class="cstat-no" title="statement not covered" >    console.log(parsedNext)</span>
 <span class="cstat-no" title="statement not covered" >    api(`marketplace/order/?page=${parsedNext[parsedNext.length - 1]}`)</span>
         .then(<span class="fstat-no" title="function not covered" >(r</span>esponse)=&gt;{
 <span class="cstat-no" title="statement not covered" >            setPagesTotal(response.data.count)</span>
 <span class="cstat-no" title="statement not covered" >            setNextPage(response.data.next)</span>
-<span class="cstat-no" title="statement not covered" >            console.log([...ordersList, ...response.data.results])</span>
 <span class="cstat-no" title="statement not covered" >            setOrdersList([...ordersList, ...response.data.results])</span>
         })
 }
-&nbsp;
-&nbsp;
 <span class="cstat-no" title="statement not covered" >    return (</span>
         &lt;Card&gt;
             &lt;Card.Header&gt;
@@ -260,15 +251,15 @@ function <span class="fstat-no" title="function not covered" >fetchData(</span>)
             &lt;/Card.Header&gt;
             &lt;Card.Body&gt;
                 &lt;ListGroup&gt;
-                    {ordersList.map(<span class="fstat-no" title="function not covered" >(o</span>rder)=&gt;(
-<span class="cstat-no" title="statement not covered" >                        &lt;ListGroup.Item onClick={<span class="fstat-no" title="function not covered" >()</span>=&gt;{</span>
+                    {load === true &amp;&amp; ordersList.length &gt; 0 ? ordersList.map(<span class="fstat-no" title="function not covered" >(o</span>rder)=&gt;(
+<span class="cstat-no" title="statement not covered" >                        &lt;ListGroup.Item key={order.id} onClick={<span class="fstat-no" title="function not covered" >()</span>=&gt;{</span>
 <span class="cstat-no" title="statement not covered" >                            navigate(`/order/${order.id}`)</span>
                         }} className={styles.orderItem}&gt;
                             &lt;div className={styles.mainOrderBlock}&gt;
                                 &lt;span className={styles.orderId}&gt;Заказ #{order.id}&lt;/span&gt;
                                 &lt;div className={styles.imgBlock}&gt;
                                     {order.images.map(<span class="fstat-no" title="function not covered" >(i</span>mg)=&gt;(
-<span class="cstat-no" title="statement not covered" >                                        &lt;img className={styles.orderImg} src={img} alt=""/&gt;</span>
+<span class="cstat-no" title="statement not covered" >                                        &lt;img key={img} className={styles.orderImg} src={img} alt=""/&gt;</span>
                                     ))}
                                 &lt;/div&gt;
                             &lt;/div&gt;
@@ -282,8 +273,8 @@ function <span class="fstat-no" title="function not covered" >fetchData(</span>)
 &nbsp;
                         &lt;/ListGroup.Item&gt;
                         )
-                    )}
-&nbsp;
+                    ) : &lt;div className={styles.div_widthout_orders}&gt;&lt;Spinner className={styles.Spinner_orderlistPage} animation="grow" /&gt;&lt;/div&gt;}
+                    {ordersList.length === 0 &amp;&amp; load === false ? &lt;div style={{marginTop: '20px'}}&gt;В данный момент заказов нет&lt;/div&gt; : &lt;&gt;&lt;/&gt;}
                 &lt;/ListGroup&gt;
                 &lt;div style={{width:'100%', display:'flex', justifyContent:'center'}}&gt;
                     {nextPage &amp;&amp;
@@ -304,7 +295,7 @@ export default OrderListPage;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sun May 29 2022 14:31:35 GMT+0300 (Москва, стандартное время)
+                at Sun Jun 05 2022 12:01:11 GMT+0300 (Москва, стандартное время)
             </div>
         <script src="../../../prettify.js"></script>
         <script>

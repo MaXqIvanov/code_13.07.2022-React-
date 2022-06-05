@@ -19,7 +19,7 @@ const ItemPage = () => {
      }, [pageParams.id])
 
 async function getData(){
-   await api(`marketplace/nomenclature/${pageParams.id}`)
+   await api(`marketplace/nomenclature/${pageParams.id}?tmp=${cookies.tmt}`)
         .then((response)=>{
             setItemHolder(response.data)
         })

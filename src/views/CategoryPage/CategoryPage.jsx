@@ -22,11 +22,10 @@ const CategoryPage = observer(() => {
 
 
     useEffect(()=>{
-        api(`marketplace/nomenclature/?category=${pageParams.id}`)
+        api(`marketplace/nomenclature/?category=${pageParams.id}&tmp=${cookies.tmt}`)
             .then((response)=>{
                 // setItemsHolder((prevState => ([...prevState,response.data.results])))
                 // change this
-                
                 setItemsHolder(response.data.results)
             })
     },[pageParams.id])
