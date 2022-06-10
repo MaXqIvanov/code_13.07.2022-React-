@@ -18,7 +18,7 @@ class user {
         if (!Cookies.get('userCity')){
             axios.get('http://dev1.itpw.ru:8005/marketplace/city/')
                 .then((response)=>{
-                    Cookies.set('userCity', JSON.stringify(response.data[0]), {expires:7, path:'/'})
+                    Cookies.set('userCity', JSON.stringify(response.data.results[0]), {expires:7, path:'/'})
                 })
         }
 

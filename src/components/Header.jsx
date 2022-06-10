@@ -34,7 +34,6 @@ const Header = observer(() => {
 useEffect(()=>{
     api('marketplace/city/')
         .then((response)=>{
-            console.log(response)
             setCityVar(response.data.results)
         })
 },[])
