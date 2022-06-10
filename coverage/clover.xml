@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1654419672900" clover="3.2.0">
-  <project timestamp="1654419672901" name="All files">
-    <metrics statements="605" coveredstatements="0" conditionals="263" coveredconditionals="0" methods="280" coveredmethods="0" elements="1148" coveredelements="0" complexity="0" loc="605" ncloc="605" packages="20" files="27" classes="27"/>
+<coverage generated="1654885680842" clover="3.2.0">
+  <project timestamp="1654885680842" name="All files">
+    <metrics statements="603" coveredstatements="0" conditionals="263" coveredconditionals="0" methods="280" coveredmethods="0" elements="1146" coveredelements="0" complexity="0" loc="603" ncloc="603" packages="20" files="27" classes="27"/>
     <package name="src">
       <metrics statements="18" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="3" coveredmethods="0"/>
       <file name="App.js" path="D:\2022\Web-Developing\1FRONTEND\Job\store\stroyroom_frontend_marketplace\src\App.js">
@@ -585,9 +585,9 @@
       </file>
     </package>
     <package name="src.views.CategoryPage">
-      <metrics statements="30" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="14" coveredmethods="0"/>
+      <metrics statements="28" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="14" coveredmethods="0"/>
       <file name="CategoryPage.jsx" path="D:\2022\Web-Developing\1FRONTEND\Job\store\stroyroom_frontend_marketplace\src\views\CategoryPage\CategoryPage.jsx">
-        <metrics statements="30" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="14" coveredmethods="0"/>
+        <metrics statements="28" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="14" coveredmethods="0"/>
         <line num="12" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
@@ -600,24 +600,22 @@
         <line num="24" count="0" type="stmt"/>
         <line num="25" count="0" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="41" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="44" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="52" count="0" type="stmt"/>
-        <line num="57" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="58" count="0" type="stmt"/>
-        <line num="60" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="64" count="0" type="stmt"/>
-        <line num="88" count="0" type="stmt"/>
-        <line num="98" count="0" type="stmt"/>
-        <line num="99" count="0" type="stmt"/>
-        <line num="105" count="0" type="stmt"/>
-        <line num="110" count="0" type="stmt"/>
-        <line num="117" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="39" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="42" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="55" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="58" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="96" count="0" type="stmt"/>
+        <line num="97" count="0" type="stmt"/>
+        <line num="103" count="0" type="stmt"/>
+        <line num="108" count="0" type="stmt"/>
+        <line num="115" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.views.ItemPage">

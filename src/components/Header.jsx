@@ -34,7 +34,8 @@ const Header = observer(() => {
 useEffect(()=>{
     api('marketplace/city/')
         .then((response)=>{
-            setCityVar(response.data)
+            console.log(response)
+            setCityVar(response.data.results)
         })
 },[])
 //TODO сделать привязку по городу (спб, новгород)
