@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap');
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+  font-family: 'PT Sans', sans-serif;
+  font-weight: 400;
+}
+.carousel-indicators {
+  position: absolute;
+  right: 0;
+  bottom: -45px;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin-right: 15%;
+  margin-bottom: 1rem;
+  margin-left: 15%;
+  list-style: none;
+
+}
+.carousel-control-prev-icon{
+  position: absolute;
+  left: -50px;
+  height: 50px;
+  width: 50px;
+  background-size: 100%, 100%;
+  @media(max-width:630px){
+    left: 0px;
+  }  
+}
+.carousel-control-next-icon {
+    position: absolute;
+    right: -50px;
+    height: 50px;
+    width: 50px;
+    background-size: 100%, 100%;
+    filter: unset;
+    @media(max-width:630px){
+      right: 0px;
+    }
+}
+.custom_inputMask{
+  background: #474747;
+  color: white;
+  outline: none;
+  border-style: none;
+  text-align: center;
+}

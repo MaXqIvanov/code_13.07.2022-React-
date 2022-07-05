@@ -1,0 +1,164 @@
+.main{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main_wrapper{
+    margin-top: 30px;
+    height: 90%;
+    width: 90%;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.slides{
+    border-radius: 10px;
+    max-height: 500px;
+    max-width: 600px;
+
+    img{
+        height: 500px;
+        width: 600px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        border-radius: 10px;
+    }
+
+    @media(max-width: 700px){
+        width: 100%;
+        max-width: 100vw;
+        max-height: 400px;
+
+        img{
+            height: 400px;
+        }
+    }
+}
+.carouse_custom_wrapper{
+    width: 500px;
+    height: fit-content;
+    @media(max-width: 700px){
+        width: 100%;
+        max-width: 100vw;
+        max-height: 400px;
+    }
+}
+.block_logo{
+    font-family: 'PT Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 72px;
+    line-height: 93px;
+    color: #943AA3;
+
+    @media(max-width: 630px){
+        font-size: 50px;
+    }
+}
+.block_auth{
+    background: #BDBDBD;
+    border-radius: 12px;
+    width: 335px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.3s linear;
+    @media(max-width: 630px){
+        width: 255px;
+        height: 35px;
+        margin-top: 0px;
+    }
+
+    &:hover{
+        box-shadow: 0px 0px 5px #943AA3;
+    }
+}
+.block_registration{
+    margin-top: 15px;
+    cursor: pointer;
+    color: #943AA3;
+    text-decoration: underline;
+}
+.registration{
+
+    height: 300px;
+    width: 450px;
+    position: absolute;
+    background: #FFFFFF;
+    border-radius: 12px;
+    z-index: 999;
+    top: 50%;
+    padding: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @media(max-width: 550px){
+        width: 90%;
+    }
+}
+.registration_wrapper{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    justify-content: space-around;
+}
+.auth_vk{
+    background: #7294C7;
+    border-radius: 8px;
+    width: 275px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.auth_number{
+    background: #474747;
+    border-radius: 8px;
+    width: 275px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.auth_apple{
+    background: #1C1C1E;
+    border-radius: 8px;
+    width: 275px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.auth_img_apple_wrapper{
+    width: fit-content;
+    display: flex;
+
+    span{
+        margin-left: 10px;
+        color: white
+    }
+}
+.auth_img_apple{
+    background-image: url('../assets/auth/Icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 25px;
+    width: fit-content;
+    width: 25px;
+    span{
+        margin-right: 25px;
+    }
+}
