@@ -5,7 +5,7 @@ import {BrowserRouter as Router, Route, Routes, useNavigate} from "react-router-
 import {MainPage} from "./views/MainPage";
 import { Spinner } from "react-bootstrap";
 import {useCookies} from "react-cookie";
-import { v4 as uuidv4 } from 'uuid';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfileAsync } from './store/profileSlice';
 import { AuthPage } from './views/AuthPage';
