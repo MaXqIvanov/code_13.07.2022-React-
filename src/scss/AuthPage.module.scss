@@ -273,10 +273,26 @@
         text-decoration-line: underline;
     }
 }
-.custom_inputMask_wrapper{
+.sms_input_wrapper{
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-columns: 20% 20% 20% 20%;
-    column-gap: 6.59%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.custom_inputMask_wrapper{
+    width: 80%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    // grid-template-columns: 20% 20% 20% 20%;
+    // column-gap: 6.56%;
+}
+.btn_enter{
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translate(-50%,0);
+    cursor: pointer;
+
 }

@@ -3,6 +3,7 @@ import styles from '../../scss/AuthPage.module.scss';
 import InputMask from 'react-input-mask';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeIsProfileRegistration, createUserProfile } from '../../store/profileSlice';
+import ReactCodeInput from 'react-code-input';
 
 export const RegistrationComponent = () => {
   const dispatch = useDispatch()
@@ -13,7 +14,51 @@ export const RegistrationComponent = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [pin, setPin] = useState('')
-  const CODE_LENGTH = new Array(4).fill(0);
+  
+  const props:any = {
+    className: 'reactCodeInput',
+    inputStyle: {
+      fontFamily: 'monospace',
+      margin:  '4px',
+      MozAppearance: 'textfield',
+      width: '33px',
+      borderRadius: '3px',
+      fontSize: '20px',
+      height: '40px',
+      paddingLeft: '0px',
+      backgroundColor: 'white',
+      color: '#BDBDBD',
+      border: '1px solid gray',
+      textAlign: 'center'
+    },
+    inputStyleInvalid: {
+      fontFamily: 'monospace',
+      margin:  '4px',
+      MozAppearance: 'textfield',
+      width: '15px',
+      borderRadius: '3px',
+      fontSize: '20px',
+      height: '26px',
+      paddingLeft: '0px',
+      backgroundColor: 'white',
+      color: '#BDBDBD',
+      border: '1px solid gray',
+      textAlign: 'center'
+    }
+  }
+
+  const submitCode = (value:any)=>{
+    if(value.length === 4){
+      dispatch(createUserProfile({
+        first_name,
+        last_name,
+        phone,
+        email,
+        password,
+        pin: value
+      }))
+    }
+  }
 
   return (
     <div className={styles.registration}>
@@ -37,23 +82,19 @@ export const RegistrationComponent = () => {
             {visiblePin ? 
             <div className={styles.auth_pin}>
               <div className={styles.title_code}><span>Введите код из смс</span></div>
-              <div className={styles.custom_inputMask_wrapper}>
-                {/* <InputMask className="custom_inputMask"
-                formatChars={{
-                  "9": "[0-9]",
-                }}
-                mask="9999"
-                maskChar=" "
-                placeholder='Код из смс'
-                value={pin}
-                onChange={(e:any)=>setPin(e.target.value)}
-                /> */}
-                <input className="sms-input" type="tel" maxLength={1} tabIndex={1} />
-                <input className="sms-input" type="tel" maxLength={1} tabIndex={2} />
-                <input className="sms-input" type="tel" maxLength={1} tabIndex={3} />
-                <input className="sms-input" type="tel" maxLength={1} tabIndex={4} />
+              <div className={styles.sms_input_wrapper}>
+                <div className={styles.custom_inputMask_wrapper}>
+                    <ReactCodeInput onChange={(e:any)=>submitCode(e)} autoFocus={true} inputMode='numeric' name='sms-input' fields={4} {...props}/>
+                </div>
               </div>
-              <div className={styles.repeat_send_code}><span>Отправить код ещё раз</span></div></div> : <></>}
+              <div onClick={()=> dispatch(createUserProfile({
+              first_name,
+              last_name,
+              phone,
+              email,
+              password,
+              pin
+            }))} className={styles.repeat_send_code}><span>Отправить код ещё раз</span></div></div> : <></>}
             <div onClick={()=> dispatch(createUserProfile({
               first_name,
               last_name,

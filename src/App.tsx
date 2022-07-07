@@ -18,14 +18,13 @@ export const App = () => {
   const {userAuth} = useSelector((state:any)=> state.profile);
   const [cookies, setCookie, removeCookie] = useCookies(['token', 'tmt']);
   const urlParams = useParams()
-
   useEffect(() => {
     dispatch(getProfileAsync({nav, urlParams}))
   }, [])
   
   return (
     <>
-        {!userAuth ? <Header></Header> : <></> }
+        {userAuth ? <Header></Header> : <></> }
         <div className={'wrapper'}>
         <Routes>
             <Route path={'/'} element={<MainPage />} />

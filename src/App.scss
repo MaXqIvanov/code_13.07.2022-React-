@@ -72,4 +72,11 @@ select:-webkit-autofill:focus {
 }
 .sms-input{
   width: 100% !important;
+  border: 1px solid #BDBDBD;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  text-align: center;
+  color: #BDBDBD;
+  font-size: 30px;
 }

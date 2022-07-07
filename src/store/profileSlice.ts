@@ -1,18 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../plugins/axios/api';
+import Cookies from 'js-cookie'
 
 export const getProfileAsync:any = createAsyncThunk(
   'profile/getProfileAsync',
   async ({ nav, urlParams }:any, state:any) => { // here you have two arguments
-       api('accounts/profile/info/').then((response:any)=>{
-        if(response.status == 401){
-          nav('/auth')
-        }
-        else{
-          state.userAuth = true;
-        }
+      const response = await api('accounts/profile/info/')
+      if(response.status == 401){
+        nav('/auth')
+      }
+      else{
         return response
-      })
+      }
   },
 )
 
@@ -31,11 +30,30 @@ export const createUserProfile:any = createAsyncThunk(
   }
 )
 
+export const authUser:any = createAsyncThunk(
+  'profile/authUser',
+  async (params:any, action:any) => {
+    console.log(params);
+    const response = await api.post(`accounts/authentication/auth/`,{
+      password: params.password,
+      login:  params.phone,
+    })
+    console.log(response);
+    
+    if(response.status === 400){
+      alert(response.data.detail)
+    }
+    else{
+      return {response, nav: params.nav }
+    }
+  }
+)
+
 const profileSlice:any = createSlice({
   name: 'profile',
   initialState: {
     userProfile: [] as any[],
-    userAuth: true as boolean,
+    userAuth: false as boolean,
     visiblePin: false as boolean,
     // modal window
     isProfileRegistration: false as boolean,
@@ -58,7 +76,10 @@ const profileSlice:any = createSlice({
       state.status = 'loading'
     },
     [getProfileAsync.fulfilled]: (state:any, { payload }:any) => {
+      console.log(payload);
       state.status = 'success'
+      state.userAuth = true;
+      state.userProfile = payload.data
     },
     [getProfileAsync.rejected]: (state:any, action: any) => {
       state.status = 'failed'
@@ -73,6 +94,8 @@ const profileSlice:any = createSlice({
       }
       else{
         if(state.visiblePin){
+          alert(payload.data.detail)
+          state.visiblePin = !state.visiblePin
           state.isProfileRegistration = false
           state.isProfileAuthorisation = false
         }else{
@@ -83,7 +106,24 @@ const profileSlice:any = createSlice({
     },
     [createUserProfile.rejected]: (state:any, action: any) => {
       state.status = 'failed'
-    }
+    },
+    [authUser.pending]: (state:any, action:any) => {
+      state.status = 'loading'
+    },
+    [authUser.fulfilled]: (state:any, { payload }:any) => {
+      state.status = 'success'
+      const myPromise = new Promise((resolve, reject) => {
+        Cookies.set('token', `${payload.response.data.token}`, { path: '/', expires: 60 })
+        state.userProfile = payload.response.data.user;
+        state.userAuth = true;
+        resolve('success')
+      }).then(()=>{
+        payload.nav('/')
+      })
+    },
+    [authUser.rejected]: (state:any, action: any) => {
+      state.status = 'failed'
+    },
   }
 })
 

@@ -11,3 +11,4 @@ declare module '*.svg' {
 declare module 'js-cookie'
 declare module 'uuid'
 declare module 'react-input-mask'
+declare module 'CodeInputField.scss'
