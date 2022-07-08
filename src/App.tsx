@@ -3,7 +3,6 @@ import React, { Suspense, useEffect } from 'react';
 import {Header} from "./components/Header";
 import {BrowserRouter as Router, Route, Routes, useNavigate} from "react-router-dom";
 import {MainPage} from "./views/MainPage";
-import { Spinner } from "react-bootstrap";
 import {useCookies} from "react-cookie";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +11,8 @@ import { AuthPage } from './views/AuthPage';
 import {useParams} from "react-router-dom";
 import Lottie from "lottie-react";
 import loadingScreen from './assets/evs.json';
+import { BasketPage } from './views/BasketPage';
+import { AddressPage } from './views/AddressPage';
 // const UserPage = React.lazy(() => import('./views/UserPage/UserPage'));
 
 export const App = () => {
@@ -33,6 +34,8 @@ export const App = () => {
         <Routes>
             <Route path={'/'} element={<MainPage />} />
             <Route path={'/auth'} element={<AuthPage />} />
+            <Route path={'/basket'} element={<BasketPage />} />
+            <Route path={'/address'} element={<AddressPage />} />
         </Routes>
         </div>
       </>  

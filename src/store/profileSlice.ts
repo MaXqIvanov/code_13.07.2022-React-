@@ -72,6 +72,11 @@ const profileSlice:any = createSlice({
       state.isProfileAuthorisation = !state.isProfileAuthorisation
       state.isProfileRegistration = false
     },
+    logoutFunction(state: any){
+      state.userAuth = !state.userAuth;
+      Cookies.remove('token');
+      state.isProfileAuthorisation = false
+    }
   },
   extraReducers: {
     [getProfileAsync.pending]: (state:any, action:any) => {
@@ -91,6 +96,8 @@ const profileSlice:any = createSlice({
     },
     [getProfileAsync.rejected]: (state:any, action: any) => {
       state.loading = true;
+      console.log(action);
+      
     },
     [createUserProfile.pending]: (state:any, action:any) => {
       state.status = 'loading'
@@ -136,5 +143,5 @@ const profileSlice:any = createSlice({
 })
 
 export default profileSlice.reducer;
-export const { changeIsProfileRegistration, changeIsProfileAuthorisation } =
+export const { changeIsProfileRegistration, changeIsProfileAuthorisation, logoutFunction } =
 profileSlice.actions;

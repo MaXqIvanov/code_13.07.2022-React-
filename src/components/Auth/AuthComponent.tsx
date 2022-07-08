@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styles from '../../scss/AuthPage.module.scss';
 import InputMask from 'react-input-mask';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authUser, changeIsProfileAuthorisation } from '../../store/profileSlice';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,9 +34,11 @@ export const AuthComponent = () => {
             type="text"
           /></span></div></div>
           <div className={styles.auth_number}><input value={password} onChange={(e)=>setPassword(e.target.value)} className="custom_inputMask" type="password" placeholder='Пароль'></input></div>
+          <>
           <div onClick={()=>{
             submitAuth()
           }} className={styles.btn_enter}>войти</div>
+          </>
         </div>
         <div onClick={()=> dispatch(changeIsProfileAuthorisation())} className={styles.custom_close_wrapper}><i className={`bi bi-x ${styles.custom_close}`}></i></div>
     </div>

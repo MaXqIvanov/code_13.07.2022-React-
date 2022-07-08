@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AuthComponent } from '../components/Auth/AuthComponent';
 import { RegistrationComponent } from '../components/Auth/RegistrationComponent';
 import style from '../scss/AuthPage.module.scss';
-import { changeIsProfileAuthorisation, changeIsProfileRegistration } from '../store/profileSlice';
+import { changeIsProfileAuthorisation, changeIsProfileRegistration, logoutFunction } from '../store/profileSlice';
 export const AuthPage = () => {
     const dispatch = useDispatch()
     const {isProfileRegistration, isProfileAuthorisation} = useSelector((state:any)=> state.profile)
-      
+    const {userAuth} = useSelector((state:any)=> state.profile)
+
   return (
     <div className={style.main}>
         <div className={style.main_wrapper}>
@@ -44,7 +45,10 @@ export const AuthPage = () => {
                 </Carousel>
             </div>
             <div className={`mt-4 ${style.block_logo}`}>EveryServices</div>
+            {userAuth == false ? 
             <div onClick={()=>dispatch(changeIsProfileAuthorisation())} className={style.block_auth}><span>Войти</span></div>
+            :<div onClick={()=>dispatch(logoutFunction())} className={style.block_auth}><span>Выйти</span></div>
+            }
             <div onClick={()=>dispatch(changeIsProfileRegistration())} className={style.block_registration}>Зарегистрироваться</div>
         </div>
         {isProfileRegistration ? <RegistrationComponent />: <></>}

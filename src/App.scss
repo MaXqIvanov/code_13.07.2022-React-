@@ -42,6 +42,12 @@
       display: none;
     }
 }
+.carousel-control-next{
+  overflow-x: hidden;
+}
+.carousel-control-prev{
+  overflow-x: hidden;
+}
 .custom_inputMask{
   background: #474747;
   color: white;
@@ -102,4 +108,16 @@ select:-webkit-autofill:focus {
 }
 .wrapper{
   margin-bottom: 20px;
+}
+.Order_page_basket::-webkit-scrollbar {
+  width: 8px; /* ширина scrollbar */
+}
+.Order_page_basket::-webkit-scrollbar-track {
+  background: rgb(255, 255, 255); /* цвет дорожки */
+  border-radius: 25px;
+}
+.Order_page_basket::-webkit-scrollbar-thumb {
+  background-color: #b8e5ff; /* цвет плашки */
+  border-radius: 20px; /* закругления плашки */
+  border: 3px solid #b8e5ff; /* padding вокруг плашки */
 }

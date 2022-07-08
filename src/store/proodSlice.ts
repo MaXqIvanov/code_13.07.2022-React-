@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const serviceSlice = createSlice({
-  name: 'service',
+const proodSlice = createSlice({
+  name: 'prood',
   initialState: {
     services: [] as any [],
   },
@@ -12,6 +12,6 @@ const serviceSlice = createSlice({
   },
 });
 
-export default serviceSlice.reducer;
+export default proodSlice.reducer;
 export const { getServices } =
-serviceSlice.actions;
+proodSlice.actions;

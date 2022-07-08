@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import styles from './MainPage.module.scss'
+import styles from '../scss/MainPage.module.scss';
 import api from '../plugins/axios/api'
 
 export const MainPage = () => {
