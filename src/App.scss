@@ -90,4 +90,13 @@ select:-webkit-autofill:focus {
 .spinner_app{
   height: 50%;
   width: 50%;
+
+  @media(min-width: 1400px){
+    height: 40%;
+    width: 40%;
+  }
+  @media(max-width: 530px){
+    height: 60%;
+    width: 60%;
+  }
 }
