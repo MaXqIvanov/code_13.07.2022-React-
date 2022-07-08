@@ -16,6 +16,17 @@
         font-size: x-large;
     }
 }
+.dekstop{
+    @media(max-width: 630px){
+        display: none;
+    }
+}
+.mobile{
+    display: none;
+    @media(max-width: 630px){
+        display: block;
+    }
+}
 .header_wrapper{
     width: 90%;
     border-bottom: 1px  #943AA3;
@@ -25,6 +36,9 @@
 
     @media(max-width: 800px){
         grid-template-columns: 255px auto;
+    }
+    @media(max-width: 630px){
+        grid-template-columns: 135px auto;
     }
 }
 

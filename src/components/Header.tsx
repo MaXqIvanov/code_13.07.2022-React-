@@ -19,7 +19,7 @@ export const Header = () => {
                 className="main_logo_div"
               >
                 <div onClick={()=>nav('/')} className={styles.main_logo_div_smallV2}>
-                  Every Services<span></span>
+                  <div className={styles.dekstop}>Every Services</div><span className={styles.mobile}>ES</span>
                 </div>
               </Navbar.Brand>
               <Navbar.Offcanvas
