@@ -28,7 +28,7 @@
   width: 50px;
   background-size: 100%, 100%;
   @media(max-width:630px){
-    left: 0px;
+    display: none;
   }  
 }
 .carousel-control-next-icon {
@@ -39,7 +39,7 @@
     background-size: 100%, 100%;
     filter: unset;
     @media(max-width:630px){
-      right: 0px;
+      display: none;
     }
 }
 .custom_inputMask{
@@ -99,4 +99,7 @@ select:-webkit-autofill:focus {
     height: 60%;
     width: 60%;
   }
+}
+.wrapper{
+  margin-bottom: 20px;
 }
