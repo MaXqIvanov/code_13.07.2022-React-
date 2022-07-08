@@ -8,6 +8,7 @@ export const getProfileAsync:any = createAsyncThunk(
       const response = await api('accounts/profile/info/')
       if(response.status == 401){
         nav('/auth')
+        return response.status
       }
       else{
         return response
@@ -77,10 +78,16 @@ const profileSlice:any = createSlice({
       state.loading = false;
     },
     [getProfileAsync.fulfilled]: (state:any, { payload }:any) => {
-      console.log(payload);
-      state.loading = true;
-      state.userAuth = true;
-      state.userProfile = payload.data
+      if(payload == 401){
+        state.loading = true;
+        state.userAuth = false;
+      }
+      else{
+        console.log(payload);
+        state.loading = true;
+        state.userAuth = true;
+        state.userProfile = payload.data
+      }
     },
     [getProfileAsync.rejected]: (state:any, action: any) => {
       state.loading = true;
