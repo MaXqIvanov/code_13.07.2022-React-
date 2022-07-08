@@ -80,3 +80,14 @@ select:-webkit-autofill:focus {
   color: #BDBDBD;
   font-size: 30px;
 }
+.loading{
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.spinner_app{
+  height: 50%;
+  width: 50%;
+}

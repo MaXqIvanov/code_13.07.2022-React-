@@ -10,12 +10,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProfileAsync } from './store/profileSlice';
 import { AuthPage } from './views/AuthPage';
 import {useParams} from "react-router-dom";
+import Lottie from "lottie-react";
+import loadingScreen from './assets/evs.json';
 // const UserPage = React.lazy(() => import('./views/UserPage/UserPage'));
 
 export const App = () => {
   const nav = useNavigate()
   const dispatch = useDispatch()
-  const {userAuth} = useSelector((state:any)=> state.profile);
+  const {userAuth, loading} = useSelector((state:any)=> state.profile);
   const [cookies, setCookie, removeCookie] = useCookies(['token', 'tmt']);
   const urlParams = useParams()
   useEffect(() => {
@@ -24,6 +26,8 @@ export const App = () => {
   
   return (
     <>
+    {loading ? 
+      <>
         {userAuth ? <Header></Header> : <></> }
         <div className={'wrapper'}>
         <Routes>
@@ -31,6 +35,10 @@ export const App = () => {
             <Route path={'/auth'} element={<AuthPage />} />
         </Routes>
         </div>
+      </>  
+      : <div className='loading'><Lottie className='spinner_app' animationData={loadingScreen} /></div>}
     </>    
   );
 }
+
+//<Spinner className='spinner_app' animation="grow" />

@@ -5,7 +5,9 @@ import api from '../plugins/axios/api'
 export const MainPage = () => {
     return (
         <div className={styles.mainBlock}>
-            123
+            <div className={styles.mainBlock_wrapper}>
+                Основная страница
+            </div>
         </div>
     );
 };

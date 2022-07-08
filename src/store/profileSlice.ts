@@ -60,6 +60,7 @@ const profileSlice:any = createSlice({
     isProfileAuthorisation: false as boolean, 
     // async 
     status: false as boolean,
+    loading: false as boolean,
   },
   reducers: {
     changeIsProfileRegistration(state: any) {
@@ -73,16 +74,16 @@ const profileSlice:any = createSlice({
   },
   extraReducers: {
     [getProfileAsync.pending]: (state:any, action:any) => {
-      state.status = 'loading'
+      state.loading = false;
     },
     [getProfileAsync.fulfilled]: (state:any, { payload }:any) => {
       console.log(payload);
-      state.status = 'success'
+      state.loading = true;
       state.userAuth = true;
       state.userProfile = payload.data
     },
     [getProfileAsync.rejected]: (state:any, action: any) => {
-      state.status = 'failed'
+      state.loading = true;
     },
     [createUserProfile.pending]: (state:any, action:any) => {
       state.status = 'loading'
