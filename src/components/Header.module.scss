@@ -1,5 +1,5 @@
 .header{
-    height: 60px;
+    height: 70px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -7,16 +7,25 @@
     font-family: 'PT Sans';
 }
 .Navbar{
-    height: 40px;
+    height: 70px;
 }
 .main_logo_div_smallV2{
-    font-size: x-large;
+    font-size: xx-large;
+    cursor: pointer;
+    @media(max-width: 800px){
+        font-size: x-large;
+    }
 }
 .header_wrapper{
     width: 90%;
     border-bottom: 1px  #943AA3;
     display: grid;
-    grid-template-columns: 255px auto;
+    grid-template-columns: 305px auto;
+    border-bottom: 3px solid #943AA3;
+
+    @media(max-width: 800px){
+        grid-template-columns: 255px auto;
+    }
 }
 
 .block_width_navigation{
@@ -36,8 +45,14 @@
     width: 20px;
 }
 .icon_calendar{
-    height: 20px;
-    width: 20px;
+    height: 30px;
+    width: 30px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.icon_busket{
+    height: 30px;
+    width: 30px;
     background-repeat: no-repeat;
     background-size: contain;
 }

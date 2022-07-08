@@ -17,7 +17,7 @@ export const AuthPage = () => {
                     <Carousel.Item>
                         <img
                         className="d-block w-100"
-                        src="https://mykaleidoscope.ru/uploads/posts/2021-10/1634789282_56-mykaleidoscope-ru-p-klassnii-manikyur-56.jpg"
+                        src="https://delomoyo.com/storage/media/13211/conversions/11333e03f081428153d2743f4781f7a2-big.jpg"
                         alt="First slide"
                         />
                         <Carousel.Caption>

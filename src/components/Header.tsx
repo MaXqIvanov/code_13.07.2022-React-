@@ -1,12 +1,13 @@
 import React from 'react';
 import { Navbar, Container, Offcanvas, Nav, Form, Button, FormControl } from 'react-bootstrap';
 import styles from './Header.module.scss';
-import calendar from '../assets/header/calendar.svg'; 
-import gearshape from '../assets/header/gearshape.svg';
-import person from '../assets/header/person.svg';
-import store from '../assets/header/store.svg';
+import location from '../assets/header/location.svg'; 
+import person from '../assets/header/person_2.svg';
+import busket from '../assets/header/busket.svg';
+import { useNavigate } from 'react-router-dom';
 
 export const Header = () => {
+  const nav = useNavigate()
   return (
     <div className={styles.header}>
       <div className={styles.header_wrapper}>
@@ -17,7 +18,7 @@ export const Header = () => {
                 title="Вернуться на главную"
                 className="main_logo_div"
               >
-                <div className={styles.main_logo_div_smallV2}>
+                <div onClick={()=>nav('/')} className={styles.main_logo_div_smallV2}>
                   Every Services<span></span>
                 </div>
               </Navbar.Brand>
@@ -67,21 +68,21 @@ export const Header = () => {
         </Navbar>
         <div className={styles.block_width_navigation}>
               <div className={`me-4 ${styles.nav_store}`}>
-               <div className='d-flex justify-content-center'><span className={styles.icon_calendar} style={{backgroundImage: `url(${calendar})`}}></span></div>
+               <div className='d-flex justify-content-center'><span className={styles.icon_calendar} style={{backgroundImage: `url(${location})`}}></span></div>
                 <div>
-                  Записи
+                  Адресса
                 </div>
               </div>
               <div className={`me-4 ${styles.nav_store}`}>
-                <div className='d-flex justify-content-center'><span className={styles.icon_calendar} style={{backgroundImage: `url(${person})`}}></span></div>
+                <div onClick={()=>nav('/auth')} className='d-flex justify-content-center'><span className={styles.icon_calendar} style={{backgroundImage: `url(${person})`}}></span></div>
                 <div>
-                  Клиенты
+                  Войти
                 </div>
               </div>
               <div className={`me-2 ${styles.nav_store}`}>
-                <div className='d-flex justify-content-center'><span className={styles.icon_calendar} style={{backgroundImage: `url(${store})`}}></span></div>
+                <div className='d-flex justify-content-center'><span className={styles.icon_busket} style={{backgroundImage: `url(${busket})`}}></span></div>
                 <div>
-                  Магазины
+                  Корзина
                 </div>
               </div>
         </div>
