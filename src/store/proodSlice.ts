@@ -48,6 +48,18 @@ export const deleteProodBasketAsync:any = createAsyncThunk(
       return {response, params};
   },
 )
+
+export const changeProodBasketAsync:any = createAsyncThunk(
+  'prood/changeProodBasketAsync',
+  async (params:any, state:any) => { // here you have two arguments
+    let value = params.elem.count + params.amount;
+    const response = await api.post(`marketplace/cart/change/`,{
+      product: params.elem.product,
+      count: value,
+    })
+    return {response, params};
+},
+)
 // end work with basket <==
 
 const proodSlice = createSlice({
@@ -114,6 +126,35 @@ const proodSlice = createSlice({
       state.prood_basket = state.prood_basket.filter((elem:any)=> elem.product === payload.id)
     },
     [deleteProodBasketAsync.rejected]: (state:any, action: any) => {
+    },
+
+    [changeProodBasketAsync.pending]: (state:any, action:any) => {
+    },
+    [changeProodBasketAsync.fulfilled]: (state:any, { payload }:any) => {
+      console.log(payload.response);
+      if(payload.response.status == 400){
+        state.prood_basket = state.prood_basket.filter((elem:any)=> elem.id !== payload.params.elem.id)
+      }
+      else{
+        state.prood_basket = state.prood_basket;
+        let index = 0;
+        for(let i = 0; i < state.prood_basket.length; i++){
+          if(state.prood_basket[i].id == payload.params.elem.id){
+            index = i;
+          }
+        }
+        let new_elem:any = payload.params.elem;
+        let new_price = new_elem.cost;
+        if(payload.params.amount === 1){
+          new_price = new_price + new_elem._product.cost;
+        }else{
+          new_price = new_price - new_elem._product.cost;
+        }
+        new_elem = {...new_elem, count: Number(new_elem.count + payload.params.amount), cost: new_price};
+        state.prood_basket[index] = new_elem;
+      }
+    },
+    [changeProodBasketAsync.rejected]: (state:any, action: any) => {
     },
   }
 });

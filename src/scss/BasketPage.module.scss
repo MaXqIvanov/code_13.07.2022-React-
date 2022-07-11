@@ -19,21 +19,117 @@
 // work with cart_basket
 .cart_basket{
     margin-top: 15px;
-    width: 600px;
-    height: 250px;
-    box-shadow: 0px 0px 5px gray;
+    width: 80%;
+    height: 100%;
     border-radius: 25px;
     padding: 15px;
+
+    @media(max-width: 1200px){
+        width: 100%;
+    }
 }
 .cart_basket_wrapper{
     height: 100%;
     width: 100%;
     position: relative;
+    display: flex;
+}
+.block_info_basket{
+    margin-left: 20px;
+    width: 100%;
+    height: fit-content;
+    min-height: 150px;
 }
 .basket_title{
-    width: 600px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
+    width: 80%;
+    span{
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: xx-large;
+    }
+    @media(max-width: 1200px){
+        width: 100%;
+    }
+}
+.basket_img{
+    height: 150px;
+    width: 170px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+.basket_id{
+    position: absolute;
+    top: -10px;
+    left: 0px;
+    font-size: small;
+}
+.basket_code{
+    font-size: small;
+    color: gray;
+}
+.basket_name{
     font-size: x-large;
+    cursor: pointer;
+}
+.block_with_btn{
+    position: absolute;
+    top: 0px;
+    right: 40px;
+    display: flex;
+}
+.basket_plus{
+    font-size: 20px;
+    cursor: pointer;
+    padding: 3px;
+    transition: all 0.277s linear;
+    &:hover{
+        color: red;
+    }
+}
+.basket_minus{
+    font-size: 20px;
+    cursor: pointer;
+    padding: 3px;
+    transition: all 0.277s linear;
+    &:hover{
+        color: red;
+    }
+}
+.basket_amount{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.basket_delete{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: all 0.3s linear;
+    &:hover{
+        opacity: 0.8;
+        color: red;
+    }
+}
+.basket_price{
+    position: absolute;
+    top: 2px;
+    right: 120px;
+    font-size: x-large;
+    span{
+        opacity: 0.7;
+    }
+}
+.basket_count{
+    color: gray;
+    font-size: small;
+}
+.basket_description{
+    color: gray;
+    max-height: 100px;
+    overflow-y: scroll;
+    font-size: small;
 }
 // end work with cart_basket
