@@ -7,7 +7,109 @@
 }
 .mainBlock_wrapper{
     margin-top: 20px;
+    margin-bottom: 20px;
     height: 100%;
     width: 90%;
-    min-height: 85vh;
+    min-height: 80vh;
+
+    @media(max-width: 630px){
+        margin-bottom: 40px;
+    }
 }
+
+
+
+// block advertising
+
+.advertising{
+    height: 300px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.advertising_wrapper{
+    height: 100%;
+    width: 80%;
+}
+.carouse_custom_wrapper{
+    width: 100%;
+    height: 100%;
+    max-width: 1200px;
+}
+.slides{
+    height: 300px;
+    width: 100%;
+    max-width: 1200px;
+    img{
+        max-height: 300px;
+        max-width: 1200px;
+        background-size: contain;
+        background-repeat: no-repeat;
+
+        @media(max-width: 630px){
+            background-size: contain;
+            min-height: 300px;
+        }
+    }
+}
+
+.category_title{
+    margin-top: 50px;
+    font-size: xx-large;
+}
+// end block advertising
+// start block category
+.category{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}  
+.category_wrapper{
+    min-height: 300px;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 32% 32% 32%;
+    column-gap: 2%;
+    row-gap: 20px;
+    @media(max-width: 1000px){
+        grid-template-columns: 48% 48%;
+        column-gap: 4%;
+    }
+    @media(max-width: 700px){
+        grid-template-columns: 100%;
+        column-gap: 0px;
+    }
+}
+// end block category
+// block cart
+.cart{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cart_wrapper{
+    height: 250px;
+    width: 250px;
+    border-radius: 10px;
+    position: relative;
+}
+.category_img{
+    height: 250px;
+    width: 250px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.title_category{
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: larger;
+}
+// end block cart

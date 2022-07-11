@@ -13,6 +13,8 @@ import Lottie from "lottie-react";
 import loadingScreen from './assets/evs.json';
 import { BasketPage } from './views/BasketPage';
 import { AddressPage } from './views/AddressPage';
+import { CurrentCategoryPage } from './views/CurrentCategoryPage';
+import { getProodBasketAsync } from './store/proodSlice';
 // const UserPage = React.lazy(() => import('./views/UserPage/UserPage'));
 
 export const App = () => {
@@ -23,6 +25,7 @@ export const App = () => {
   const urlParams = useParams()
   useEffect(() => {
     dispatch(getProfileAsync({nav, urlParams}))
+    dispatch(getProodBasketAsync())
   }, [])
   
   return (
@@ -36,6 +39,7 @@ export const App = () => {
             <Route path={'/auth'} element={<AuthPage />} />
             <Route path={'/basket'} element={<BasketPage />} />
             <Route path={'/address'} element={<AddressPage />} />
+            <Route path={'/category/:id'} element={<CurrentCategoryPage />} />
         </Routes>
         </div>
       </>  
