@@ -41,6 +41,7 @@ export const addProodBasketAsync:any = createAsyncThunk(
 export const deleteProodBasketAsync:any = createAsyncThunk(
   'prood/deleteProodBasketAsync',
   async (params:any, state:any) => { // here you have two arguments
+    console.log(params);
       const response = await api.post(`marketplace/cart/change/`,{
         product: params.id,
         count: 0,
@@ -68,6 +69,7 @@ const proodSlice = createSlice({
     category: [] as any [],
     prood_category: [] as any[],
     prood_basket: [] as any[],
+    count_basket: 0 as number,
   },
   reducers: {
     getServices(state, action) {
@@ -106,6 +108,7 @@ const proodSlice = createSlice({
       }
       alert(payload.response.data.detail)
       state.prood_basket = [...state.prood_basket, basket];
+      state.count_basket = state.count_basket + 1;
     },
     [addProodBasketAsync.rejected]: (state:any, action: any) => {
 
@@ -115,6 +118,7 @@ const proodSlice = createSlice({
     },
     [getProodBasketAsync.fulfilled]: (state:any, { payload }:any) => {
       state.prood_basket = payload.data.results
+      state.count_basket = state.prood_basket.reduce((sum:any, current:any)=> sum+current.count, 0)
     },
     [getProodBasketAsync.rejected]: (state:any, action: any) => {
     },
@@ -122,8 +126,9 @@ const proodSlice = createSlice({
     [deleteProodBasketAsync.pending]: (state:any, action:any) => {
     },
     [deleteProodBasketAsync.fulfilled]: (state:any, { payload }:any) => {
+      state.prood_basket = state.prood_basket.filter((elem:any)=> elem.product !== payload.params.id)
+      state.count_basket = state.prood_basket.reduce((sum:any, current:any)=> sum+current.count, 0)
       alert(payload.response.data.detail);
-      state.prood_basket = state.prood_basket.filter((elem:any)=> elem.product === payload.id)
     },
     [deleteProodBasketAsync.rejected]: (state:any, action: any) => {
     },
@@ -145,13 +150,17 @@ const proodSlice = createSlice({
         }
         let new_elem:any = payload.params.elem;
         let new_price = new_elem.cost;
+        let new_price_discount = new_elem.cost_with_discount;
         if(payload.params.amount === 1){
           new_price = new_price + new_elem._product.cost;
+          new_price_discount = new_price_discount + new_elem._product.cost_with_discount;
         }else{
           new_price = new_price - new_elem._product.cost;
+          new_price_discount = new_price_discount - new_elem._product.cost_with_discount;
         }
-        new_elem = {...new_elem, count: Number(new_elem.count + payload.params.amount), cost: new_price};
+        new_elem = {...new_elem, count: Number(new_elem.count + payload.params.amount), cost: new_price, cost_with_discount: new_price_discount};
         state.prood_basket[index] = new_elem;
+        state.count_basket = state.prood_basket.reduce((sum:any, current:any)=> sum+current.count, 0)
       }
     },
     [changeProodBasketAsync.rejected]: (state:any, action: any) => {

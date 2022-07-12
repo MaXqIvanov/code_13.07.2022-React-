@@ -11,6 +11,7 @@ import { getCityAsync } from '../store/addressSlice';
 export const Header = () => {
   const dispatch = useDispatch()
   const {cityES} = useSelector((state:any)=> state.address)
+  const {count_basket} = useSelector((state:any)=> state.prood)
   const nav = useNavigate()
   useEffect(() => {
     dispatch(getCityAsync())
@@ -94,8 +95,9 @@ export const Header = () => {
                 </div>
               </div>
               <div className={`me-2 ${styles.nav_store}`}>
+               <div className={styles.basket_count}><span>{count_basket}</span></div>
                 <div onClick={()=>nav('/basket')} className='d-flex justify-content-center'><span className={styles.icon_busket} style={{backgroundImage: `url(${busket})`}}></span></div>
-                <div>
+                <div className={styles.basket_title}>
                   Корзина
                 </div>
               </div>

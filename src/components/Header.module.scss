@@ -53,6 +53,7 @@
 }
 .nav_store{
     cursor: pointer;
+    position: relative;
 }
 .icon{
     height: 20px;
@@ -81,4 +82,24 @@
     width: 90%;
     color: black;
     display: flex;
+}
+.basket_title{
+    position: relative;
+}
+.basket_count{
+    position: absolute;
+    top: -5px;
+    right: -2px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    color: #943AA3;
+    span{
+        font-weight: 700;
+        font-size: small;
+    }
 }

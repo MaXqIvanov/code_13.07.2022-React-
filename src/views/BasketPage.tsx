@@ -9,7 +9,7 @@ export const BasketPage = () => {
     <div className={styles.basket}>
         <div className={styles.basket_wrapper}>
             <div className={styles.basket_title}><span>Корзина:</span></div>
-            {prood_basket.map((elem:any)=><CartProodBasket elem={elem}/>)}
+            {prood_basket.map((elem:any)=><CartProodBasket key={elem.id} elem={elem}/>)}
         </div>
     </div>
   )

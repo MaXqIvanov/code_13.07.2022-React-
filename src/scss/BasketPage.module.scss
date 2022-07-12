@@ -114,9 +114,6 @@
     }
 }
 .basket_price{
-    position: absolute;
-    top: 2px;
-    right: 120px;
     font-size: x-large;
     span{
         opacity: 0.7;
@@ -131,5 +128,22 @@
     max-height: 100px;
     overflow-y: scroll;
     font-size: small;
+}
+.group_price{
+    position: absolute;
+    top: 2px;
+    right: 120px;
+}
+.group_price_wrapper{
+    height: fit-content;
+    width: fit-content;
+    position: relative;
+}
+.cost_discount{
+    position: absolute;
+    top: -10px;
+    color: red;
+    font-size: small;
+    text-decoration: line-through;
 }
 // end work with cart_basket
