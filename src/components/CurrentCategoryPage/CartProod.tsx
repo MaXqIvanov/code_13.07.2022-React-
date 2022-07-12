@@ -25,7 +25,10 @@ export const CartProod = ({prood}:any) => {
           <div className={styles.prood_description}>{prood.name}</div>
           <div className={styles.prood_count}>в наличии: {prood.count}шт.</div>
           <div className={styles.prood_group}>
-            <div className={styles.prood_price}>{prood.cost} ₽</div>
+            <div className={`${styles.group_price_category}`}>
+              {prood.cost_with_discount ? <div className={styles.prood_discount_category}>{prood?.cost}</div> : <></>}
+              <div className={styles.prood_price}>{prood.cost_with_discount ? prood?.cost_with_discount : prood.cost} ₽</div>
+            </div>
             {
              proodAdded ? 
               <i onClick={()=>dispatch(addProodBasketAsync(prood))} title='Положить в корзину' className={`bi bi-bag-plus ${styles.btn_basket}`}></i>

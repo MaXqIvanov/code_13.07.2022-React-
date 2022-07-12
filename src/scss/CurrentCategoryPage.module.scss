@@ -79,4 +79,14 @@
     display: flex;
     border: 1px solid black;
 }
+.group_price_category{
+    position: relative;
+}
+.prood_discount_category{
+    color: red;
+    position: absolute;
+    top: -8px;
+    font-size: x-small;
+    text-decoration: line-through;
+}
 // end block cart_prood

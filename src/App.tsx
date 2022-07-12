@@ -15,6 +15,7 @@ import { BasketPage } from './views/BasketPage';
 import { AddressPage } from './views/AddressPage';
 import { CurrentCategoryPage } from './views/CurrentCategoryPage';
 import { getProodBasketAsync } from './store/proodSlice';
+import { OrdersPage } from './views/OrdersPage';
 // const UserPage = React.lazy(() => import('./views/UserPage/UserPage'));
 
 export const App = () => {
@@ -38,6 +39,7 @@ export const App = () => {
             <Route path={'/'} element={<MainPage />} />
             <Route path={'/auth'} element={<AuthPage />} />
             <Route path={'/basket'} element={<BasketPage />} />
+            <Route path={'/orders'} element={<OrdersPage />} />
             <Route path={'/address'} element={<AddressPage />} />
             <Route path={'/category/:id'} element={<CurrentCategoryPage />} />
         </Routes>
