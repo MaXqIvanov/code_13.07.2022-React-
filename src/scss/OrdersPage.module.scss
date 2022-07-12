@@ -149,4 +149,15 @@
     top: 0px;
     right: 0px;
 }
+.orders_send_price{
+    display: flex;
+    justify-content: space-between;
+    width: 93%;
+    position: absolute;
+    bottom: 60px;
+    div{
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+    }
+}
 // end start cart_orders

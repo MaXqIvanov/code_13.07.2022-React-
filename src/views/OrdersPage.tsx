@@ -28,7 +28,10 @@ export const OrdersPage = () => {
                 <div className={styles.orders_send_wrapper}>
                     <div className={styles.orders_block}>
                         <div className={styles.orders_send_title}>Сумма заказа</div>
-                        <div className={styles.orders_send_price}>{totalPrice}</div>
+                        <div className={styles.orders_send_price}>
+                            <div>к оплате</div>
+                            <div>{totalPrice} ₽</div>
+                        </div>
                         <div className={styles.orders_send_btn}>Подтвердить заказ</div>
                     </div>
                 </div>
