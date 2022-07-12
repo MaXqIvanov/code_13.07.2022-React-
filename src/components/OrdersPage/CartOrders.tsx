@@ -1,14 +1,41 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { Form } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../scss/OrdersPage.module.scss';
+import { addOrders } from '../../store/orderSlice';
 
 export const CartOrders = ({orders}:any) => {
-  const {orders_prood} = useSelector((state:any)=> state.order)
+    console.log(orders);
+    const dispatch = useDispatch();
   return (
     <div className={styles.cart_orders}>
         <div className={styles.cart_orders_wrapper}>
-            <div className={styles.cart_orders_store_name}>Магазин: <span>{orders.store_name}</span></div>
-            <div></div>
+            <div className={styles.cart_orders_store_name}>
+                <Form.Check
+                    onClick={(e:any)=>dispatch(addOrders({orders, checked: e.target.checked}))}
+                    type='checkbox'
+                    id={`default-${orders.store_id}`}
+                />
+                 Магазин: {orders.store_name}
+            </div>
+            <div className={styles.cart_orders_info}>
+                {
+                    orders.cart_positions.map((elem:any)=>
+                    <div key={elem.id} className={styles.current_order}>
+                        <div className={styles.current_order_wrapper}>
+                            <div style={{backgroundImage: `url(${elem._product.photos[0]})`}} className={styles.current_order_img}></div>
+                            <div className={styles.current_order_group}>
+                                <div className={styles.current_order_name}>{elem._product.name}</div>
+                                <div className={styles.group_cost}>
+                                    {elem.cost_with_discount ? <div className={styles.current_order_discount_price}>{elem.cost} ₽</div> : <></>}
+                                    <div className={styles.current_order_price}>{elem.cost_with_discount ? elem.cost_with_discount : elem.cost} ₽</div>
+                                    <div className={styles.current_order_count}>количество: {elem.count}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>)
+                }
+            </div>
         </div>
     </div>
   )

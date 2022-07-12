@@ -13,10 +13,15 @@ const orderSlice = createSlice({
   name: 'order',
   initialState: {
     orders_prood: [] as any [],
+    orders_add_prood: [] as any [],
   },
   reducers: {
-    getOrders(state, action) {
-        
+    addOrders(state, action) {
+        if(action.payload.checked){
+          state.orders_add_prood = [...state.orders_add_prood, action.payload.orders];
+        }else{
+          state.orders_add_prood = state.orders_add_prood.filter((elem:any)=> elem.store_id !== action.payload.orders.store_id)
+        }
     },
   },
   extraReducers: {
@@ -33,5 +38,5 @@ const orderSlice = createSlice({
 });
 
 export default orderSlice.reducer;
-export const { getOrders } =
+export const { addOrders } =
 orderSlice.actions;
