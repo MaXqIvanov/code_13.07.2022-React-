@@ -89,6 +89,10 @@
         grid-template-columns: 24% 24% 24% 24%;
         column-gap: 1.333%;
     }
+    @media(min-width: 1600px){
+        grid-template-columns: 19% 19% 19% 19% 19%;
+        column-gap: 1.25%;
+    }
 }
 // end block category
 // block cart
