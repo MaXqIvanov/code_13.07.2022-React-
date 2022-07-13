@@ -18,7 +18,6 @@ export const CartOrders = ({orders}:any) => {
         }
     }, [orders_add_prood])
     
-
   return (
     <div className={styles.cart_orders}>
         <div className={`${styles.cart_orders_wrapper} ${activeOrder && styles.active_order}`}>
@@ -26,6 +25,7 @@ export const CartOrders = ({orders}:any) => {
                 <Form.Check
                     onClick={(e:any)=>dispatch(addOrders({orders, checked: e.target.checked}))}
                     type='checkbox'
+                    checked={activeOrder}
                     id={`default-${orders.store_id}`}
                 />
                  Магазин: {orders.store_name}
