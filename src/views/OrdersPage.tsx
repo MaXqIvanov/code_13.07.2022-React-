@@ -24,7 +24,7 @@ export const OrdersPage = () => {
                 <div className={styles.order_address_user}>
                     <div className={styles.order_address_title}>Адрес доставки</div>
                     <div className={styles.order_address_info}>
-                        <div className={styles.order_address_btn}>добавить новый адрес</div>
+                        <div className={styles.order_address_btn}>+добавить новый адрес</div>
                     </div>
                 </div>
                 <div className={styles.orders_info}>

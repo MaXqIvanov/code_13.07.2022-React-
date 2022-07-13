@@ -204,11 +204,12 @@
 .order_address_btn{
     position: absolute;
     right: 20px;
-    top: 50%;
+    top: 20%;
     transform: translate(0, -50%);
     color: #137b9e;
     opacity: 0.8;
     transition: all linear 0.3s;
+    letter-spacing: 0.1px;
     cursor: pointer;
     &:hover{
         opacity: 1;
