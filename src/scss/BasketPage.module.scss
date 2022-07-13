@@ -12,7 +12,8 @@
     margin-bottom: 30px;
     min-height: 80vh;
     display: grid;
-    grid-template-columns: 80% 20%;
+    grid-template-columns: 79% 20%;
+    column-gap: 1%;
     @media(max-width: 1400px){
         grid-template-columns: 75% 23%;
         column-gap: 2%;
