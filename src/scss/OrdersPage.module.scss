@@ -12,7 +12,8 @@
     margin-bottom: 30px;
     min-height: 80vh;
     display: grid;
-    grid-template-columns: 80% 20%;
+    grid-template-columns: 79% 20%;
+    column-gap: 1%;
     @media(max-width: 1400px){
         grid-template-columns: 75% 23%;
         column-gap: 2%;
@@ -23,6 +24,12 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
 }
+.order_address_title{
+    font-size: x-large;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
 .cart_orders_store_name{
     display: flex;
     font-family: 'Montserrat', sans-serif;
@@ -54,6 +61,14 @@
     height: 100%;
     width: 100%;
     min-height: 200px;
+    transition: all linear 0.3s;
+    opacity: 0.7;
+    &:hover{
+        opacity: 1;
+    }
+}
+.active_order{
+    opacity: 1 !important;
 }
 
 .orders_send{
@@ -66,7 +81,7 @@
         box-shadow: 0px 0px 5px rgb(190, 190, 190);
         position: fixed;
         border-radius: 10px;
-        top: 145px;
+        top: 115px;
         right: 5%;
         width: 100%;
         max-width: 265px;
@@ -104,6 +119,25 @@
     height: fit-content;
     width: 100%;
     flex-direction: column;
+    padding: 10px;
+    box-shadow: 0px 0px 5px rgb(209, 209, 209);
+    border-radius: 10px;
+}
+.block_inform{
+    display: flex;
+    height: fit-content;
+    width: 100%;
+    flex-direction: column;
+}
+.order_address_user{
+    display: flex;
+    height: fit-content;
+    width: 100%;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0px 0px 5px rgb(209, 209, 209);
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 .cart_orders_info{
     height: 100%;
@@ -111,6 +145,7 @@
     min-height: 175px;
     padding-left: 20px;
     overflow-y: scroll;
+    cursor: default;
 }
 .current_order{
     height: 100%;
@@ -158,6 +193,25 @@
     div{
         font-family: 'Montserrat', sans-serif;
         font-weight: 700;
+    }
+}
+.order_address_info{
+    position: relative;
+    height: fit-content;
+    height: 50px;
+    width: 100%;
+}
+.order_address_btn{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translate(0, -50%);
+    color: #137b9e;
+    opacity: 0.8;
+    transition: all linear 0.3s;
+    cursor: pointer;
+    &:hover{
+        opacity: 1;
     }
 }
 // end start cart_orders

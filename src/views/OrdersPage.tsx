@@ -20,9 +20,17 @@ export const OrdersPage = () => {
   return (
     <div className={styles.orders}>
         <div className={styles.orders_wrapper}>
-            <div className={styles.orders_info}>
-                <div className={styles.title_order}>Состав заказа</div>
-                {orders_prood.map((elem:any)=><CartOrders orders={elem} key={elem.store_id}/>)}
+            <div className={styles.block_inform}>
+                <div className={styles.order_address_user}>
+                    <div className={styles.order_address_title}>Адрес доставки</div>
+                    <div className={styles.order_address_info}>
+                        <div className={styles.order_address_btn}>добавить новый адрес</div>
+                    </div>
+                </div>
+                <div className={styles.orders_info}>
+                    <div className={styles.title_order}>Состав заказа</div>
+                    {orders_prood.map((elem:any)=><CartOrders orders={elem} key={elem.store_id}/>)}
+                </div>
             </div>
             <div className={styles.orders_send}>
                 <div className={styles.orders_send_wrapper}>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../scss/OrdersPage.module.scss';
@@ -7,9 +7,21 @@ import { addOrders } from '../../store/orderSlice';
 export const CartOrders = ({orders}:any) => {
     console.log(orders);
     const dispatch = useDispatch();
+    const [activeOrder, setActiveOrder] = useState(false);
+    const {orders_add_prood} = useSelector((state:any)=> state.order);
+    useEffect(() => {
+        let check = orders_add_prood.filter((elem:any)=> elem.store_id === orders.store_id)
+        if(check.length > 0){
+            setActiveOrder(true)
+        }else{
+            setActiveOrder(false)
+        }
+    }, [orders_add_prood])
+    
+
   return (
     <div className={styles.cart_orders}>
-        <div className={styles.cart_orders_wrapper}>
+        <div className={`${styles.cart_orders_wrapper} ${activeOrder && styles.active_order}`}>
             <div className={styles.cart_orders_store_name}>
                 <Form.Check
                     onClick={(e:any)=>dispatch(addOrders({orders, checked: e.target.checked}))}
