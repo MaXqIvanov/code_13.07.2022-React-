@@ -51,7 +51,7 @@ export const OrdersPage = () => {
                 </div>
             </div>
         </div>
-        {visibleAddress && <ModalAddressAdded /> }
+        {visibleAddress && <ModalAddressAdded setVisibleAddress={setVisibleAddress}/> }
     </div>
   )
 }
