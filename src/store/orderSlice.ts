@@ -9,11 +9,20 @@ export const getOrdersAsync:any = createAsyncThunk(
   },
 )
 
+export const getOrdersAddressAsync:any = createAsyncThunk(
+  'order/getOrdersAddressAsync',
+  async (params:any, state:any) => { // here you have two arguments
+      const response = await api('marketplace/order_addresses')
+      return response;
+  },
+)
+
 const orderSlice = createSlice({
   name: 'order',
   initialState: {
     orders_prood: [] as any [],
     orders_add_prood: [] as any [],
+    orders_address: [] as any [],
   },
   reducers: {
     addOrders(state, action) {
@@ -28,11 +37,19 @@ const orderSlice = createSlice({
     [getOrdersAsync.pending]: (state:any, action:any) => {
     },
     [getOrdersAsync.fulfilled]: (state:any, { payload }:any) => {
-      console.log(payload);
+      // console.log(payload);
       state.orders_prood = payload.data
     },
     [getOrdersAsync.rejected]: (state:any, action: any) => {
+    },
 
+    [getOrdersAddressAsync.pending]: (state:any, action:any) => {
+    },
+    [getOrdersAddressAsync.fulfilled]: (state:any, { payload }:any) => {
+      console.log(payload);
+      // state.orders_address = payload.data
+    },
+    [getOrdersAddressAsync.rejected]: (state:any, action: any) => {
     },
   }
 });

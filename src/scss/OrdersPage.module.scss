@@ -150,6 +150,8 @@
 .current_order{
     height: 100%;
     width: 100%;
+    margin-bottom: 10px;
+    margin-top: 5px;
 }
 .current_order_wrapper{
     height: fit-content;
@@ -162,7 +164,7 @@
     width: 75px;
     background-repeat: no-repeat;
     background-size: contain;
-    background-position: center;
+    background-position: top;
 }
 .current_order_group{
     margin-left: 10px;
@@ -216,3 +218,25 @@
     }
 }
 // end start cart_orders
+
+// modal address
+.address_added{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 5px gray;
+    border-radius: 10px;
+    min-width: 400px;
+    height: 300px;
+}
+.address_added_wrapper{
+    height: fit-content;
+    width: 90%;
+    height: 90%;
+    font-family: 'Montserrat', sans-serif;
+}
+// end modal address

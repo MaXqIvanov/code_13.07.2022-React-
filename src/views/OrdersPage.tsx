@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getOrdersAsync } from '../store/orderSlice'
+import { getOrdersAddressAsync, getOrdersAsync } from '../store/orderSlice'
 import styles from '../scss/OrdersPage.module.scss';
 import { CartOrders } from '../components/OrdersPage/CartOrders';
+import { ModalAddressAdded } from '../components/OrdersPage/ModalAddressAdded';
 
 export const OrdersPage = () => {
     const dispatch = useDispatch()
-    const {orders_prood, orders_add_prood} = useSelector((state:any)=> state.order)
+    const {orders_prood, orders_add_prood, orders_address} = useSelector((state:any)=> state.order)
+    const [visibleAddress,setVisibleAddress] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0)
     useEffect(() => {
         dispatch(getOrdersAsync())
+        dispatch(getOrdersAddressAsync())
       }, [])
     
     useEffect(() => {
@@ -24,7 +27,10 @@ export const OrdersPage = () => {
                 <div className={styles.order_address_user}>
                     <div className={styles.order_address_title}>Адрес доставки</div>
                     <div className={styles.order_address_info}>
-                        <div className={styles.order_address_btn}>+добавить новый адрес</div>
+                        {orders_address ? orders_address.map((elem:any)=> <div>
+                            какой то адресс (изменить)
+                        </div>) : <></>}
+                        <div onClick={()=>setVisibleAddress(!visibleAddress)} className={styles.order_address_btn}>+добавить новый адрес</div>
                     </div>
                 </div>
                 <div className={styles.orders_info}>
@@ -45,6 +51,7 @@ export const OrdersPage = () => {
                 </div>
             </div>
         </div>
+        {visibleAddress && <ModalAddressAdded /> }
     </div>
   )
 }
