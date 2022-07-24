@@ -34,7 +34,7 @@ export const Header = () => {
                 className="main_logo_div"
               >
                 <div onClick={()=>nav('/')} className={styles.main_logo_div_smallV2}>
-                  <div className={styles.dekstop}>Every Services</div><span className={styles.mobile}>ES</span>
+                  <div className={styles.dekstop}>EXAMPLE</div><span className={styles.mobile}>EX</span>
                 </div>
               </Navbar.Brand>
               <Navbar.Offcanvas
@@ -45,7 +45,7 @@ export const Header = () => {
               >
                 <Offcanvas.Header closeButton>
                   <Offcanvas.Title style={{ color: 'black' }} id="offcanvasNavbarLabel">
-                    Every Services
+                    Example
                   </Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
